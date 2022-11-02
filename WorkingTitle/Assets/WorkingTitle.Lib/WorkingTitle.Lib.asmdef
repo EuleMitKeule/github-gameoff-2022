@@ -1,6 +1,6 @@
 {
     "name": "WorkingTitle.Lib",
-    "rootNamespace": "",
+    "rootNamespace": "WorkingTitle.Lib",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
