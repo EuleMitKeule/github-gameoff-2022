@@ -42,12 +42,15 @@ namespace WorkingTitle.Unity.Pathfinding
         
         List<Tilemap> Tilemaps => WalkableTilemaps.Concat(ObstacleTilemaps).ToList();
         
+        public BoundsInt Bounds { get; private set; }
+        
         public PathfindingDirection[,] Directions { get; set; }
+        public FlowField FlowField { get; set; }
         
         [OdinSerialize]
         [Required]
         [ValueDropdown(nameof(PlayerTransformValues))]
-        Transform PlayerTransform { get; set; }
+        public Transform PlayerTransform { get; set; }
         
         Vector2Int? LastPlayerPosition { get; set; }
 
@@ -69,18 +72,17 @@ namespace WorkingTitle.Unity.Pathfinding
         {
             if (!LastPlayerPosition.HasValue) return;
             
-            var bounds = Tilemaps.GetBounds();
-            var targetPosition = LastPlayerPosition.Value.ToPositive(bounds);
-            var gridSize = (Vector2Int)bounds.ToPositive().size;
+            Bounds = Tilemaps.GetBounds();
+            var targetPosition = LastPlayerPosition.Value.ToPositive(Bounds);
+            var gridSize = (Vector2Int)Bounds.ToPositive().size;
             var obstaclePositions = ObstacleTilemaps
                 .GetTilePositions()
-                .ToPositive(bounds)
+                .ToPositive(Bounds)
                 .ToList();
             
-            var flowField = new FlowField(targetPosition, obstaclePositions, gridSize);
-            flowField.CalcCosts();
-            flowField.CalcDirections();
-            Directions = flowField.GetDirections();
+            FlowField = new FlowField(targetPosition, obstaclePositions, gridSize);
+            FlowField.CalcCosts();
+            FlowField.CalcDirections();
         }
 
 #if UNITY_EDITOR

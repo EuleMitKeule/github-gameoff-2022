@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6064423492359556246}
   - component: {fileID: 6064423492359556244}
   - component: {fileID: 6064423492359556245}
+  - component: {fileID: 779659689631481611}
   m_Layer: 6
   m_Name: tank_player
   m_TagString: Untagged
@@ -52,16 +53,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 6064423492455411463}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TankBody
-      Entry: 10
-      Data: 0
     - Name: Speed
       Entry: 4
       Data: 100
@@ -83,16 +80,12 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 6064423493732264457}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: TankCannon
-      Entry: 10
-      Data: 0
+    SerializationNodes: []
 --- !u!114 &6064423492359556244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +141,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &779659689631481611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22667a775abb4059bb314791cff87137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 6064423492455411463}
+    - {fileID: 6064423493732264457}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: TankBody
+      Entry: 10
+      Data: 0
+    - Name: TankCannon
+      Entry: 10
+      Data: 1
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +197,7 @@ Transform:
   m_GameObject: {fileID: 6064423492455411463}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.65, z: 1}
+  m_LocalScale: {x: 0.65, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6064423492359556235}

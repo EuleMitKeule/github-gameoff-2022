@@ -20,6 +20,31 @@ namespace WorkingTitle.Lib.Pathfinding
             List<Vector2Int> obstaclePositions,
             Vector2Int gridSize)
         {
+            if (obstaclePositions == null)
+            {
+                throw new ArgumentNullException(nameof(obstaclePositions));
+            }
+
+            if (obstaclePositions.Any(e =>
+                e.x < 0 || e.x >= gridSize.x ||
+                e.y < 0 || e.y >= gridSize.y))
+            {
+                throw new ArgumentException(
+                    $"Items in '{nameof(obstaclePositions)}' must be between (0,0) and {gridSize}",
+                    nameof(obstaclePositions));
+            }
+            
+            if (targetPosition.x < 0 || targetPosition.x >= gridSize.x ||
+                targetPosition.y < 0 || targetPosition.y >= gridSize.y)
+            {
+                throw new ArgumentException($"'{nameof(targetPosition)}' is out of grid bounds.", nameof(targetPosition));
+            }
+            
+            if (gridSize.x <= 0 || gridSize.y <= 0)
+            {
+                throw new ArgumentException($"'{nameof(gridSize)}' must be greater than zero.", nameof(gridSize));
+            }
+
             Cells = new PathfindingCell[gridSize.x][];
             for (var i = 0; i < gridSize.x; i++)
             {
@@ -78,7 +103,7 @@ namespace WorkingTitle.Lib.Pathfinding
                         continue;
                     }
                     
-                    var neighborCost = (ushort)(neighborCell.BaseCost * (isInterCardinal ? Mathf.Sqrt(2) : 1) + cell.Cost);
+                    var neighborCost = neighborCell.BaseCost * (isInterCardinal ? Mathf.Sqrt(2) : 1) + cell.Cost;
                     
                     if (neighborCost >= neighborCell.Cost) continue;
                     

@@ -7,7 +7,7 @@ namespace WorkingTitle.Lib.Pathfinding
         public Vector2Int Position { get; set; }
         public byte BaseCost { get; set; }
         public bool IsObstacle { get; set; }
-        public ushort Cost { get; set; } = ushort.MaxValue;
+        public float Cost { get; set; } = float.PositiveInfinity;
         public PathfindingDirection Direction { get; set; }
     }
 }

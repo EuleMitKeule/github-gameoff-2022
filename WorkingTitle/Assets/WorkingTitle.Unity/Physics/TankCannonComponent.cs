@@ -4,25 +4,22 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Extensions;
+using WorkingTitle.Unity.Gameplay;
 using WorkingTitle.Unity.Input;
 
 namespace WorkingTitle.Unity.Physics
 {
+    [RequireComponent(typeof(TankComponent))]
     [RequireComponent(typeof(InputComponent))]
     public class TankCannonComponent : SerializedMonoBehaviour
     {
-        [TitleGroup("General")]
-        [OdinSerialize]
-        [ValueDropdown("ChildObjects")]
-        protected GameObject TankCannon { get; private set; }
-        
-        [UsedImplicitly]
-        IEnumerable<GameObject> ChildObjects => gameObject.GetChildren();
+        TankComponent TankComponent { get; set; }
         
         InputComponent InputComponent { get; set; }
 
         void Awake()
         {
+            TankComponent = GetComponent<TankComponent>();
             InputComponent = GetComponent<InputComponent>();
         }
         
@@ -30,7 +27,7 @@ namespace WorkingTitle.Unity.Physics
         {
             var direction = InputComponent.InputAimPosition - (Vector2)transform.position;
             var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            TankCannon.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            TankComponent.TankCannon.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
 }
