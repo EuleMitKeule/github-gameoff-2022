@@ -17,6 +17,34 @@ namespace WorkingTitle.Lib.Pathfinding
             PathfindingDirection.Right,
             PathfindingDirection.UpRight
         };
+
+        public static IEnumerable<PathfindingDirection> Cardinal => new[]
+        {
+            PathfindingDirection.Up,
+            PathfindingDirection.Left,
+            PathfindingDirection.Down,
+            PathfindingDirection.Right
+        };
+
+        public static IEnumerable<PathfindingDirection> CardinalAndInterCardinal => new[]
+        {
+            PathfindingDirection.Up,
+            PathfindingDirection.UpLeft,
+            PathfindingDirection.Left,
+            PathfindingDirection.DownLeft,
+            PathfindingDirection.Down,
+            PathfindingDirection.DownRight,
+            PathfindingDirection.Right,
+            PathfindingDirection.UpRight
+        };
+        
+        public static IEnumerable<PathfindingDirection> InterCardinal => new[]
+        {
+            PathfindingDirection.UpLeft,
+            PathfindingDirection.DownLeft,
+            PathfindingDirection.DownRight,
+            PathfindingDirection.UpRight
+        };
         
         public static Vector2Int ToVector2Int(this PathfindingDirection direction) => direction switch
         {
