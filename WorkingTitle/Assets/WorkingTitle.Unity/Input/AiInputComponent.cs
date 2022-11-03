@@ -5,7 +5,6 @@ namespace WorkingTitle.Unity.Input
 {
     public class AiInputComponent : InputComponent
     {
-
         void Awake()
         {
             
@@ -13,7 +12,7 @@ namespace WorkingTitle.Unity.Input
 
         void Update()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

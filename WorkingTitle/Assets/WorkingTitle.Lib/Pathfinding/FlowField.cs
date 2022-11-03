@@ -35,14 +35,14 @@ namespace WorkingTitle.Lib.Pathfinding
                     var baseCost = isTargetCell ? 0 : 1;
                     var isObstacle = obstaclePositions.Contains(position);
                     var cost = isTargetCell ? 0 : ushort.MaxValue;
-                    
+
                     var cell = new PathfindingCell
                     {
-                        BaseCost = (byte)baseCost,
+                        BaseCost = (byte) baseCost,
                         IsObstacle = isObstacle,
                         Position = position,
-                        Cost = (ushort)cost 
-                        
+                        Cost = (ushort) cost
+
                     };
                     Cells[x][y] = cell;
                 }
