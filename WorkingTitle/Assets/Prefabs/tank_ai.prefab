@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 6064423492359556246}
   - component: {fileID: 4209170925603678806}
   - component: {fileID: 6064423492359556245}
-  - component: {fileID: 6809698434024172169}
-  - component: {fileID: 9087554923880699772}
   m_Layer: 7
   m_Name: tank_ai
   m_TagString: Untagged
@@ -137,38 +135,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &6809698434024172169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6064423492359556233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80b692e6e05a3264999c1416aa50154d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seeker: {fileID: 6064423492359556235}
-  target: {fileID: 0}
-  GridOwner: {fileID: 0}
---- !u!114 &9087554923880699772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6064423492359556233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07b8fe7d3f4210c428c4a9220975c36b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridWorldSize: {x: 0, y: 0, z: 0}
-  nodeRadius: 0
-  obstaclemap: {fileID: 0}
-  gridSizeX: 0
-  gridSizeY: 0
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0
