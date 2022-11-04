@@ -2,13 +2,29 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using WorkingTitle.Lib.Extensions;
 
 namespace WorkingTitle.Unity.Extensions
 {
     public static class TilemapExtensions
     {
-        public static BoundsInt GetBounds(this IEnumerable<Tilemap> tilemaps) => 
-            tilemaps.Aggregate(new BoundsInt(), (current, tilemap) => current.Encapsulate(tilemap.cellBounds));
+        public static BoundsInt GetBounds(this IEnumerable<Tilemap> tilemaps, Vector3Int position = default)
+        {
+            var totalBounds = new BoundsInt
+            {
+                position = position
+            };
+
+            foreach (var tilemap in tilemaps)
+            {
+                totalBounds = totalBounds.Encapsulate(tilemap.cellBounds);
+            }
+
+            return totalBounds;
+        }
+            
+            // => 
+            // tilemaps.Aggregate(new BoundsInt(), (current, tilemap) => current.Encapsulate(tilemap.cellBounds));
 
         public static IEnumerable<Vector2Int> GetTilePositions(this Tilemap tilemap)
         {

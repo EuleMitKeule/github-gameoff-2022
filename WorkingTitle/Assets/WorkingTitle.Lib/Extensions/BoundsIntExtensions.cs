@@ -1,9 +1,17 @@
 ﻿using UnityEngine;
+using WorkingTitle.Lib.Pathfinding;
 
-namespace WorkingTitle.Unity.Extensions
+namespace WorkingTitle.Lib.Extensions
 {
     public static class BoundsIntExtensions
     {
+        public static BoundsInt MoveBounds(this BoundsInt bounds, Direction direction)
+        {
+            var offset = direction.ToVector3Int();
+            var position = bounds.position + offset * bounds.size;
+            return new BoundsInt(position, bounds.size);
+        }
+        
         public static BoundsInt Encapsulate(this BoundsInt bounds, BoundsInt otherBounds)
         {
             var encapsulatedBounds = new BoundsInt

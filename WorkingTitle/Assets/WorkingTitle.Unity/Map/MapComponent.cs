@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using WorkingTitle.Lib.Extensions;
 using WorkingTitle.Lib.Pathfinding;
 using WorkingTitle.Unity.Extensions;
 using WorkingTitle.Unity.Gameplay;
@@ -179,51 +180,20 @@ namespace WorkingTitle.Unity.Map
             var chunkPrefab = ChunkPrefabs[randomIndex];
 
             var centerBounds = ChunkComponents[Direction.None].Bounds;
-            var newChunkBounds = new BoundsInt
-            {
-                xMin = direction switch
-                {
-                    Direction.Left or Direction.UpLeft or Direction.DownLeft => centerBounds.xMin -
-                        centerBounds.size.x,
-                    Direction.Right or Direction.UpRight or Direction.DownRight => centerBounds.xMax,
-                    _ => centerBounds.xMin
-                },
-                xMax = direction switch
-                {
-                    Direction.Left or Direction.UpLeft or Direction.DownLeft => centerBounds.xMin,
-                    Direction.Right or Direction.UpRight or Direction.DownRight => centerBounds.xMax +
-                        centerBounds.size.x,
-                    _ => centerBounds.xMax
-                },
-                yMin = direction switch
-                {
-                    Direction.Up or Direction.UpLeft or Direction.UpRight => centerBounds.yMax,
-                    Direction.Down or Direction.DownLeft or Direction.DownRight => centerBounds.yMin -
-                        centerBounds.size.y,
-                    _ => centerBounds.yMin
-                },
-                yMax = direction switch
-                {
-                    Direction.Up or Direction.UpLeft or Direction.UpRight =>
-                        centerBounds.yMax + centerBounds.size.y,
-                    Direction.Down or Direction.DownLeft or Direction.DownRight => centerBounds.yMin,
-                    _ => centerBounds.yMax
-                },
-                zMin = 0,
-                zMax = 1
-            };
+            var moveBounds = centerBounds.MoveBounds(direction);
             
             var chunk = Instantiate(chunkPrefab, transform);
+            var chunkComponent = chunk.GetComponent<ChunkComponent>();
+            
             var tilemaps = chunk.GetComponentsInChildren<Tilemap>();
-            var oldChunkBounds = tilemaps.GetBounds();
+            var oldChunkBounds = chunkComponent.Bounds;
             
             foreach (var tilemap in tilemaps)
             {
-                tilemap.MoveTiles(oldChunkBounds, newChunkBounds);
+                tilemap.MoveTiles(oldChunkBounds, moveBounds);
             }
             
-            var chunkComponent = chunk.GetComponent<ChunkComponent>();
-            chunkComponent.Initialize();
+            chunkComponent.Initialize(moveBounds.position);
             ChunkComponents[direction] = chunkComponent;
         }
         
@@ -250,8 +220,10 @@ namespace WorkingTitle.Unity.Map
             Tilemaps = chunkComponents
                 .SelectMany(c => c.Tilemaps)
                 .ToList();
+
+            var centerChunk = ChunkComponents[Direction.None];
             
-            Bounds = Tilemaps.GetBounds();
+            Bounds = Tilemaps.GetBounds(centerChunk.Bounds.position);
             GridSize = (Vector2Int)Bounds.ToPositive().size;
         }
         

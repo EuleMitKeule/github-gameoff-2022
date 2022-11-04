@@ -93,6 +93,20 @@ namespace WorkingTitle.Lib.Pathfinding
             _ => Vector2Int.zero
         };
         
+        public static Vector3Int ToVector3Int(this Direction direction) => direction switch
+        {
+            Direction.None => Vector3Int.zero,
+            Direction.Up => Vector3Int.up,
+            Direction.UpLeft => Vector3Int.up + Vector3Int.left,
+            Direction.Left => Vector3Int.left,
+            Direction.DownLeft => Vector3Int.down + Vector3Int.left,
+            Direction.Down => Vector3Int.down,
+            Direction.DownRight => Vector3Int.down + Vector3Int.right,
+            Direction.Right => Vector3Int.right,
+            Direction.UpRight => Vector3Int.up + Vector3Int.right,
+            _ => Vector3Int.zero
+        };
+        
         public static Vector2 ToVector2(this Direction direction) => (direction switch
         {
             Direction.None => Vector2.zero,

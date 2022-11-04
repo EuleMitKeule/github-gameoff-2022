@@ -42,7 +42,7 @@ namespace WorkingTitle.Unity.Map
             Initialize();
         }
         
-        public void Initialize()
+        public void Initialize(Vector3Int position = default)
         {
             Tilemaps = WalkableTilemaps.Concat(ObstacleTilemaps).ToList();
 
@@ -51,7 +51,7 @@ namespace WorkingTitle.Unity.Map
                 tilemap.CompressBounds();
             }
             
-            Bounds = Tilemaps.GetBounds();
+            Bounds = Tilemaps.GetBounds(position);
         }
     }
 }
