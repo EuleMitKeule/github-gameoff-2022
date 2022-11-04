@@ -495,7 +495,7 @@ PrefabInstance:
       objectReference: {fileID: 779659689631481611, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
     - target: {fileID: 779659689631481611, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 779659689631481611, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
@@ -504,6 +504,15 @@ PrefabInstance:
     - target: {fileID: 779659689631481611, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[1]
       value: '"path":"TankCannon","value":$eref:1'
+      objectReference: {fileID: 0}
+    - target: {fileID: 779659689631481611, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      value: '"path":"WallMask","value":{"$id":0,"$type":"UnityEngine.LayerMask,
+        UnityEngine.CoreModule",256}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 779659689631481611, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
+      propertyPath: serializationData.SerializationNodes.Array.data[3].Data
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 779659689631481611, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size

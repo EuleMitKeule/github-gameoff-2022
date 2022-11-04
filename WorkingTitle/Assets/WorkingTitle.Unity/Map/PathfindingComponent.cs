@@ -22,18 +22,18 @@ namespace WorkingTitle.Unity.Map
         public Vector2 TargetPosition { get; private set; }
         
         MapComponent MapComponent { get; set; }
-        CellEntityComponent PlayerCellEntityComponent { get; set; }
+        EntityComponent PlayerEntityComponent { get; set; }
         
         void Awake()
         {
             MapComponent = GetComponent<MapComponent>();
-            PlayerCellEntityComponent = 
+            PlayerEntityComponent = 
                 GetComponentInChildren<PlayerComponent>()?
-                .GetComponent<CellEntityComponent>();
+                .GetComponent<EntityComponent>();
 
-            if (PlayerCellEntityComponent)
+            if (PlayerEntityComponent)
             {
-                PlayerCellEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;
+                PlayerEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;
             }
 
             UpdateTarget();
@@ -51,16 +51,16 @@ namespace WorkingTitle.Unity.Map
 
         void UpdateTarget()
         {
-            if (!PlayerCellEntityComponent) return;
+            if (!PlayerEntityComponent) return;
          
-            TargetCellPosition = PlayerCellEntityComponent.CellPosition;
-            TargetPositiveCellPosition = PlayerCellEntityComponent.PositiveCellPosition;
-            TargetPosition = PlayerCellEntityComponent.Position;
+            TargetCellPosition = PlayerEntityComponent.CellPosition;
+            TargetPositiveCellPosition = PlayerEntityComponent.PositiveCellPosition;
+            TargetPosition = PlayerEntityComponent.Position;
         }
 
         void UpdateDirections()
         {
-            if (!PlayerCellEntityComponent) return;
+            if (!PlayerEntityComponent) return;
             
             var obstaclePositions = MapComponent
                 .ObstacleTilemaps
@@ -85,9 +85,7 @@ namespace WorkingTitle.Unity.Map
         {
             if (!FlowField?.IsDirectionsCalculated ?? true) return;
             
-            var bounds = MapComponent
-                .Tilemaps
-                .GetBounds();
+            var bounds = MapComponent.Bounds;
             var walkablePositions = MapComponent
                 .WalkableTilemaps
                 .GetTilePositions()

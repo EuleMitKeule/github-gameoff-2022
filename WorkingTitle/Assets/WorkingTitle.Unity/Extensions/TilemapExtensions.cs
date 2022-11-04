@@ -45,6 +45,8 @@ namespace WorkingTitle.Unity.Extensions
 
         public static void MoveTiles(this Tilemap tilemap, BoundsInt fromBounds, BoundsInt toBounds)
         {
+            if (fromBounds == toBounds) return;
+            
             var tiles = tilemap.GetTilesBlock(fromBounds);
             tilemap.SetTilesBlock(toBounds, tiles);
             tilemap.SetTilesBlock(fromBounds, new TileBase[tiles.Length]);

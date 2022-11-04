@@ -8,7 +8,7 @@ using WorkingTitle.Unity.Physics;
 
 namespace WorkingTitle.Unity.Input
 {
-    [RequireComponent(typeof(CellEntityComponent))]
+    [RequireComponent(typeof(EntityComponent))]
     [RequireComponent(typeof(TankComponent))]
     public class AiInputComponent : InputComponent
     {
@@ -54,22 +54,22 @@ namespace WorkingTitle.Unity.Input
 
         TankComponent TankComponent { get; set; }
         PathfindingComponent PathfindingComponent { get; set; }
-        CellEntityComponent CellEntityComponent { get; set; }
+        EntityComponent EntityComponent { get; set; }
         
         void Awake()
         {
             PathfindingComponent = GetComponentInParent<PathfindingComponent>();
-            CellEntityComponent = GetComponent<CellEntityComponent>();
+            EntityComponent = GetComponent<EntityComponent>();
             TankComponent = GetComponent<TankComponent>();
             
-            CellEntityComponent.CellPositionChanged += OnCellPositionChanged;
+            EntityComponent.CellPositionChanged += OnCellPositionChanged;
         }
 
         void OnCellPositionChanged(object sender, Vector2Int position)
         {
             if (!PathfindingComponent) return;
             
-            CurrentCell = PathfindingComponent.GetCell(CellEntityComponent.PositiveCellPosition);
+            CurrentCell = PathfindingComponent.GetCell(EntityComponent.PositiveCellPosition);
 
             if (CurrentCell is null) return;
 

@@ -50,11 +50,9 @@ namespace WorkingTitle.Unity.Map
         [ShowInInspector]
         [ReadOnly]
         Direction PlayerChunk { get; set; }
-        
-        public event EventHandler<Direction> ChunkChanged;
 
         Grid Grid { get; set; }
-        CellEntityComponent PlayerCellEntityComponent { get; set; }
+        EntityComponent PlayerEntityComponent { get; set; }
 
         #region Editor
 
@@ -70,27 +68,19 @@ namespace WorkingTitle.Unity.Map
         void Awake()
         {
             Grid = GetComponent<Grid>();
-            PlayerCellEntityComponent =
+            PlayerEntityComponent =
                 GetComponentInChildren<PlayerComponent>()?
-                    .GetComponent<CellEntityComponent>();
+                    .GetComponent<EntityComponent>();
 
-            if (PlayerCellEntityComponent)
+            if (PlayerEntityComponent)
             {
-                PlayerCellEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;
+                PlayerEntityComponent.ChunkChanged += OnChunkChanged;
             }
             
             SpawnInitialChunk();
             SpawnChunks(DirectionExtensions.CardinalAndInterCardinal);
 
             UpdateChunks();
-            UpdatePlayerChunk();
-            
-            ChunkChanged += OnChunkChanged;
-        }
-
-        void OnPlayerCellPositionChanged(object sender, Vector2Int position)
-        {
-            UpdatePlayerChunk();
         }
 
         void OnChunkChanged(object sender, Direction direction)
@@ -196,16 +186,6 @@ namespace WorkingTitle.Unity.Map
             chunkComponent.Initialize(moveBounds.position);
             ChunkComponents[direction] = chunkComponent;
         }
-        
-        void UpdatePlayerChunk()
-        {
-            var playerChunk = ChunkComponents.GetChunk(ToCell(PlayerCellEntityComponent.Position));
-
-            if (playerChunk == PlayerChunk) return;
-            
-            PlayerChunk = playerChunk;
-            ChunkChanged?.Invoke(this, PlayerChunk);
-        }
 
         void UpdateChunks()
         {
@@ -232,5 +212,8 @@ namespace WorkingTitle.Unity.Map
 
         public Vector2Int ToCell(Vector2 position) =>
             (Vector2Int)Grid.WorldToCell(position);
+
+        public Direction ToChunkDirection(Vector2Int position) =>
+            ChunkComponents.GetChunk(position);
     }
 }
