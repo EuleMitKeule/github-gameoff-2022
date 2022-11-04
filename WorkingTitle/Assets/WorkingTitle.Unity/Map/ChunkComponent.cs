@@ -2,7 +2,9 @@
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UnityEngine;
 using UnityEngine.Tilemaps;
+using WorkingTitle.Unity.Extensions;
 
 namespace WorkingTitle.Unity.Map
 {
@@ -22,7 +24,9 @@ namespace WorkingTitle.Unity.Map
         [ValidateInput(nameof(IsTilemapsUnique), "Tilemap can not be both walkable and obstacle.")]
         public List<Tilemap> ObstacleTilemaps { get; private set; } = new ();
         
-        public List<Tilemap> Tilemaps => WalkableTilemaps.Concat(ObstacleTilemaps).ToList();
+        public List<Tilemap> Tilemaps { get; private set; }
+        
+        public BoundsInt Bounds { get; private set; }
         
         #region Editor
         
@@ -32,5 +36,22 @@ namespace WorkingTitle.Unity.Map
         bool IsWalkableTilemapsNotEmpty => WalkableTilemaps.Any();
         
         #endregion
+
+        void Awake()
+        {
+            Initialize();
+        }
+        
+        public void Initialize()
+        {
+            Tilemaps = WalkableTilemaps.Concat(ObstacleTilemaps).ToList();
+
+            foreach (var tilemap in Tilemaps)
+            {
+                tilemap.CompressBounds();
+            }
+            
+            Bounds = Tilemaps.GetBounds();
+        }
     }
 }

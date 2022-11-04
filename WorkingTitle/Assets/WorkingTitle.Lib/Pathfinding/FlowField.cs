@@ -86,9 +86,9 @@ namespace WorkingTitle.Lib.Pathfinding
             {
                 var cell = queue.Dequeue();
                 var neighborCells =
-                    GetNeighborCells(cell.Position, PathfindingDirectionExtensions.CardinalAndInterCardinal);
+                    GetNeighborCells(cell.Position, DirectionExtensions.CardinalAndInterCardinal);
 
-                foreach (var neighborDirection in PathfindingDirectionExtensions.CardinalAndInterCardinal)
+                foreach (var neighborDirection in DirectionExtensions.CardinalAndInterCardinal)
                 {
                     var relativePosition = neighborDirection.ToVector2Int();
                     var neighborCell = neighborCells[relativePosition.x + 1][relativePosition.y + 1];
@@ -125,10 +125,10 @@ namespace WorkingTitle.Lib.Pathfinding
                     
                     if (cell.IsObstacle) continue;
                 
-                    var neighborCells = GetNeighborCells(cell.Position, PathfindingDirectionExtensions.CardinalAndInterCardinal);
+                    var neighborCells = GetNeighborCells(cell.Position, DirectionExtensions.CardinalAndInterCardinal);
                     var bestCost = cell.Cost;
                 
-                    foreach (var direction in PathfindingDirectionExtensions.CardinalAndInterCardinal)
+                    foreach (var direction in DirectionExtensions.CardinalAndInterCardinal)
                     {
                         var relativePosition = direction.ToVector2Int();
                         var neighborCell = neighborCells[relativePosition.x + 1][relativePosition.y + 1];
@@ -154,7 +154,7 @@ namespace WorkingTitle.Lib.Pathfinding
             IsDirectionsCalculated = true;
         }
 
-        public PathfindingDirection[,] GetDirections()
+        public Direction[,] GetDirections()
         {
             if (!IsCostsCalculated)
             {
@@ -166,7 +166,7 @@ namespace WorkingTitle.Lib.Pathfinding
                 throw new InvalidOperationException("Directions must be calculated before directions can be retrieved.");
             }
             
-            var directions = new PathfindingDirection[GridSize.x, GridSize.y];
+            var directions = new Direction[GridSize.x, GridSize.y];
             
             for (var x = 0; x < GridSize.x; x++)
             {
@@ -180,7 +180,7 @@ namespace WorkingTitle.Lib.Pathfinding
             return directions;
         }
 
-        PathfindingCell GetNeighborCell(Vector2Int position, PathfindingDirection direction)
+        PathfindingCell GetNeighborCell(Vector2Int position, Direction direction)
         {
             var neighborPosition = position + direction.ToVector2Int();
 
@@ -195,7 +195,7 @@ namespace WorkingTitle.Lib.Pathfinding
             return neighborCell.IsObstacle ? null : neighborCell;
         }
         
-        PathfindingCell[][] GetNeighborCells(Vector2Int position, IEnumerable<PathfindingDirection> directions)
+        PathfindingCell[][] GetNeighborCells(Vector2Int position, IEnumerable<Direction> directions)
         {
             var neighborCells = new PathfindingCell[3][];
             for (var i = 0; i < 3; i++)

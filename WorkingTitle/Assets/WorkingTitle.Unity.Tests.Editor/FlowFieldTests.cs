@@ -21,11 +21,11 @@ namespace WorkingTitle.Unity.Tests.Editor
             
             var expectedDirections = new[,]
             {
-                { PathfindingDirection.UpRight, PathfindingDirection.UpRight, PathfindingDirection.UpRight, PathfindingDirection.UpRight, PathfindingDirection.Right },
-                { PathfindingDirection.UpRight, PathfindingDirection.UpRight, PathfindingDirection.UpRight, PathfindingDirection.UpRight, PathfindingDirection.Right },
-                { PathfindingDirection.Up,     PathfindingDirection.Up,       PathfindingDirection.Up,      PathfindingDirection.Up,     PathfindingDirection.None },
-                { PathfindingDirection.UpLeft, PathfindingDirection.UpLeft, PathfindingDirection.UpLeft, PathfindingDirection.UpLeft, PathfindingDirection.Left },
-                { PathfindingDirection.UpLeft, PathfindingDirection.UpLeft, PathfindingDirection.UpLeft, PathfindingDirection.UpLeft, PathfindingDirection.Left }
+                { Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.Right },
+                { Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.Right },
+                { Direction.Up,     Direction.Up,       Direction.Up,      Direction.Up,     Direction.None },
+                { Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.Left },
+                { Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.Left }
             };
 
             var directions = flowField.GetDirections();

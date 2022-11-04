@@ -1,6 +1,6 @@
 ﻿namespace WorkingTitle.Lib.Pathfinding
 {
-    public enum PathfindingDirection
+    public enum Direction
     {
         None,
         Up,

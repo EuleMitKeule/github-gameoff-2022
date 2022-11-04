@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using WorkingTitle.Lib.Pathfinding;
@@ -66,10 +67,17 @@ namespace WorkingTitle.Unity.Map
                 .GetTilePositions()
                 .ToPositive(MapComponent.Bounds)
                 .ToList();
-            
-            FlowField = new FlowField(TargetPositiveCellPosition, obstaclePositions, MapComponent.GridSize);
-            FlowField.CalcCosts();
-            FlowField.CalcDirections();
+
+            try
+            {
+                FlowField = new FlowField(TargetPositiveCellPosition, obstaclePositions, MapComponent.GridSize);
+                FlowField.CalcCosts();
+                FlowField.CalcDirections();
+            }
+            catch (ArgumentException e)
+            {
+                Debug.LogError(e.Message);
+            }
         }
 
 #if UNITY_EDITOR

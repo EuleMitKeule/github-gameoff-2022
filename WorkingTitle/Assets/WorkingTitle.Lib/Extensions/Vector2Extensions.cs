@@ -6,9 +6,9 @@ namespace WorkingTitle.Lib.Extensions
 {
     public static class Vector2Extensions
     {
-        public static PathfindingDirection ToPathfindingDirection(this Vector2 value) =>
-            PathfindingDirectionExtensions.All
-                .DefaultIfEmpty(PathfindingDirection.None)
+        public static Direction ToPathfindingDirection(this Vector2 value) =>
+            DirectionExtensions.All
+                .DefaultIfEmpty(Direction.None)
                 .FirstOrDefault(direction => direction.ToVector2() == value);
     }
 }

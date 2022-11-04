@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4209170925603678806}
   - component: {fileID: 6064423492359556245}
   - component: {fileID: 779659689631481611}
+  - component: {fileID: 8006970213262483037}
   m_Layer: 7
   m_Name: tank_ai
   m_TagString: Untagged
@@ -107,9 +108,12 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Grid
-      Entry: 6
-      Data: 
+    - Name: TargetDirectionThreshold
+      Entry: 4
+      Data: 3
+    - Name: TargetDistanceThreshold
+      Entry: 4
+      Data: 3
 --- !u!50 &6064423492359556245
 Rigidbody2D:
   serializedVersion: 4
@@ -160,6 +164,36 @@ MonoBehaviour:
     - Name: TankCannon
       Entry: 10
       Data: 1
+    - Name: WallMask
+      Entry: 7
+      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+--- !u!114 &8006970213262483037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac63e8cab44448dabe6c9c263c9cec94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0

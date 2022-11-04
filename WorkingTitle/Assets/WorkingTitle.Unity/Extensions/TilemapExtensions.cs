@@ -26,5 +26,13 @@ namespace WorkingTitle.Unity.Extensions
         public static IEnumerable<Vector2Int> GetTilePositions(this IEnumerable<Tilemap> tilemaps) => tilemaps
             .SelectMany(tilemap => tilemap.GetTilePositions())
             .ToList();
+
+        public static void MoveTiles(this Tilemap tilemap, BoundsInt fromBounds, BoundsInt toBounds)
+        {
+            var tiles = tilemap.GetTilesBlock(fromBounds);
+            tilemap.SetTilesBlock(toBounds, tiles);
+            tilemap.SetTilesBlock(fromBounds, new TileBase[tiles.Length]);
+            tilemap.CompressBounds();
+        }
     }
 }
