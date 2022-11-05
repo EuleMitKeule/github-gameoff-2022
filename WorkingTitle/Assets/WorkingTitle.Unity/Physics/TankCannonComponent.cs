@@ -26,7 +26,7 @@ namespace WorkingTitle.Unity.Physics
         void Update()
         {
             var direction = InputComponent.InputAimPosition - (Vector2)transform.position;
-            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            var angle = Vector2.SignedAngle(transform.up, direction);
             TankComponent.TankCannon.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
     }
