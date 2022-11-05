@@ -36,6 +36,13 @@ namespace WorkingTitle.Unity.Input
         [ValueDropdown("InputActionNames")]
         string InputActionRotationName { get; set; }
 
+        [OdinSerialize]
+        [Required]
+        [LabelText("Boost Action")]
+        [EnableIf("InputActionMap")]
+        [ValueDropdown("InputActionNames")]
+        string InputActionBoostName { get; set; }
+
         Camera Camera { get; set; }
         
         InputActionMap InputActionMap => 
@@ -44,6 +51,9 @@ namespace WorkingTitle.Unity.Input
             InputActionMovementName is not null ? InputActionMap.FindAction(InputActionMovementName) : null;
         InputAction InputActionRotation => 
             InputActionMap.FindAction(InputActionRotationName);
+
+        private InputAction InputActionBoost =>
+            InputActionBoostName is not null ? InputActionMap.FindAction(InputActionBoostName) : null;
 
         [UsedImplicitly]
         IEnumerable<string> InputActionMapNames => InputActionAsset ? InputActionAsset.actionMaps.Select(e => e.name) : null;
@@ -55,10 +65,13 @@ namespace WorkingTitle.Unity.Input
         {
             InputActionMovement.Enable();
             InputActionRotation.Enable();
+            InputActionBoost.Enable();
             InputActionMovement.started += OnMovementStarted;
             InputActionRotation.started += OnRotationStarted;
+            InputActionBoost.started += OnBoostStarted;
             InputActionMovement.canceled += OnMovementCanceled;
             InputActionRotation.canceled += OnRotationCanceled;
+            InputActionBoost.canceled += OnBoostCanceled;
 
             Camera = Camera.main;
         }
@@ -68,6 +81,11 @@ namespace WorkingTitle.Unity.Input
             var mousePosition = Mouse.current.position.ReadValue();
             var mousePositionWorld = (Vector2)Camera.ScreenToWorldPoint(mousePosition);
             InputAimPosition = mousePositionWorld;
+        }
+
+        void OnBoostStarted(InputAction.CallbackContext context)
+        {
+            InputBoost = true;
         }
 
         void OnRotationCanceled(InputAction.CallbackContext context)
@@ -90,6 +108,11 @@ namespace WorkingTitle.Unity.Input
         {
             var value = context.ReadValue<float>();
             InputMovement = value;
+        }
+
+        void OnBoostCanceled(InputAction.CallbackContext context)
+        {
+            InputBoost = false;
         }
     }
 }

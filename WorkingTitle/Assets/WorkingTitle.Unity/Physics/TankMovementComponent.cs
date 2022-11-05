@@ -17,6 +17,9 @@ namespace WorkingTitle.Unity.Physics
         protected float Speed { get; private set; }
         
         [OdinSerialize]
+        protected float SpeedBoostModifier { get; private set; }
+        
+        [OdinSerialize]
         protected float RotationSpeed { get; private set; }
         
         TankComponent TankComponent { get; set; }
@@ -40,8 +43,10 @@ namespace WorkingTitle.Unity.Physics
 
         void Move()
         {
+            var speedBoostModifier = InputComponent.InputBoost ? SpeedBoostModifier : 1;
+            
             var direction = TankComponent.TankBody.transform.up;
-            var velocity = direction * (Speed * InputComponent.InputMovement * Time.fixedDeltaTime);
+            var velocity = direction * (speedBoostModifier * Speed * InputComponent.InputMovement * Time.fixedDeltaTime);
             Rigidbody.velocity = velocity;
         }
 
