@@ -35,6 +35,13 @@ namespace WorkingTitle.Unity.Input
         [EnableIf("InputActionMap")]
         [ValueDropdown("InputActionNames")]
         string InputActionRotationName { get; set; }
+        
+        [OdinSerialize]
+        [Required]
+        [LabelText("Primary Attack Action")]
+        [EnableIf("InputActionMap")]
+        [ValueDropdown("InputActionNames")]
+        string InputActionPrimaryAttackName { get; set; }
 
         [OdinSerialize]
         [Required]
@@ -49,6 +56,7 @@ namespace WorkingTitle.Unity.Input
         InputAction InputActionMovement { get; set; }
         InputAction InputActionRotation { get; set; }
         InputAction InputActionBoost { get; set; }
+        InputAction InputPrimaryAttack { get; set; }
 
         # region Editor
         
@@ -68,9 +76,11 @@ namespace WorkingTitle.Unity.Input
             
             InputActionMovement.started += OnMovementStarted;
             InputActionRotation.started += OnRotationStarted;
+            InputActionPrimaryAttack.started += OnPrimaryAttackStarted;
             InputActionBoost.started += OnBoostStarted;
             InputActionMovement.canceled += OnMovementCanceled;
             InputActionRotation.canceled += OnRotationCanceled;
+            InputActionPrimaryAttack.canceled += OnPrimaryAttackCanceled;
             InputActionBoost.canceled += OnBoostCanceled;
 
             Camera = Camera.main;
@@ -82,10 +92,12 @@ namespace WorkingTitle.Unity.Input
             
             InputActionMovement = InputActionMap.FindAction(InputActionMovementName);
             InputActionRotation = InputActionMap.FindAction(InputActionRotationName);
+            InputActionPrimaryAttack = InputActionMap.FindAction(InputActionPrimaryAttackName);
             InputActionBoost = InputActionMap.FindAction(InputActionBoostName);
 
             InputActionMovement.Enable();
             InputActionRotation.Enable();
+            InputActionPrimaryAttack.Enable();
             InputActionBoost.Enable();
         }
 
@@ -96,19 +108,10 @@ namespace WorkingTitle.Unity.Input
             InputAimPosition = mousePositionWorld;
         }
 
-        void OnBoostStarted(InputAction.CallbackContext context)
+        void OnMovementStarted(InputAction.CallbackContext context)
         {
-            InputBoost = true;
-        }
-
-        void OnRotationCanceled(InputAction.CallbackContext context)
-        {
-            InputRotation = 0;
-        }
-
-        void OnMovementCanceled(InputAction.CallbackContext context)
-        {
-            InputMovement = 0;
+            var value = context.ReadValue<float>();
+            InputMovement = value;
         }
 
         void OnRotationStarted(InputAction.CallbackContext context)
@@ -116,13 +119,32 @@ namespace WorkingTitle.Unity.Input
             var value = context.ReadValue<float>();
             InputRotation = value;
         }
-
-        void OnMovementStarted(InputAction.CallbackContext context)
+        
+        void OnPrimaryAttackStarted(InputAction.CallbackContext context)
         {
-            var value = context.ReadValue<float>();
-            InputMovement = value;
+            InputPrimaryAttack = true;
         }
 
+        void OnBoostStarted(InputAction.CallbackContext context)
+        {
+            InputBoost = true;
+        }
+
+        void OnMovementCanceled(InputAction.CallbackContext context)
+        {
+            InputMovement = 0;
+        }
+
+        void OnRotationCanceled(InputAction.CallbackContext context)
+        {
+            InputRotation = 0;
+        }
+
+        void OnPrimaryAttackCanceled(InputAction.CallbackContext context)
+        {
+            InputPrimaryAttack = false;
+        }
+        
         void OnBoostCanceled(InputAction.CallbackContext context)
         {
             InputBoost = false;

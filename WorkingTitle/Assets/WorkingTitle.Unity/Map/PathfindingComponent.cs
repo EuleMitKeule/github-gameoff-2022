@@ -22,7 +22,7 @@ namespace WorkingTitle.Unity.Map
         public Vector2 TargetPosition { get; private set; }
         
         MapComponent MapComponent { get; set; }
-        EntityComponent PlayerEntityComponent { get; set; }
+        public EntityComponent PlayerEntityComponent { get; set; }
         
         void Awake()
         {

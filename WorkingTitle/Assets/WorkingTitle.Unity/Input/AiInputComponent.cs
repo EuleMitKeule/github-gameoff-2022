@@ -82,7 +82,8 @@ namespace WorkingTitle.Unity.Input
             
             InputRotation = WithinTargetDirectionThreshold ? 0 : Mathf.Sign(PathAngle);
             InputMovement = WithinTargetDistanceThreshold && IsPlayerVisible ? 0 : 1;
-            InputAimPosition = PathfindingComponent.TargetPosition;
+            InputAimPosition = PathfindingComponent.PlayerEntityComponent.transform.position;
+            InputPrimaryAttack = IsPlayerVisible;
         }
 
         void UpdateTarget()
