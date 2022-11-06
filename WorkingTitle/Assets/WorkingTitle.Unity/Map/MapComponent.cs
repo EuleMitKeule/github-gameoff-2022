@@ -68,10 +68,14 @@ namespace WorkingTitle.Unity.Map
         void Awake()
         {
             Grid = GetComponent<Grid>();
-            PlayerEntityComponent =
-                GetComponentInChildren<PlayerComponent>()?
-                    .GetComponent<EntityComponent>();
+        }
 
+        void Start()
+        {
+            PlayerEntityComponent = 
+                GetComponentInChildren<PlayerComponent>()
+                .GetComponent<EntityComponent>();
+            
             if (PlayerEntityComponent)
             {
                 PlayerEntityComponent.ChunkChanged += OnChunkChanged;

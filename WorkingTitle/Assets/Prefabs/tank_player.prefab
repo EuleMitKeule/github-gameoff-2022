@@ -96,6 +96,9 @@ MonoBehaviour:
     - Name: Speed
       Entry: 4
       Data: 100
+    - Name: SpeedBoostModifier
+      Entry: 4
+      Data: 1.75
     - Name: RotationSpeed
       Entry: 4
       Data: 100
@@ -157,6 +160,9 @@ MonoBehaviour:
     - Name: InputActionPrimaryAttackName
       Entry: 1
       Data: primary_attack
+    - Name: InputActionBoostName
+      Entry: 1
+      Data: boost
 --- !u!50 &6064423492359556245
 Rigidbody2D:
   serializedVersion: 4

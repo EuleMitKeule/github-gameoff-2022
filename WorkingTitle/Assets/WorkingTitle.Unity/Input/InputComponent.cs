@@ -25,5 +25,8 @@ namespace WorkingTitle.Unity.Input
         [ShowInInspector]
         [ReadOnly]
         public bool InputBoost { get; protected set; }
+
+        public abstract void EnableInput();
+        public abstract void DisableInput();
     }
 }

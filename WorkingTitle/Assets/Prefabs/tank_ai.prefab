@@ -95,6 +95,9 @@ MonoBehaviour:
     - Name: Speed
       Entry: 4
       Data: 100
+    - Name: SpeedBoostModifier
+      Entry: 4
+      Data: 0
     - Name: RotationSpeed
       Entry: 4
       Data: 100
