@@ -1,4 +1,4 @@
-name: Test PR
+name: Build PR
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
     
 jobs:
   test:
-    name: Test
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
