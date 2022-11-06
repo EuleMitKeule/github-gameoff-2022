@@ -15,8 +15,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          lfs: true
 
       - name: Create semantic release
         uses: docker://ghcr.io/codfish/semantic-release-action:latest
@@ -33,8 +31,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          lfs: true
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
@@ -86,8 +82,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          lfs: true
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
@@ -139,8 +133,6 @@ jobs:
       
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          lfs: true
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
@@ -192,8 +184,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          lfs: true
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
