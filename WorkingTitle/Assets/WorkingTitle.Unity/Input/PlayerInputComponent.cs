@@ -36,31 +36,57 @@ namespace WorkingTitle.Unity.Input
         [ValueDropdown("InputActionNames")]
         string InputActionRotationName { get; set; }
 
+        [OdinSerialize]
+        [Required]
+        [LabelText("Boost Action")]
+        [EnableIf("InputActionMap")]
+        [ValueDropdown("InputActionNames")]
+        string InputActionBoostName { get; set; }
+
         Camera Camera { get; set; }
         
-        InputActionMap InputActionMap => 
-            InputActionMapName is not null ? InputActionAsset.FindActionMap(InputActionMapName) : null;
-        InputAction InputActionMovement =>
-            InputActionMovementName is not null ? InputActionMap.FindAction(InputActionMovementName) : null;
-        InputAction InputActionRotation => 
-            InputActionMap.FindAction(InputActionRotationName);
+        InputActionMap InputActionMap { get; set; }
+        InputAction InputActionMovement { get; set; }
+        InputAction InputActionRotation { get; set; }
+        InputAction InputActionBoost { get; set; }
 
-        [UsedImplicitly]
-        IEnumerable<string> InputActionMapNames => InputActionAsset ? InputActionAsset.actionMaps.Select(e => e.name) : null;
+        # region Editor
         
         [UsedImplicitly]
-        IEnumerable<string> InputActionNames => InputActionMap?.actions.Select(e => e.name);
+        IEnumerable<string> InputActionMapNames => 
+            InputActionAsset ? InputActionAsset.actionMaps.Select(e => e.name) : null;
+        
+        [UsedImplicitly]
+        IEnumerable<string> InputActionNames => 
+            InputActionMap?.actions.Select(e => e.name);
+        
+        # endregion
         
         void Awake()
         {
-            InputActionMovement.Enable();
-            InputActionRotation.Enable();
+            InitializeActions();
+            
             InputActionMovement.started += OnMovementStarted;
             InputActionRotation.started += OnRotationStarted;
+            InputActionBoost.started += OnBoostStarted;
             InputActionMovement.canceled += OnMovementCanceled;
             InputActionRotation.canceled += OnRotationCanceled;
+            InputActionBoost.canceled += OnBoostCanceled;
 
             Camera = Camera.main;
+        }
+
+        void InitializeActions()
+        {
+            InputActionMap = InputActionAsset.FindActionMap(InputActionMapName);
+            
+            InputActionMovement = InputActionMap.FindAction(InputActionMovementName);
+            InputActionRotation = InputActionMap.FindAction(InputActionRotationName);
+            InputActionBoost = InputActionMap.FindAction(InputActionBoostName);
+
+            InputActionMovement.Enable();
+            InputActionRotation.Enable();
+            InputActionBoost.Enable();
         }
 
         void Update()
@@ -70,12 +96,17 @@ namespace WorkingTitle.Unity.Input
             InputAimPosition = mousePositionWorld;
         }
 
+        void OnBoostStarted(InputAction.CallbackContext context)
+        {
+            InputBoost = true;
+        }
+
         void OnRotationCanceled(InputAction.CallbackContext context)
         {
             InputRotation = 0;
         }
 
-        void OnMovementCanceled(InputAction.CallbackContext obj)
+        void OnMovementCanceled(InputAction.CallbackContext context)
         {
             InputMovement = 0;
         }
@@ -90,6 +121,11 @@ namespace WorkingTitle.Unity.Input
         {
             var value = context.ReadValue<float>();
             InputMovement = value;
+        }
+
+        void OnBoostCanceled(InputAction.CallbackContext context)
+        {
+            InputBoost = false;
         }
     }
 }

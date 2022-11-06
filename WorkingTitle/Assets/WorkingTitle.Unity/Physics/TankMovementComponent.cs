@@ -14,10 +14,13 @@ namespace WorkingTitle.Unity.Physics
     {
         [TitleGroup("Physics")]
         [OdinSerialize]
-        protected float Speed { get; private set; }
+        float Speed { get; set; }
         
         [OdinSerialize]
-        protected float RotationSpeed { get; private set; }
+        float SpeedBoostModifier { get; set; }
+        
+        [OdinSerialize]
+        float RotationSpeed { get; set; }
         
         TankComponent TankComponent { get; set; }
         
@@ -40,8 +43,10 @@ namespace WorkingTitle.Unity.Physics
 
         void Move()
         {
+            var speedBoostModifier = InputComponent.InputBoost ? SpeedBoostModifier : 1;
             var direction = TankComponent.TankBody.transform.up;
-            var velocity = direction * (Speed * InputComponent.InputMovement * Time.fixedDeltaTime);
+            var velocity = direction * (speedBoostModifier * Speed * InputComponent.InputMovement * Time.fixedDeltaTime);
+            
             Rigidbody.velocity = velocity;
         }
 
@@ -49,6 +54,7 @@ namespace WorkingTitle.Unity.Physics
         {
             var zRotation = TankComponent.TankBody.transform.rotation.eulerAngles.z - InputComponent.InputRotation * RotationSpeed * Time.fixedDeltaTime;
             var rotation = Quaternion.Euler(0, 0, zRotation);
+            
             TankComponent.TankBody.transform.rotation = rotation;
         }
     }

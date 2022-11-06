@@ -20,5 +20,10 @@ namespace WorkingTitle.Unity.Input
         [ReadOnly]
         [PropertyOrder(-1)]
         public Vector2 InputAimPosition { get; protected set; }
+                
+        [ShowInInspector]
+        [ReadOnly]
+        [PropertyOrder(0)]
+        public bool InputBoost { get; protected set; }
     }
 }
