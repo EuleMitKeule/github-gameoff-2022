@@ -30,9 +30,10 @@ jobs:
       - name: Cache
         uses: actions/cache@v2
         with:
-          path: Library
-          key: Library-${{ hashFiles('src/Assets/**', 'src/Packages/**', 'src/ProjectSettings/**') }}
+          path: WorkingTitle/Library
+          key: Library-WorkingTitle-TargetPlatform
           restore-keys: |
+            Library-WorkingTitle-
             Library-
 
       - name: Run tests
