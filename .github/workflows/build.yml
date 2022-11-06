@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     
 jobs:
-  test:
+  build:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -37,8 +37,16 @@ jobs:
           restore-keys: |
             Library-WorkingTitle-
             Library-
-            
-      - name: Build player
+
+      - name: Create semantic release
+        uses: docker://ghcr.io/codfish/semantic-release-action:latest
+        id: semantic
+        with:
+          tag_format: 'v${version}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build StandaloneWindows64
         uses: game-ci/unity-builder@v2
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -47,9 +55,73 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           projectPath: WorkingTitle/
+          buildName: WorkingTitle-StandaloneWindows64
+          buildsPath: WorkingTitle/builds
+          versioning: Custom
+          version: ${{ steps.semantic.outputs.version }}
 
-      - name: Store build
+      - name: Build StandaloneOSX
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          targetPlatform: StandaloneOSX
+          projectPath: WorkingTitle/
+          buildName: WorkingTitle-StandaloneOSX
+          buildsPath: WorkingTitle/builds
+          versioning: Custom
+          version: ${{ steps.semantic.outputs.version }}
+
+      - name: Build StandaloneLinux64
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          targetPlatform: StandaloneLinux64
+          projectPath: WorkingTitle/
+          buildName: WorkingTitle-StandaloneLinux64
+          buildsPath: WorkingTitle/builds
+          versioning: Custom
+          version: ${{ steps.semantic.outputs.version }}
+
+      - name: Build WebGL
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          targetPlatform: WebGL
+          projectPath: WorkingTitle/
+          buildName: WorkingTitle-WebGL
+          buildsPath: WorkingTitle/builds
+          versioning: Custom
+          version: ${{ steps.semantic.outputs.version }}
+
+      - name: Upload StandaloneWindows64
         uses: actions/upload-artifact@v2
         with:
           name: Build
-          path: build
+          path: WorkingTitle/builds/WorkingTitle-StandaloneWindows64
+
+      - name: Upload StandaloneOSX
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: WorkingTitle/builds/WorkingTitle-StandaloneOSX
+
+      - name: Upload StandaloneLinux64
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: WorkingTitle/builds/WorkingTitle-StandaloneLinux64
+
+      - name: Upload WebGL
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: WorkingTitle/builds/WorkingTitle-WebGL
