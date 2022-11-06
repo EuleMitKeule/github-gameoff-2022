@@ -574,6 +574,19 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 6064423492359556234, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
+    - target: {fileID: 6064423492359556234, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6064423492359556234, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"SpeedBoostModifier","value":{"$id":0,"$type":"System.Single,
+        mscorlib",1.75}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6064423492359556234, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6064423492359556235, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
       propertyPath: m_RootOrder
       value: 1

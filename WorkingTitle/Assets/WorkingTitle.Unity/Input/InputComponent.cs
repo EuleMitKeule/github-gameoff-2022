@@ -8,22 +8,22 @@ namespace WorkingTitle.Unity.Input
         [TitleGroup("Input")]
         [ShowInInspector]
         [ReadOnly]
-        [PropertyOrder(-3)]
         public float InputMovement { get; protected set; }
         
         [ShowInInspector]
         [ReadOnly]
-        [PropertyOrder(-2)]
         public float InputRotation { get; protected set; }
         
         [ShowInInspector]
         [ReadOnly]
-        [PropertyOrder(-1)]
         public Vector2 InputAimPosition { get; protected set; }
         
         [ShowInInspector]
         [ReadOnly]
-        [PropertyOrder(0)]
         public bool InputPrimaryAttack { get; protected set; }
+                
+        [ShowInInspector]
+        [ReadOnly]
+        public bool InputBoost { get; protected set; }
     }
 }
