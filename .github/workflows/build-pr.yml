@@ -5,9 +5,11 @@ on:
   workflow_dispatch:
     
 jobs:
-  test:
-    name: Build
+  
+  build-windows:
+    name: Build Windows
     runs-on: ubuntu-latest
+    needs: release
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,7 +37,7 @@ jobs:
           restore-keys: |
             Library-WorkingTitle-
             Library-
-            
+
       - name: Build StandaloneWindows64
         uses: game-ci/unity-builder@v2
         env:
@@ -48,6 +50,45 @@ jobs:
           buildName: WorkingTitle-StandaloneWindows64
           buildsPath: WorkingTitle/builds
           versioning: None
+
+      - name: Upload StandaloneWindows64
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: WorkingTitle/builds/WorkingTitle-StandaloneWindows64
+
+  build-osx:
+    name: Build OSX
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+          
+      - name: Checkout odin-inspector
+        uses: actions/checkout@v3
+        with:
+           repository: EuleMitKeule/odin-inspector-3.1.6.1
+           path: odin/
+           ref: master
+           token: ${{ secrets.GH_PAT }}
+      
+      - name: Move odin-inspector
+        run: |
+          cp -r odin/* WorkingTitle/
+          rm -r odin
+      
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: WorkingTitle/Library
+          key: Library-WorkingTitle-TargetPlatform
+          restore-keys: |
+            Library-WorkingTitle-
+            Library-     
 
       - name: Build StandaloneOSX
         uses: game-ci/unity-builder@v2
@@ -62,6 +103,45 @@ jobs:
           buildsPath: WorkingTitle/builds
           versioning: None
 
+      - name: Upload StandaloneOSX
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: WorkingTitle/builds/WorkingTitle-StandaloneOSX
+
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+      
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+          
+      - name: Checkout odin-inspector
+        uses: actions/checkout@v3
+        with:
+           repository: EuleMitKeule/odin-inspector-3.1.6.1
+           path: odin/
+           ref: master
+           token: ${{ secrets.GH_PAT }}
+      
+      - name: Move odin-inspector
+        run: |
+          cp -r odin/* WorkingTitle/
+          rm -r odin
+      
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: WorkingTitle/Library
+          key: Library-WorkingTitle-TargetPlatform
+          restore-keys: |
+            Library-WorkingTitle-
+            Library-
+
       - name: Build StandaloneLinux64
         uses: game-ci/unity-builder@v2
         env:
@@ -74,6 +154,45 @@ jobs:
           buildName: WorkingTitle-StandaloneLinux64
           buildsPath: WorkingTitle/builds
           versioning: None
+
+      - name: Upload StandaloneLinux64
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: WorkingTitle/builds/WorkingTitle-StandaloneLinux64
+
+  build-webgl:
+    name: Build WebGL
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+          
+      - name: Checkout odin-inspector
+        uses: actions/checkout@v3
+        with:
+           repository: EuleMitKeule/odin-inspector-3.1.6.1
+           path: odin/
+           ref: master
+           token: ${{ secrets.GH_PAT }}
+      
+      - name: Move odin-inspector
+        run: |
+          cp -r odin/* WorkingTitle/
+          rm -r odin
+      
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: WorkingTitle/Library
+          key: Library-WorkingTitle-TargetPlatform
+          restore-keys: |
+            Library-WorkingTitle-
+            Library-
 
       - name: Build WebGL
         uses: game-ci/unity-builder@v2
@@ -88,8 +207,8 @@ jobs:
           buildsPath: WorkingTitle/builds
           versioning: None
 
-      - name: Store build
+      - name: Upload WebGL
         uses: actions/upload-artifact@v2
         with:
           name: Build
-          path: build
+          path: WorkingTitle/builds/WorkingTitle-WebGL
