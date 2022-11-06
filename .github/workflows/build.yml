@@ -70,7 +70,7 @@ jobs:
           buildName: WorkingTitle-StandaloneWindows64
           buildsPath: WorkingTitle/builds
           versioning: Custom
-          version: ${{ jobs.release.outputs.version }}
+          version: ${{ needs.release.outputs.version }}
 
       - name: Upload StandaloneWindows64
         uses: actions/upload-artifact@v2
@@ -123,7 +123,7 @@ jobs:
           buildName: WorkingTitle-StandaloneOSX
           buildsPath: WorkingTitle/builds
           versioning: Custom
-          version: ${{ jobs.release.outputs.version }}
+          version: ${{ needs.release.outputs.version }}
 
       - name: Upload StandaloneOSX
         uses: actions/upload-artifact@v2
@@ -176,7 +176,7 @@ jobs:
           buildName: WorkingTitle-StandaloneLinux64
           buildsPath: WorkingTitle/builds
           versioning: Custom
-          version: ${{ jobs.release.outputs.version }}
+          version: ${{ needs.release.outputs.version }}
 
       - name: Upload StandaloneLinux64
         uses: actions/upload-artifact@v2
@@ -229,7 +229,7 @@ jobs:
           buildName: WorkingTitle-WebGL
           buildsPath: WorkingTitle/builds
           versioning: Custom
-          version: ${{ jobs.release.outputs.version }}
+          version: ${{ needs.release.outputs.version }}
 
       - name: Upload WebGL
         uses: actions/upload-artifact@v2
