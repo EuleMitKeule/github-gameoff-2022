@@ -178,6 +178,30 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"MapPrefab","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"PlayerPrefab","value":$eref:1'
+      objectReference: {fileID: 0}
+    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 152961888976396738, guid: cf3884a4d56ac984ba25ab2c8f2bdacc, type: 3}
+    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 6064423492359556233, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
     - target: {fileID: 723799196888635258, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: m_Name
       value: game
