@@ -123,6 +123,72 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &293397265 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3080588550860022916, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+  m_PrefabInstance: {fileID: 1717229545}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &293397272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293397265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &1450496989 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5081341724362525028, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+  m_PrefabInstance: {fileID: 1717229545}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1450496992
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1450496989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 0, z: -10}
+  m_XDamping: 2.5
+  m_YDamping: 2.5
+  m_ZDamping: 2.5
+  m_AngularDampingMode: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AngularDamping: 0
 --- !u!1001 &1717229545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -206,9 +272,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: game
       objectReference: {fileID: 0}
+    - target: {fileID: 3080588550860022914, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: field of view
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080588550860022914, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: far clip plane
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080588550860022914, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: near clip plane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3080588550860022914, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: orthographic size
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"MouseFollowDamping","value":{"$id":0,"$type":"System.Single,
+        mscorlib",0.5}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
