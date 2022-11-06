@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -14,65 +13,66 @@ namespace WorkingTitle.Unity.Input
         [OdinSerialize]
         [Required]
         InputActionAsset InputActionAsset { get; set; }
-
+        
         [OdinSerialize]
+        [ValueDropdown(nameof(InputActionMapNameValues))]
         [Required]
-        [LabelText("Input Action Map")]
-        [EnableIf("InputActionAsset")]
-        [ValueDropdown("InputActionMapNames")]
         string InputActionMapName { get; set; }
         
         [OdinSerialize]
+        [ValueDropdown(nameof(InputActionNameValues))]
         [Required]
-        [LabelText("Movement Action")]
-        [EnableIf("InputActionMap")]
-        [ValueDropdown("InputActionNames")]
         string InputActionMovementName { get; set; }
         
         [OdinSerialize]
+        [ValueDropdown(nameof(InputActionNameValues))]
         [Required]
-        [LabelText("Rotation Action")]
-        [EnableIf("InputActionMap")]
-        [ValueDropdown("InputActionNames")]
         string InputActionRotationName { get; set; }
         
         [OdinSerialize]
+        [ValueDropdown(nameof(InputActionNameValues))]
         [Required]
-        [LabelText("Primary Attack Action")]
-        [EnableIf("InputActionMap")]
-        [ValueDropdown("InputActionNames")]
         string InputActionPrimaryAttackName { get; set; }
-
+        
         [OdinSerialize]
+        [ValueDropdown(nameof(InputActionNameValues))]
         [Required]
-        [LabelText("Boost Action")]
-        [EnableIf("InputActionMap")]
-        [ValueDropdown("InputActionNames")]
         string InputActionBoostName { get; set; }
-
-        Camera Camera { get; set; }
         
         InputActionMap InputActionMap { get; set; }
         InputAction InputActionMovement { get; set; }
         InputAction InputActionRotation { get; set; }
-        InputAction InputActionBoost { get; set; }
         InputAction InputActionPrimaryAttack { get; set; }
+        InputAction InputActionBoost { get; set; }
+
+        Camera Camera { get; set; }
 
         # region Editor
         
-        [UsedImplicitly]
-        IEnumerable<string> InputActionMapNames => 
-            InputActionAsset ? InputActionAsset.actionMaps.Select(e => e.name) : null;
-        
-        [UsedImplicitly]
-        IEnumerable<string> InputActionNames => 
+        IEnumerable<string> InputActionMapNameValues => 
+            InputActionAsset.actionMaps.Select(e => e.name);
+
+        IEnumerable<string> InputActionNameValues =>
             InputActionMap?.actions.Select(e => e.name);
         
         # endregion
         
         void Awake()
         {
+            Camera = Camera.main;
+
             InitializeActions();
+            
+            EnableInput();
+        }
+
+        void InitializeActions()
+        {
+            InputActionMap = InputActionAsset.FindActionMap(InputActionMapName);
+            InputActionMovement = InputActionMap.FindAction(InputActionMovementName);
+            InputActionRotation = InputActionMap.FindAction(InputActionRotationName);
+            InputActionPrimaryAttack = InputActionMap.FindAction(InputActionPrimaryAttackName);
+            InputActionBoost = InputActionMap.FindAction(InputActionBoostName);
             
             InputActionMovement.started += OnMovementStarted;
             InputActionRotation.started += OnRotationStarted;
@@ -82,23 +82,22 @@ namespace WorkingTitle.Unity.Input
             InputActionRotation.canceled += OnRotationCanceled;
             InputActionPrimaryAttack.canceled += OnPrimaryAttackCanceled;
             InputActionBoost.canceled += OnBoostCanceled;
-
-            Camera = Camera.main;
         }
 
-        void InitializeActions()
+        public override void EnableInput()
         {
-            InputActionMap = InputActionAsset.FindActionMap(InputActionMapName);
-            
-            InputActionMovement = InputActionMap.FindAction(InputActionMovementName);
-            InputActionRotation = InputActionMap.FindAction(InputActionRotationName);
-            InputActionPrimaryAttack = InputActionMap.FindAction(InputActionPrimaryAttackName);
-            InputActionBoost = InputActionMap.FindAction(InputActionBoostName);
-
             InputActionMovement.Enable();
             InputActionRotation.Enable();
             InputActionPrimaryAttack.Enable();
             InputActionBoost.Enable();
+        }
+        
+        public override void DisableInput()
+        {
+            InputActionMovement.Disable();
+            InputActionRotation.Disable();
+            InputActionPrimaryAttack.Disable();
+            InputActionBoost.Disable();
         }
 
         void Update()

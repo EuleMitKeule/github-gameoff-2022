@@ -32,8 +32,8 @@ namespace WorkingTitle.Unity.Physics
         public event EventHandler<Direction> ChunkChanged;
 
         MapComponent MapComponent { get; set; }
-        
-        void Awake()
+
+        void Start()
         {
             MapComponent = GetComponentInParent<MapComponent>();
             

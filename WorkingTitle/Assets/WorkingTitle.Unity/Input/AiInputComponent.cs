@@ -58,11 +58,15 @@ namespace WorkingTitle.Unity.Input
         
         void Awake()
         {
-            PathfindingComponent = GetComponentInParent<PathfindingComponent>();
             EntityComponent = GetComponent<EntityComponent>();
             TankComponent = GetComponent<TankComponent>();
             
             EntityComponent.CellPositionChanged += OnCellPositionChanged;
+        }
+
+        void Start()
+        {
+            PathfindingComponent = GetComponentInParent<PathfindingComponent>();
         }
 
         void OnCellPositionChanged(object sender, Vector2Int position)
@@ -103,6 +107,16 @@ namespace WorkingTitle.Unity.Input
             PathAngle = Vector2.SignedAngle(PathDirection, bodyUp);
             WithinTargetDirectionThreshold = Mathf.Abs(PathAngle) < TargetDirectionThreshold;
             WithinTargetDistanceThreshold = TargetDistance < TargetDistanceThreshold;
+        }
+        
+        public override void EnableInput()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void DisableInput()
+        {
+            throw new System.NotImplementedException();
         }
 
 #if UNITY_EDITOR

@@ -22,19 +22,20 @@ namespace WorkingTitle.Unity.Map
         public Vector2 TargetPosition { get; private set; }
         
         MapComponent MapComponent { get; set; }
-        public EntityComponent PlayerEntityComponent { get; set; }
-        
+        public EntityComponent PlayerEntityComponent { get; private set; }
+
         void Awake()
         {
             MapComponent = GetComponent<MapComponent>();
-            PlayerEntityComponent = 
-                GetComponentInChildren<PlayerComponent>()?
-                .GetComponent<EntityComponent>();
+        }
 
-            if (PlayerEntityComponent)
-            {
-                PlayerEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;
-            }
+        void Start()
+        {
+            PlayerEntityComponent = 
+                GetComponentInChildren<PlayerComponent>()
+                .GetComponent<EntityComponent>();
+            
+            PlayerEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;
 
             UpdateTarget();
             UpdateDirections();
@@ -68,16 +69,9 @@ namespace WorkingTitle.Unity.Map
                 .ToPositive(MapComponent.Bounds)
                 .ToList();
 
-            try
-            {
-                FlowField = new FlowField(TargetPositiveCellPosition, obstaclePositions, MapComponent.GridSize);
-                FlowField.CalcCosts();
-                FlowField.CalcDirections();
-            }
-            catch (ArgumentException e)
-            {
-                Debug.LogError(e.Message);
-            }
+            FlowField = new FlowField(TargetPositiveCellPosition, obstaclePositions, MapComponent.GridSize);
+            FlowField.CalcCosts();
+            FlowField.CalcDirections();
         }
 
 #if UNITY_EDITOR
