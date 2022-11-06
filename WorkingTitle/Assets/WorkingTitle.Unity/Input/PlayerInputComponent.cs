@@ -45,27 +45,27 @@ namespace WorkingTitle.Unity.Input
 
         Camera Camera { get; set; }
         
-        InputActionMap InputActionMap => 
-            InputActionMapName is not null ? InputActionAsset.FindActionMap(InputActionMapName) : null;
-        InputAction InputActionMovement =>
-            InputActionMovementName is not null ? InputActionMap.FindAction(InputActionMovementName) : null;
-        InputAction InputActionRotation => 
-            InputActionMap.FindAction(InputActionRotationName);
+        InputActionMap InputActionMap { get; set; }
+        InputAction InputActionMovement { get; set; }
+        InputAction InputActionRotation { get; set; }
+        InputAction InputActionBoost { get; set; }
 
-        private InputAction InputActionBoost =>
-            InputActionBoostName is not null ? InputActionMap.FindAction(InputActionBoostName) : null;
-
-        [UsedImplicitly]
-        IEnumerable<string> InputActionMapNames => InputActionAsset ? InputActionAsset.actionMaps.Select(e => e.name) : null;
+        # region Editor
         
         [UsedImplicitly]
-        IEnumerable<string> InputActionNames => InputActionMap?.actions.Select(e => e.name);
+        IEnumerable<string> InputActionMapNames => 
+            InputActionAsset ? InputActionAsset.actionMaps.Select(e => e.name) : null;
+        
+        [UsedImplicitly]
+        IEnumerable<string> InputActionNames => 
+            InputActionMap?.actions.Select(e => e.name);
+        
+        # endregion
         
         void Awake()
         {
-            InputActionMovement.Enable();
-            InputActionRotation.Enable();
-            InputActionBoost.Enable();
+            InitializeActions();
+            
             InputActionMovement.started += OnMovementStarted;
             InputActionRotation.started += OnRotationStarted;
             InputActionBoost.started += OnBoostStarted;
@@ -74,6 +74,19 @@ namespace WorkingTitle.Unity.Input
             InputActionBoost.canceled += OnBoostCanceled;
 
             Camera = Camera.main;
+        }
+
+        void InitializeActions()
+        {
+            InputActionMap = InputActionAsset.FindActionMap(InputActionMapName);
+            
+            InputActionMovement = InputActionMap.FindAction(InputActionMovementName);
+            InputActionRotation = InputActionMap.FindAction(InputActionRotationName);
+            InputActionBoost = InputActionMap.FindAction(InputActionBoostName);
+
+            InputActionMovement.Enable();
+            InputActionRotation.Enable();
+            InputActionBoost.Enable();
         }
 
         void Update()
