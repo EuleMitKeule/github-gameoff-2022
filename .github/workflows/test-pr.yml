@@ -44,18 +44,18 @@ jobs:
         with:
           projectPath: WorkingTitle/
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          customParameters: -debugCodeOptimization -enableCodeCoverage -coverageOptions generateBadgeReport;assemblyFilters:+WorkingTitle.Unity,+WorkingTitle.Lib -coverageResultsPath coverage
+          customParameters: -debugCodeOptimization -enableCodeCoverage -coverageOptions generateBadgeReport;assemblyFilters:+WorkingTitle.Unity,+WorkingTitle.Lib
 
       - name: Store results
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: Test results
-          path: artifacts
+          path: ${{ steps.run-tests.outputs.artifactsPath }}
 
       - name: Store coverage
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: Code coverage
-          path: ./WorkingTitle/coverage
+          path: ${{ steps.run-tests.outputs.coveragePath }}
