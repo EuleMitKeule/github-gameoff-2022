@@ -56,7 +56,7 @@ namespace WorkingTitle.Unity.Input
         InputAction InputActionMovement { get; set; }
         InputAction InputActionRotation { get; set; }
         InputAction InputActionBoost { get; set; }
-        InputAction InputPrimaryAttack { get; set; }
+        InputAction InputActionPrimaryAttack { get; set; }
 
         # region Editor
         
