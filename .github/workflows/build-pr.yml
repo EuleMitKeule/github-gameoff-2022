@@ -1,0 +1,53 @@
+name: Test PR
+
+on:
+  pull_request:
+  workflow_dispatch:
+    
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+          
+      - name: Checkout odin-inspector
+        uses: actions/checkout@v3
+        with:
+           repository: EuleMitKeule/odin-inspector-3.1.6.1
+           path: odin/
+           ref: master
+           token: ${{ secrets.GH_PAT }}
+      
+      - name: Move odin-inspector
+        run: |
+          cp -r odin/* WorkingTitle/
+          rm -r odin
+      
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: WorkingTitle/Library
+          key: Library-WorkingTitle-TargetPlatform
+          restore-keys: |
+            Library-WorkingTitle-
+            Library-
+            
+      - name: Build player
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          targetPlatform: StandaloneWindows64
+          projectPath: WorkingTitle/
+
+      - name: Store build
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build
+          path: build
