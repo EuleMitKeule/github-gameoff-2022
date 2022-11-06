@@ -20,6 +20,7 @@ jobs:
            repository: EuleMitKeule/odin-inspector-3.1.6.1
            path: odin/
            ref: master
+           token: ${{ secrets.GITHUB_PAT }}
       
       - name: Move odin-inspector
         run: |
