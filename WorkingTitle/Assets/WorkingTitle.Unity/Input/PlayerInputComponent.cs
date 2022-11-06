@@ -106,7 +106,7 @@ namespace WorkingTitle.Unity.Input
             InputRotation = 0;
         }
 
-        void OnMovementCanceled(InputAction.CallbackContext obj)
+        void OnMovementCanceled(InputAction.CallbackContext context)
         {
             InputMovement = 0;
         }
