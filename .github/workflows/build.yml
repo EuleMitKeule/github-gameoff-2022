@@ -1,5 +1,13 @@
 name: Build
 
+env:
+  PROJECT_DIR: "WorkingTitle"
+  PROJECT_NAME: "WorkingTitle"
+  USE_ODIN: true
+  ODIN_REPO: EuleMitKeule/odin-inspector-3.1.6.1
+  GH_PAT: ${{ secrets.GH_PAT }}
+  BUILD_DIR: "WorkingTitle/Builds"
+
 on:
   push:
     branches:
@@ -12,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.semantic.outputs.version }}
+      uploadUrl: ${{ steps.getUploadUrl.outputs.uploadUrl }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,10 +33,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  build-windows:
-    name: Build Windows
+      - name: Get upload URL
+        id: getUploadUrl
+        run: |
+          uploadUrl=$(curl -sL https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.semantic.outputs.new_release_git_tag }} | jq -r '.upload_url')
+          echo uploadUrl=$uploadUrl >> $GITHUB_OUTPUT
+
+  build:
     runs-on: ubuntu-latest
     needs: release
+    strategy:
+      matrix:
+        buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64", "WebGL"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,194 +52,57 @@ jobs:
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
         with:
-           repository: EuleMitKeule/odin-inspector-3.1.6.1
+           repository: ${{ env.ODIN_REPO }}
            path: odin/
            ref: master
-           token: ${{ secrets.GH_PAT }}
+           token: ${{ env.GH_PAT }}
       
       - name: Move odin-inspector
         run: |
-          cp -r odin/* WorkingTitle/
+          cp -r odin/* ${{ env.PROJECT_DIR }}
           rm -r odin
       
       - name: Cache
         uses: actions/cache@v2
         with:
-          path: WorkingTitle/Library
-          key: Library-WorkingTitle-TargetPlatform
+          path: ${{ env.PROJECT_DIR }}/Library
+          key: Library-${{ env.PROJECT_DIR }}-TargetPlatform
           restore-keys: |
-            Library-WorkingTitle-
+            Library-${{ env.PROJECT_DIR }}-
             Library-
 
-      - name: Build StandaloneWindows64
+      - name: Build ${{ matrix.buildTarget }}
         uses: game-ci/unity-builder@v2
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
-          targetPlatform: StandaloneWindows64
-          projectPath: WorkingTitle/
-          buildName: WorkingTitle-StandaloneWindows64
-          buildsPath: WorkingTitle/builds
+          targetPlatform: ${{ matrix.buildTarget }}
+          projectPath: ${{ env.PROJECT_DIR }}
+          buildName: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
+          buildsPath: ${{ env.BUILD_DIR }}
           versioning: Custom
           version: ${{ needs.release.outputs.version }}
 
-      - name: Upload StandaloneWindows64
+      - name: Upload build
         uses: actions/upload-artifact@v2
         with:
           name: Build
-          path: WorkingTitle/builds/WorkingTitle-StandaloneWindows64
+          path: ${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
 
-  build-osx:
-    name: Build OSX
-    runs-on: ubuntu-latest
-    needs: release
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3
-          
-      - name: Checkout odin-inspector
-        uses: actions/checkout@v3
+      - name: Zip build
+        uses: thedoctor0/zip-release@v1
         with:
-           repository: EuleMitKeule/odin-inspector-3.1.6.1
-           path: odin/
-           ref: master
-           token: ${{ secrets.GH_PAT }}
+          files: ${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
+          filename: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
       
-      - name: Move odin-inspector
-        run: |
-          cp -r odin/* WorkingTitle/
-          rm -r odin
-      
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: WorkingTitle/Library
-          key: Library-WorkingTitle-TargetPlatform
-          restore-keys: |
-            Library-WorkingTitle-
-            Library-     
-
-      - name: Build StandaloneOSX
-        uses: game-ci/unity-builder@v2
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
         env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          targetPlatform: StandaloneOSX
-          projectPath: WorkingTitle/
-          buildName: WorkingTitle-StandaloneOSX
-          buildsPath: WorkingTitle/builds
-          versioning: Custom
-          version: ${{ needs.release.outputs.version }}
-
-      - name: Upload StandaloneOSX
-        uses: actions/upload-artifact@v2
-        with:
-          name: Build
-          path: WorkingTitle/builds/WorkingTitle-StandaloneOSX
-
-  build-linux:
-    name: Build Linux
-    runs-on: ubuntu-latest
-    needs: release
-    steps:
-      
-      - name: Checkout
-        uses: actions/checkout@v3
-          
-      - name: Checkout odin-inspector
-        uses: actions/checkout@v3
-        with:
-           repository: EuleMitKeule/odin-inspector-3.1.6.1
-           path: odin/
-           ref: master
-           token: ${{ secrets.GH_PAT }}
-      
-      - name: Move odin-inspector
-        run: |
-          cp -r odin/* WorkingTitle/
-          rm -r odin
-      
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: WorkingTitle/Library
-          key: Library-WorkingTitle-TargetPlatform
-          restore-keys: |
-            Library-WorkingTitle-
-            Library-
-
-      - name: Build StandaloneLinux64
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-        with:
-          targetPlatform: StandaloneLinux64
-          projectPath: WorkingTitle/
-          buildName: WorkingTitle-StandaloneLinux64
-          buildsPath: WorkingTitle/builds
-          versioning: Custom
-          version: ${{ needs.release.outputs.version }}
-
-      - name: Upload StandaloneLinux64
-        uses: actions/upload-artifact@v2
-        with:
-          name: Build
-          path: WorkingTitle/builds/WorkingTitle-StandaloneLinux64
-
-  build-webgl:
-    name: Build WebGL
-    runs-on: ubuntu-latest
-    needs: release
-    steps:
-
-      - name: Checkout
-        uses: actions/checkout@v3
-          
-      - name: Checkout odin-inspector
-        uses: actions/checkout@v3
-        with:
-           repository: EuleMitKeule/odin-inspector-3.1.6.1
-           path: odin/
-           ref: master
-           token: ${{ secrets.GH_PAT }}
-      
-      - name: Move odin-inspector
-        run: |
-          cp -r odin/* WorkingTitle/
-          rm -r odin
-      
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: WorkingTitle/Library
-          key: Library-WorkingTitle-TargetPlatform
-          restore-keys: |
-            Library-WorkingTitle-
-            Library-
-
-      - name: Build WebGL
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-        with:
-          targetPlatform: WebGL
-          projectPath: WorkingTitle/
-          buildName: WorkingTitle-WebGL
-          buildsPath: WorkingTitle/builds
-          versioning: Custom
-          version: ${{ needs.release.outputs.version }}
-
-      - name: Upload WebGL
-        uses: actions/upload-artifact@v2
-        with:
-          name: Build
-          path: WorkingTitle/builds/WorkingTitle-WebGL
+          upload_url: ${{ needs.release.outputs.uploadUrl }}
+          asset_path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}.zip
+          asset_name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}.zip
+          asset_content_type: application/zip
