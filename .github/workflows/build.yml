@@ -19,7 +19,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     outputs:
-      releaseCreated: ${{ steps.createRelease.outputs.new-release-published }}
+      releaseCreated: ${{ steps.semantic.outputs.new-release-published }}
       version: ${{ steps.semantic.outputs.release-version }}
       uploadUrl: ${{ steps.getUploadUrl.outputs.uploadUrl }}
     steps:
