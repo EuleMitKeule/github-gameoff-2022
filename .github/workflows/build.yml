@@ -93,12 +93,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Build
-          path: ${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
+          path: ${{ env.BUILD_DIR }}/${{ matrix.buildTarget }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
 
       - name: Zip build
         uses: thedoctor0/zip-release@main
         with:
-          path: ${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
+          path: ${{ env.BUILD_DIR }}/${{ matrix.buildTarget }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
           filename: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
       
       - name: Upload release asset
