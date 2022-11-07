@@ -6,7 +6,6 @@ env:
   USE_ODIN: true
   ODIN_REPO: EuleMitKeule/odin-inspector-3.1.6.1
   GH_PAT: ${{ secrets.GH_PAT }}
-  BUILD_DIR: "WorkingTitle/Builds"
 
 on:
   push:
@@ -84,8 +83,8 @@ jobs:
         with:
           targetPlatform: ${{ matrix.buildTarget }}
           projectPath: ${{ env.PROJECT_DIR }}
-          buildName: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
-          buildsPath: ${{ env.BUILD_DIR }}
+          buildName: ${{ env.PROJECT_NAME }}-${{ needs.release.outputs.version }}
+          buildsPath: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
           versioning: Custom
           version: ${{ needs.release.outputs.version }}
 
@@ -93,13 +92,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Build
-          path: ${{ env.BUILD_DIR }}/${{ matrix.buildTarget }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
+          path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
 
       - name: Zip build
         uses: thedoctor0/zip-release@main
         with:
-          path: ${{ env.BUILD_DIR }}/${{ matrix.buildTarget }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
-          filename: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
+          path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
+          filename: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}.zip
       
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
