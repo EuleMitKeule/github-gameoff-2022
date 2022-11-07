@@ -36,7 +36,7 @@ jobs:
       - name: Get upload URL
         id: getUploadUrl
         run: |
-          uploadUrl=$(curl -sL https://api.github.com/repos/${{ github.repository }}/releases/tags/${{ steps.semantic.outputs.new_release_git_tag }} | jq -r '.upload_url')
+          uploadUrl=$(curl -sL https://api.github.com/repos/${{ github.repository }}/releases/tags/v${{ steps.semantic.outputs.version }} | jq -r '.upload_url')
           echo uploadUrl=$uploadUrl >> $GITHUB_OUTPUT
 
   build:
