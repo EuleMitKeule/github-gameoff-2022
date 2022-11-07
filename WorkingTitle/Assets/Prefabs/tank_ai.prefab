@@ -47,6 +47,8 @@ GameObject:
   - component: {fileID: 779659689631481611}
   - component: {fileID: 8006970213262483037}
   - component: {fileID: 1771041447489154039}
+  - component: {fileID: 7126493908852175553}
+  - component: {fileID: 261747514512489440}
   m_Layer: 7
   m_Name: tank_ai
   m_TagString: Untagged
@@ -142,13 +144,7 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: TargetDirectionThreshold
-      Entry: 4
-      Data: 3
-    - Name: TargetDistanceThreshold
-      Entry: 4
-      Data: 3
+    SerializationNodes: []
 --- !u!50 &6064423492359556245
 Rigidbody2D:
   serializedVersion: 4
@@ -256,6 +252,58 @@ MonoBehaviour:
     - Name: MaxHealth
       Entry: 4
       Data: 100
+--- !u!114 &7126493908852175553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7747318da64c44feb534dd307324ea32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 261747514512489440}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: InitialStateComponent
+      Entry: 10
+      Data: 0
+    - Name: TargetDirectionThreshold
+      Entry: 4
+      Data: 0
+    - Name: TargetDistanceThreshold
+      Entry: 4
+      Data: 0
+--- !u!114 &261747514512489440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142b3888c12a4cd5a120a385d09338c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0
