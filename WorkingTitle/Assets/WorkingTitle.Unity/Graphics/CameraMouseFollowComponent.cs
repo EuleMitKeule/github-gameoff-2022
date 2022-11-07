@@ -10,9 +10,6 @@ namespace WorkingTitle.Unity.Graphics
 {
     public class CameraMouseFollowComponent : SerializedMonoBehaviour
     {
-        [OdinSerialize]
-        GameObject PlayerObject { get; set; }
-        
         [OdinSerialize] 
         float MaxDistance { get; set; }
     
@@ -26,6 +23,7 @@ namespace WorkingTitle.Unity.Graphics
         
         Camera Camera { get; set; }
         CinemachineVirtualCamera VirtualCamera { get; set; }
+        GameComponent GameComponent { get; set; }
 
         enum CorrectionMode
         {
@@ -37,7 +35,7 @@ namespace WorkingTitle.Unity.Graphics
         void Awake()
         {
             Camera = GetComponent<Camera>();
-            PlayerObject = FindObjectOfType<PlayerComponent>().gameObject;
+            GameComponent = GetComponentInParent<GameComponent>();
 
             InitializeVirtualTarget();
         }
@@ -54,7 +52,7 @@ namespace WorkingTitle.Unity.Graphics
         void Update()
         {
             var mousePosition = Camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            var playerPosition = PlayerObject.transform.position;
+            var playerPosition = GameComponent.PlayerObject.transform.position;
             var minScreenDim = float.PositiveInfinity;
         
             if (CameraCorrectionMode == CorrectionMode.MinDimension)

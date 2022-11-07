@@ -95,7 +95,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4844500482265526459}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -105,8 +105,8 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &4844500482265526456
 MonoBehaviour:
@@ -132,12 +132,51 @@ MonoBehaviour:
     - Name: Damage
       Entry: 4
       Data: 1
-    - Name: TargetLayer
+    - Name: Ricochets
+      Entry: 4
+      Data: 0
+    - Name: ContactFilter
+      Entry: 7
+      Data: UnityEngine.ContactFilter2D, UnityEngine.Physics2DModule
+    - Name: useTriggers
+      Entry: 5
+      Data: false
+    - Name: useLayerMask
+      Entry: 5
+      Data: true
+    - Name: useDepth
+      Entry: 5
+      Data: false
+    - Name: useOutsideDepth
+      Entry: 5
+      Data: false
+    - Name: useNormalAngle
+      Entry: 5
+      Data: false
+    - Name: useOutsideNormalAngle
+      Entry: 5
+      Data: false
+    - Name: layerMask
       Entry: 7
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule
     - Name: 
       Entry: 3
       Data: 832
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: minDepth
+      Entry: 4
+      Data: 0
+    - Name: maxDepth
+      Entry: 4
+      Data: 0
+    - Name: minNormalAngle
+      Entry: 4
+      Data: 0
+    - Name: maxNormalAngle
+      Entry: 4
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
