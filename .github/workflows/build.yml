@@ -19,7 +19,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.semantic.outputs.version }}
+      version: ${{ steps.semantic.outputs.release-version }}
       uploadUrl: ${{ steps.getUploadUrl.outputs.uploadUrl }}
     steps:
       - name: Checkout
@@ -36,8 +36,8 @@ jobs:
       - name: Get upload URL
         id: getUploadUrl
         run: |
-          echo "getting upload url for release ${{ steps.semantic.outputs.version }} with tag v${{ steps.semantic.outputs.version }}"
-          uploadUrl=$(curl -sL https://api.github.com/repos/${{ github.repository }}/releases/tags/v${{ steps.semantic.outputs.version }} | jq -r '.upload_url')
+          echo "getting upload url for release ${{ steps.semantic.outputs.version }} with tag v${{ steps.semantic.outputs.release-version }}"
+          uploadUrl=$(curl -sL https://api.github.com/repos/${{ github.repository }}/releases/tags/v${{ steps.semantic.outputs.release-version }} | jq -r '.upload_url')
           echo uploadUrl=$uploadUrl >> $GITHUB_OUTPUT
 
   build:
