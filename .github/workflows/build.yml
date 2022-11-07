@@ -19,6 +19,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     outputs:
+      releaseCreated: ${{ steps.createRelease.outputs.new-release-published }}
       version: ${{ steps.semantic.outputs.release-version }}
       uploadUrl: ${{ steps.getUploadUrl.outputs.uploadUrl }}
     steps:
@@ -34,6 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get upload URL
+        if: ${{ steps.semantic.outputs.new-release-published == 'true' }}
         id: getUploadUrl
         run: |
           echo "getting upload url for release ${{ steps.semantic.outputs.version }} with tag v${{ steps.semantic.outputs.release-version }}"
@@ -43,6 +45,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: release
+    if: ${{ needs.release.outputs.releaseCreated == 'true' }}
     strategy:
       matrix:
         buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64", "WebGL"]
