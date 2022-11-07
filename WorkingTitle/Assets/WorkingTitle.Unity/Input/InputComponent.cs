@@ -1,4 +1,6 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using UnityEngine;
 
 namespace WorkingTitle.Unity.Input
@@ -8,23 +10,35 @@ namespace WorkingTitle.Unity.Input
         [TitleGroup("Input")]
         [ShowInInspector]
         [ReadOnly]
-        public float InputMovement { get; protected set; }
+        public float InputMovement { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
-        public float InputRotation { get; protected set; }
+        public float InputRotation { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
-        public Vector2 InputAimPosition { get; protected set; }
+        public Vector2 InputAimDirection { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
-        public bool InputPrimaryAttack { get; protected set; }
+        public float InputAimRotation { get; set; }
+        
+        [ShowInInspector]
+        [ReadOnly]
+        public bool InputPrimaryAttack { get; set; }
                 
         [ShowInInspector]
         [ReadOnly]
         public bool InputBoost { get; protected set; }
+
+        public virtual AimMode SelectedAimMode { get; set; }
+        
+        public enum AimMode
+        {
+            Rotational,
+            Directional
+        }
 
         public abstract void EnableInput();
         public abstract void DisableInput();

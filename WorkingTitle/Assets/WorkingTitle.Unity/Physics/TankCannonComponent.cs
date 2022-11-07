@@ -13,9 +13,20 @@ namespace WorkingTitle.Unity.Physics
     [RequireComponent(typeof(InputComponent))]
     public class TankCannonComponent : SerializedMonoBehaviour
     {
+        [OdinSerialize]
+        [ShowIf(nameof(IsAimModeRotational))]
+        public float RotationSpeed { get; set; }
+        
         TankComponent TankComponent { get; set; }
         
         InputComponent InputComponent { get; set; }
+        
+        #region Editor
+        
+        bool IsAimModeRotational => 
+            GetComponent<InputComponent>() && GetComponent<InputComponent>().SelectedAimMode == InputComponent.AimMode.Rotational;
+        
+        #endregion
 
         void Awake()
         {
@@ -23,11 +34,18 @@ namespace WorkingTitle.Unity.Physics
             InputComponent = GetComponent<InputComponent>();
         }
         
-        void Update()
+        void FixedUpdate()
         {
-            var direction = InputComponent.InputAimPosition - (Vector2)transform.position;
-            var angle = Vector2.SignedAngle(transform.up, direction);
-            TankComponent.TankCannon.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            if (InputComponent.SelectedAimMode == InputComponent.AimMode.Directional)
+            {
+                var angle = Vector2.SignedAngle(transform.up, InputComponent.InputAimDirection);
+                TankComponent.TankCannon.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            }
+            else
+            {
+                var angle = TankComponent.TankCannon.transform.rotation.eulerAngles.z + RotationSpeed * InputComponent.InputAimRotation * Time.fixedDeltaTime;
+                TankComponent.TankCannon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
         }
     }
 }

@@ -19,6 +19,9 @@ namespace WorkingTitle.Unity.Gameplay.Ai
         [OdinSerialize]
         float TargetDistanceThreshold { get; set; }
         
+        [OdinSerialize]
+        public float AimOnTargetThreshold { get; set; }
+        
         [TitleGroup("Target")]
         [ShowInInspector]
         [ReadOnly]
@@ -30,7 +33,7 @@ namespace WorkingTitle.Unity.Gameplay.Ai
 
         [ShowInInspector]
         [ReadOnly]
-        Vector2 TargetDirection { get; set; }
+        public Vector2 TargetDirection { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
@@ -38,26 +41,37 @@ namespace WorkingTitle.Unity.Gameplay.Ai
         
         [ShowInInspector]
         [ReadOnly]
-        bool IsPlayerVisible { get; set; }
+        public bool IsPlayerVisible { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
-        float PathAngle { get; set; }
+        public bool IsWithinAimThreshold { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
-        bool WithinTargetDirectionThreshold { get; set; }
+        public float PathAngle { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
-        bool WithinTargetDistanceThreshold { get; set; }
+        public float AimAngle { get; set; }
+        
+        [ShowInInspector]
+        [ReadOnly]
+        public bool IsWithinTargetDirectionThreshold { get; set; }
+        
+        [ShowInInspector]
+        [ReadOnly]
+        public bool IsWithinTargetDistanceThreshold { get; set; }
 
         PathfindingComponent PathfindingComponent { get; set; }
         TankComponent TankComponent { get; set; }
         EntityComponent EntityComponent { get; set; }
+        EntityComponent TargetEntityComponent { get; set; }
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             TankComponent = GetComponent<TankComponent>();
             EntityComponent = GetComponent<EntityComponent>();
 
@@ -67,10 +81,15 @@ namespace WorkingTitle.Unity.Gameplay.Ai
         void Start()
         {
             PathfindingComponent = GetComponentInParent<PathfindingComponent>();
+            TargetEntityComponent = GetComponentInParent<GameComponent>()
+                .PlayerObject
+                .GetComponent<EntityComponent>();
         }
 
-        void Update()
+        protected override void Update()
         {
+            base.Update();
+            
             UpdateTarget();
         }
 
@@ -80,17 +99,20 @@ namespace WorkingTitle.Unity.Gameplay.Ai
 
             var bodyPosition = (Vector2)TankComponent.TankBody.transform.position;
             var bodyUp = (Vector2)TankComponent.TankBody.transform.up;
+            var cannonUp = (Vector2)TankComponent.TankCannon.transform.up;
             
-            TargetDistance = (PathfindingComponent.TargetPosition - bodyPosition).magnitude;
-            TargetDirection = (PathfindingComponent.TargetPosition - bodyPosition).normalized;
+            TargetDistance = (TargetEntityComponent.Position - bodyPosition).magnitude;
+            TargetDirection = (TargetEntityComponent.Position - bodyPosition).normalized;
             IsPlayerVisible = !Physics2D.Raycast(
                 bodyPosition,
                 TargetDirection,
                 TargetDistance,
                 TankComponent.WallMask);
+            AimAngle = Vector2.SignedAngle(TargetDirection, cannonUp);
+            IsWithinAimThreshold = Mathf.Abs(AimAngle) < AimOnTargetThreshold;
             PathAngle = Vector2.SignedAngle(PathDirection, bodyUp);
-            WithinTargetDirectionThreshold = Mathf.Abs(PathAngle) < TargetDirectionThreshold;
-            WithinTargetDistanceThreshold = TargetDistance < TargetDistanceThreshold;
+            IsWithinTargetDirectionThreshold = Mathf.Abs(PathAngle) < TargetDirectionThreshold;
+            IsWithinTargetDistanceThreshold = TargetDistance < TargetDistanceThreshold;
         }
         
         void OnCellPositionChanged(object sender, Vector2Int position)

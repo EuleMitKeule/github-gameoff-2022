@@ -1,10 +1,14 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using System.Numerics;
+using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Lib.Pathfinding;
 using WorkingTitle.Unity.Gameplay;
 using WorkingTitle.Unity.Map;
 using WorkingTitle.Unity.Physics;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace WorkingTitle.Unity.Input
 {
@@ -12,14 +16,24 @@ namespace WorkingTitle.Unity.Input
     [RequireComponent(typeof(TankComponent))]
     public class AiInputComponent : InputComponent
     {
-       
+        [OdinSerialize]
+        float AimRotationThreshold { get; set; }
+
+        public override AimMode SelectedAimMode => AimMode.Rotational;
+        
+        TankComponent TankComponent { get; set; }
+
+        void Awake()
+        {
+            TankComponent = GetComponent<TankComponent>();
+        }
 
         void Update()
         {
-            // InputRotation = WithinTargetDirectionThreshold ? 0 : Mathf.Sign(PathAngle);
-            // InputMovement = WithinTargetDistanceThreshold && IsPlayerVisible ? 0 : 1;
-            // InputAimPosition = PathfindingComponent.PlayerEntityComponent.transform.position;
-            // InputPrimaryAttack = IsPlayerVisible;
+            var currentAimDirection = TankComponent.TankCannon.transform.up;
+            var angle = Vector2.SignedAngle(currentAimDirection, InputAimDirection);
+            var rotationSign = (int)Mathf.Sign(angle);
+            InputAimRotation = Mathf.Abs(angle) > AimRotationThreshold ? rotationSign : 0;
         }
         
         public override void EnableInput()
@@ -31,20 +45,14 @@ namespace WorkingTitle.Unity.Input
         {
             throw new System.NotImplementedException();
         }
-//
-// #if UNITY_EDITOR
-//         void OnDrawGizmos()
-//         {
-//             if (!TankComponent) return;
-//             
-//             var position = TankComponent.TankBody.transform.position;
-//             
-//             Gizmos.color = WithinTargetDirectionThreshold ? Color.green : Color.red;
-//             Gizmos.DrawLine(position, position + TankComponent.TankBody.transform.up);
-//             
-//             Gizmos.color = Color.magenta;
-//             Gizmos.DrawLine(position, position + (Vector3)PathDirection);
-//         }
-// #endif
+
+#if UNITY_EDITOR
+        void OnDrawGizmos()
+        {
+            var currentAimDirection = TankComponent.TankCannon.transform.up;
+            Debug.DrawRay(transform.position, currentAimDirection, Color.red);
+            Debug.DrawRay(transform.position, InputAimDirection, Color.green);
+        }
+#endif
     }
 }

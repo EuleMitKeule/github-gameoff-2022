@@ -18,8 +18,6 @@ namespace WorkingTitle.Unity.Map
         
         public Vector2Int TargetCellPosition { get; private set; }
         public Vector2Int TargetPositiveCellPosition { get; private set; }
-
-        public Vector2 TargetPosition { get; private set; }
         
         MapComponent MapComponent { get; set; }
         public EntityComponent PlayerEntityComponent { get; private set; }
@@ -41,8 +39,25 @@ namespace WorkingTitle.Unity.Map
             UpdateDirections();
         }
         
-        public PathfindingCell GetCell(Vector2Int position) => 
-            FlowField?.Cells[position.x][position.y];
+        public PathfindingCell GetCell(Vector2Int position)
+        {
+            if (FlowField is null)
+            {
+                Debug.LogWarning("Cannot get cell because FlowField doesn't exist.");
+                return null;
+            }
+
+            if (FlowField.GridSize.x <= position.x ||
+                  FlowField.GridSize.y <= position.y ||
+                  position.x < 0 ||
+                  position.y < 0)
+            {
+                
+                return null;
+            }
+            
+            return FlowField?.Cells[position.x][position.y];
+        }
 
         void OnPlayerCellPositionChanged(object sender, Vector2Int position)
         {
@@ -56,7 +71,6 @@ namespace WorkingTitle.Unity.Map
          
             TargetCellPosition = PlayerEntityComponent.CellPosition;
             TargetPositiveCellPosition = PlayerEntityComponent.PositiveCellPosition;
-            TargetPosition = PlayerEntityComponent.Position;
         }
 
         void UpdateDirections()

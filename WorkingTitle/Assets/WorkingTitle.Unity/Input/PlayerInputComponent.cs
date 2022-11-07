@@ -38,6 +38,8 @@ namespace WorkingTitle.Unity.Input
         [ValueDropdown(nameof(InputActionNameValues))]
         [Required]
         string InputActionBoostName { get; set; }
+
+        public override AimMode SelectedAimMode => AimMode.Directional;
         
         InputActionMap InputActionMap { get; set; }
         InputAction InputActionMovement { get; set; }
@@ -104,7 +106,7 @@ namespace WorkingTitle.Unity.Input
         {
             var mousePosition = Mouse.current.position.ReadValue();
             var mousePositionWorld = (Vector2)Camera.ScreenToWorldPoint(mousePosition);
-            InputAimPosition = mousePositionWorld;
+            InputAimDirection = (mousePositionWorld - (Vector2)transform.position).normalized;
         }
 
         void OnMovementStarted(InputAction.CallbackContext context)

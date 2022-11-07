@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using UnityEngine;
 
 namespace WorkingTitle.Unity
 {
@@ -19,14 +20,14 @@ namespace WorkingTitle.Unity
         IEnumerable<ValueDropdownItem> StateComponentValues =>
             GetComponents<TBase>().Select(e => new ValueDropdownItem(e.GetType().Name, e));
         
-        void Awake()
+        protected virtual void Awake()
         {
             StateComponents = GetComponents<TBase>().ToList();
 
             SetState(InitialStateComponent.GetType());
         }
 
-        void Update()
+        protected virtual void Update()
         {
             if (StateComponent)
             {
@@ -38,7 +39,7 @@ namespace WorkingTitle.Unity
         {
             if (!stateType.IsSubclassOf(typeof(TBase))) return;
 
-            var nextState = StateComponents.First(e => e.GetType() == stateType);
+            var nextState = StateComponents.FirstOrDefault(e => e.GetType() == stateType);
             if (!nextState) return;
 
             if (StateComponent)
