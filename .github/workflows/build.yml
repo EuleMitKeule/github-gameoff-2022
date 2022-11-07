@@ -92,9 +92,9 @@ jobs:
           path: ${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
 
       - name: Zip build
-        uses: thedoctor0/zip-release@v1
+        uses: thedoctor0/zip-release@main
         with:
-          files: ${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
+          path: ${{ env.BUILD_DIR }}/${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
           filename: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.release.outputs.version }}
       
       - name: Upload release asset
