@@ -123,7 +123,7 @@ namespace WorkingTitle.Unity.Gameplay.Ai
 
             if (CurrentCell is null) return;
 
-            PathDirection = CurrentCell.Direction.ToVector2();
+            PathDirection = CurrentCell.Direction;
         }
     }
 }

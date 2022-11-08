@@ -89,26 +89,26 @@ namespace WorkingTitle.Unity.Map
         }
 
 #if UNITY_EDITOR
-        void OnDrawGizmos()
-        {
-            if (!FlowField?.IsDirectionsCalculated ?? true) return;
-            
-            var bounds = MapComponent.Bounds;
-            var walkablePositions = MapComponent
-                .WalkableTilemaps
-                .GetTilePositions()
-                .ToList();
-            
-            foreach (var walkablePosition in walkablePositions)
-            {
-                var positivePosition = walkablePosition.ToPositive(bounds);
-                var direction = FlowField.Cells[positivePosition.x][positivePosition.y].Direction;
-                var worldPosition = MapComponent.ToWorld(walkablePosition);
-                
-                Gizmos.color = Color.red;
-                Gizmos.DrawRay(worldPosition, direction.ToVector2() * 0.3f);
-            }
-        }
+        // void OnDrawGizmos()
+        // {
+        //     if (!FlowField?.IsDirectionsCalculated ?? true) return;
+        //     
+        //     var bounds = MapComponent.Bounds;
+        //     var walkablePositions = MapComponent
+        //         .WalkableTilemaps
+        //         .GetTilePositions()
+        //         .ToList();
+        //     
+        //     foreach (var walkablePosition in walkablePositions)
+        //     {
+        //         var positivePosition = walkablePosition.ToPositive(bounds);
+        //         var direction = FlowField.Cells[positivePosition.x][positivePosition.y].Direction;
+        //         var worldPosition = MapComponent.ToWorld(walkablePosition);
+        //         
+        //         Gizmos.color = Color.red;
+        //         Gizmos.DrawRay(worldPosition, direction * 0.3f);
+        //     }
+        // }
 #endif
     }
 }
