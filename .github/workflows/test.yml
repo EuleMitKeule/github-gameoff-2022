@@ -65,8 +65,15 @@ jobs:
           git config --local user.email "l.beers@outlook.de"
           git config --local user.name "EuleMitKeule"
           
+          # delete branch origin badges if exists
+          git branch -D origin/badges &>/dev/null || true  
+
+          # create branch badges
+          git checkout -b badges
+
+          # add coverage badges
           git add .
-          git commit -m "chore(meta): update coverage badges"
-          git switch -c badges
-          git pull origin badges
+          git commit -m "chore(docs): update coverage badges"
+
+          # push branch badges
           git push --set-upstream origin badges
