@@ -49,6 +49,8 @@ namespace WorkingTitle.Unity.Input
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
+            if (!TankComponent) return;
+            if (!TankComponent.TankCannon) return;
             var currentAimDirection = TankComponent.TankCannon.transform.up;
             Debug.DrawRay(transform.position, currentAimDirection, Color.red);
             Debug.DrawRay(transform.position, InputAimDirection, Color.green);

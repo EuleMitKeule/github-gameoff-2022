@@ -131,7 +131,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Damage
       Entry: 4
-      Data: 1
+      Data: 10
     - Name: Ricochets
       Entry: 4
       Data: 10

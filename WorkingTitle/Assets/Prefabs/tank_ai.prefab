@@ -189,6 +189,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 0da93fdeaffff944e9dee03edf4c03a9, type: 2}
     - {fileID: 6064423492455411463}
     - {fileID: 6064423493732264457}
     SerializedBytesString: 
@@ -196,12 +197,15 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TankBody
+    - Name: TankAsset
       Entry: 10
       Data: 0
-    - Name: TankCannon
+    - Name: TankBody
       Entry: 10
       Data: 1
+    - Name: TankCannon
+      Entry: 10
+      Data: 2
     - Name: WallMask
       Entry: 7
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule

@@ -52,7 +52,7 @@ namespace WorkingTitle.Unity.Physics
 
         void HandleDamage(GameObject other)
         {
-            var healthComponent = other.GetComponent<HealthComponent>();
+            var healthComponent = other.GetComponentInParent<HealthComponent>();
             if (healthComponent) healthComponent.ChangeHealth(-Damage);
         }
 
