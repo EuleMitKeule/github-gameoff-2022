@@ -65,7 +65,8 @@ jobs:
           git config --local user.email "l.beers@outlook.de"
           git config --local user.name "EuleMitKeule"
           
-          git switch -c badges
           git add .
           git commit -m "chore(meta): update coverage badges"
+          git switch -c badges
+          git pull
           git push --set-upstream origin badges
