@@ -8,6 +8,6 @@ namespace WorkingTitle.Lib.Pathfinding
         public byte BaseCost { get; set; }
         public bool IsObstacle { get; set; }
         public float Cost { get; set; } = float.PositiveInfinity;
-        public Direction Direction { get; set; }
+        public Vector2 Direction { get; set; }
     }
 }
