@@ -68,5 +68,5 @@ jobs:
           git add .
           git commit -m "chore(meta): update coverage badges"
           git switch -c badges
-          git pull
+          git pull origin badges
           git push --set-upstream origin badges
