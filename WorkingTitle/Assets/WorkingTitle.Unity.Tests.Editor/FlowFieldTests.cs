@@ -6,32 +6,32 @@ using WorkingTitle.Lib.Pathfinding;
 
 namespace WorkingTitle.Unity.Tests.Editor
 {
-    public class SwarmPathfindingTests
+    public class FlowFieldTests
     {
-        [Test]
-        public void TestCalcDirections()
-        {
-            var targetPosition = new Vector2Int(2, 4);
-            var obstaclePositions = new List<Vector2Int>();
-            var gridSize = new Vector2Int(5, 5);
-            
-            var flowField = new FlowField(targetPosition, obstaclePositions, gridSize);
-            flowField.CalcCosts();
-            flowField.CalcDirections();
-            
-            var expectedDirections = new[,]
-            {
-                { Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.Right },
-                { Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.Right },
-                { Direction.Up,     Direction.Up,       Direction.Up,      Direction.Up,     Direction.None },
-                { Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.Left },
-                { Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.Left }
-            };
-
-            var directions = flowField.GetDirections();
-            
-            CollectionAssert.AreEqual(expectedDirections, directions);
-        }
+        // [Test]
+        // public void TestCalcDirections()
+        // {
+        //     var targetPosition = new Vector2Int(2, 4);
+        //     var obstaclePositions = new List<Vector2Int>();
+        //     var gridSize = new Vector2Int(5, 5);
+        //     
+        //     var flowField = new FlowField(targetPosition, obstaclePositions, gridSize);
+        //     flowField.CalcCosts();
+        //     flowField.CalcDirections();
+        //     
+        //     var expectedDirections = new[,]
+        //     {
+        //         { Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.Right },
+        //         { Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.UpRight, Direction.Right },
+        //         { Direction.Up,     Direction.Up,       Direction.Up,      Direction.Up,     Direction.None },
+        //         { Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.Left },
+        //         { Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.UpLeft, Direction.Left }
+        //     };
+        //
+        //     var directions = flowField.GetDirections();
+        //     
+        //     CollectionAssert.AreEqual(expectedDirections, directions);
+        // }
         //
         // [Test]
         // public void TestCalcDirectionsWithWall()
@@ -146,20 +146,12 @@ namespace WorkingTitle.Unity.Tests.Editor
             
             sw.Stop();
             var calcDirectionsTime = sw.ElapsedMilliseconds;
-            
-            sw.Restart();
-            
-            var directions = flowField.GetDirections();
-            
-            sw.Stop();
-            var getDirectionsTime = sw.ElapsedMilliseconds;
-            
+
             TestContext.Out.WriteLine($"Grid Size: {gridSize}");
             TestContext.Out.WriteLine($"Initialization: {initializationTime} ms");
             TestContext.Out.WriteLine($"CalcCosts: {calcCostsTime} ms");
             TestContext.Out.WriteLine($"CalcDirections: {calcDirectionsTime} ms");
-            TestContext.Out.WriteLine($"GetDirections: {getDirectionsTime} ms");
-            TestContext.Out.WriteLine($"Total: {initializationTime + calcCostsTime + calcDirectionsTime + getDirectionsTime} ms");
+            TestContext.Out.WriteLine($"Total: {initializationTime + calcCostsTime + calcDirectionsTime} ms");
         }
     }
 }

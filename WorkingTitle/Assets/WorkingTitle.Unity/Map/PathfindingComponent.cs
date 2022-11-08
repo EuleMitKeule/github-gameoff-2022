@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using WorkingTitle.Lib.Pathfinding;
@@ -21,7 +24,11 @@ namespace WorkingTitle.Unity.Map
         
         MapComponent MapComponent { get; set; }
         public EntityComponent PlayerEntityComponent { get; private set; }
-
+        
+        bool HasTargetPositionChanged { get; set; }
+        
+        Coroutine UpdateFlowFieldCoroutine { get; set; }
+        
         void Awake()
         {
             MapComponent = GetComponent<MapComponent>();
@@ -31,12 +38,48 @@ namespace WorkingTitle.Unity.Map
         {
             PlayerEntityComponent = 
                 GetComponentInChildren<PlayerComponent>()
-                .GetComponent<EntityComponent>();
+                    .GetComponent<EntityComponent>();
             
             PlayerEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;
 
+            var obstaclePositions = MapComponent
+                .ObstacleTilemaps
+                .GetTilePositions()
+                .ToPositive(MapComponent.Bounds)
+                .ToList();
+            
             UpdateTarget();
-            UpdateDirections();
+            FlowField = CalcFlowField(obstaclePositions);
+            
+            UpdateFlowFieldCoroutine = StartCoroutine(UpdateFlowField());
+        }
+
+        IEnumerator UpdateFlowField()
+        {
+            while (true)
+            {
+                if (HasTargetPositionChanged)
+                {
+                    var obstaclePositions = MapComponent
+                        .ObstacleTilemaps
+                        .GetTilePositions()
+                        .ToPositive(MapComponent.Bounds)
+                        .ToList();
+            
+                    var thread = new Thread(() =>
+                    {
+                        UpdateTarget();
+                        var flowField = CalcFlowField(obstaclePositions);
+                        FlowField = flowField;
+                    });
+
+                    thread.Start();
+                    
+                    HasTargetPositionChanged = false;
+                }
+                
+                yield return new WaitForSeconds(0.1f);
+            }
         }
         
         public PathfindingCell GetCell(Vector2Int position)
@@ -48,9 +91,9 @@ namespace WorkingTitle.Unity.Map
             }
 
             if (FlowField.GridSize.x <= position.x ||
-                  FlowField.GridSize.y <= position.y ||
-                  position.x < 0 ||
-                  position.y < 0)
+                FlowField.GridSize.y <= position.y ||
+                position.x < 0 ||
+                position.y < 0)
             {
                 
                 return null;
@@ -61,8 +104,7 @@ namespace WorkingTitle.Unity.Map
 
         void OnPlayerCellPositionChanged(object sender, Vector2Int position)
         {
-            UpdateTarget();
-            UpdateDirections();
+            HasTargetPositionChanged = true;
         }
 
         void UpdateTarget()
@@ -73,42 +115,15 @@ namespace WorkingTitle.Unity.Map
             TargetPositiveCellPosition = PlayerEntityComponent.PositiveCellPosition;
         }
 
-        void UpdateDirections()
+        FlowField CalcFlowField(List<Vector2Int> obstaclePositions)
         {
-            if (!PlayerEntityComponent) return;
+            if (!PlayerEntityComponent) return null;
             
-            var obstaclePositions = MapComponent
-                .ObstacleTilemaps
-                .GetTilePositions()
-                .ToPositive(MapComponent.Bounds)
-                .ToList();
+            var flowField = new FlowField(TargetPositiveCellPosition, obstaclePositions, MapComponent.GridSize);
+            flowField.CalcCosts();
+            flowField.CalcDirections();
 
-            FlowField = new FlowField(TargetPositiveCellPosition, obstaclePositions, MapComponent.GridSize);
-            FlowField.CalcCosts();
-            FlowField.CalcDirections();
+            return flowField;
         }
-
-#if UNITY_EDITOR
-        void OnDrawGizmos()
-        {
-            if (!FlowField?.IsDirectionsCalculated ?? true) return;
-            
-            var bounds = MapComponent.Bounds;
-            var walkablePositions = MapComponent
-                .WalkableTilemaps
-                .GetTilePositions()
-                .ToList();
-            
-            foreach (var walkablePosition in walkablePositions)
-            {
-                var positivePosition = walkablePosition.ToPositive(bounds);
-                var direction = FlowField.Cells[positivePosition.x][positivePosition.y].Direction;
-                var worldPosition = MapComponent.ToWorld(walkablePosition);
-                
-                Gizmos.color = Color.red;
-                Gizmos.DrawRay(worldPosition, direction.ToVector2() * 0.3f);
-            }
-        }
-#endif
     }
 }

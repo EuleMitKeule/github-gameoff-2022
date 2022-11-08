@@ -9,12 +9,12 @@ namespace WorkingTitle.Lib.Pathfinding
     {
         public PathfindingCell TargetCell { get; }
         public PathfindingCell[][] Cells { get; }
-        
+
         public Vector2Int GridSize { get; }
 
         public bool IsCostsCalculated { get; private set; }
         public bool IsDirectionsCalculated { get; private set; }
-        
+
         public FlowField(
             Vector2Int targetPosition,
             List<Vector2Int> obstaclePositions,
@@ -33,18 +33,18 @@ namespace WorkingTitle.Lib.Pathfinding
                     $"Items in '{nameof(obstaclePositions)}' must be between (0,0) and {gridSize}",
                     nameof(obstaclePositions));
             }
-            
+
             if (targetPosition.x < 0 || targetPosition.x >= gridSize.x ||
                 targetPosition.y < 0 || targetPosition.y >= gridSize.y)
             {
                 throw new ArgumentException($"'{nameof(targetPosition)}' is out of grid bounds.", nameof(targetPosition));
             }
-            
+
             if (gridSize.x <= 0 || gridSize.y <= 0)
             {
                 throw new ArgumentException($"'{nameof(gridSize)}' must be greater than zero.", nameof(gridSize));
             }
-
+            
             Cells = new PathfindingCell[gridSize.x][];
             for (var i = 0; i < gridSize.x; i++)
             {
@@ -63,55 +63,65 @@ namespace WorkingTitle.Lib.Pathfinding
 
                     var cell = new PathfindingCell
                     {
-                        BaseCost = (byte) baseCost,
+                        BaseCost = (byte)baseCost,
                         IsObstacle = isObstacle,
                         Position = position,
-                        Cost = (ushort) cost
+                        Cost = (ushort)cost
 
                     };
                     Cells[x][y] = cell;
                 }
             }
-            
+
             TargetCell = Cells[targetPosition.x][targetPosition.y];
             GridSize = gridSize;
         }
-        
+
         public void CalcCosts()
         {
             var queue = new Queue<PathfindingCell>();
             queue.Enqueue(TargetCell);
 
+            var sqrtTwo = (float)Math.Sqrt(2);
+
             while (queue.Count > 0)
             {
                 var cell = queue.Dequeue();
-                var neighborCells =
-                    GetNeighborCells(cell.Position, DirectionExtensions.CardinalAndInterCardinal);
+                var neighborCells = GetNeighborCells(cell.Position, false);
 
-                foreach (var neighborDirection in DirectionExtensions.CardinalAndInterCardinal)
+                for (int x = -1; x < 2; x++)
                 {
-                    var relativePosition = neighborDirection.ToVector2Int();
-                    var neighborCell = neighborCells[relativePosition.x + 1][relativePosition.y + 1];
-                    var isInterCardinal = relativePosition.magnitude > 1;
-
-                    if (neighborCell is null || neighborCell.IsObstacle) continue;
-                    
-                    if (isInterCardinal &&
-                        ((neighborCells[relativePosition.x + 1][1]?.IsObstacle ?? true) || 
-                        (neighborCells[1][relativePosition.y + 1]?.IsObstacle ?? true)))
+                    for (int y = -1; y < 2; y++)
                     {
-                        continue;
+                        if (x == 0 && y == 0) continue;
+
+                        var shiftedX = x + 1;
+                        var shiftedY = y + 1;
+                        var neighborCell = neighborCells[3 * shiftedX + shiftedY];
+
+                        if (neighborCell is null || neighborCell.IsObstacle) continue;
+
+                        var isInterCardinal = x != 0 && y != 0;
+
+                        if (isInterCardinal &&
+                            ((neighborCells[shiftedX + 1]?.IsObstacle ?? true) || (neighborCells[3 + shiftedY]?.IsObstacle ?? true)))
+                        {
+                            continue;
+                        }
+
+                        var baseCost = (float)neighborCell.BaseCost;
+                        if (isInterCardinal) baseCost *= sqrtTwo;
+                        
+                        var neighborCost = baseCost + cell.Cost;
+
+                        if (neighborCost >= neighborCell.Cost) continue;
+
+                        neighborCell.Cost = neighborCost;
+                        queue.Enqueue(neighborCell);
                     }
-                    
-                    var neighborCost = neighborCell.BaseCost * (isInterCardinal ? Mathf.Sqrt(2) : 1) + cell.Cost;
-                    
-                    if (neighborCost >= neighborCell.Cost) continue;
-                    
-                    neighborCell.Cost = neighborCost;
-                    queue.Enqueue(neighborCell);
                 }
             }
-            
+
             IsCostsCalculated = true;
         }
 
@@ -122,92 +132,69 @@ namespace WorkingTitle.Lib.Pathfinding
                 for (var y = 0; y < GridSize.y; y++)
                 {
                     var cell = Cells[x][y];
-                    
+
                     if (cell.IsObstacle) continue;
-                
-                    var neighborCells = GetNeighborCells(cell.Position, DirectionExtensions.CardinalAndInterCardinal);
+
+                    var neighborCells = GetNeighborCells(cell.Position, false);
                     var bestCost = cell.Cost;
-                
-                    foreach (var direction in DirectionExtensions.CardinalAndInterCardinal)
+
+                    for (int neighborX = -1; neighborX < 2; neighborX++)
                     {
-                        var relativePosition = direction.ToVector2Int();
-                        var neighborCell = neighborCells[relativePosition.x + 1][relativePosition.y + 1];
-                        var isInterCardinal = relativePosition.magnitude > 1;
-                    
-                        if (neighborCell is null || neighborCell.Cost >= bestCost) continue;
-                    
-                        if (isInterCardinal &&
-                            ((neighborCells[relativePosition.x + 1][1]?.IsObstacle ?? true) || 
-                             (neighborCells[1][relativePosition.y + 1]?.IsObstacle ?? true)))
+                        for (int neighborY = -1; neighborY < 2; neighborY++)
                         {
-                            continue;
+                            if (neighborX == 0 && neighborY == 0) continue;
+
+                            var shiftedX = neighborX + 1;
+                            var shiftedY = neighborY + 1;
+                            
+                            var neighborCell = neighborCells[3 * shiftedX + shiftedY];
+
+                            if (neighborCell is null || neighborCell.IsObstacle || neighborCell.Cost >= bestCost) continue;
+
+                            var isInterCardinal = neighborX == 0 && neighborY == 0;
+
+                            if (isInterCardinal &&
+                                ((neighborCells[shiftedX + 1]?.IsObstacle ?? true) || (neighborCells[3 + shiftedY]?.IsObstacle ?? true)))
+                            {
+                                continue;
+                            }
+                            
+                            bestCost = neighborCell.Cost;
+                            cell.Direction = new Vector2(neighborX, neighborY).normalized;
                         }
-                    
-                        if (neighborCell.Cost >= bestCost) continue;
-                    
-                        bestCost = neighborCell.Cost;
-                        cell.Direction = direction;
                     }
                 }
             }
-            
+
             IsDirectionsCalculated = true;
         }
 
-        public Direction[,] GetDirections()
+        PathfindingCell[] GetNeighborCells(Vector2Int position, bool skipInterCardinal)
         {
-            if (!IsCostsCalculated)
+            var neighborCells = new PathfindingCell[9];
+
+            for (int x = -1; x < 2; x++)
             {
-                throw new InvalidOperationException("Costs must be calculated before directions can be retrieved.");   
-            }
-            
-            if (!IsDirectionsCalculated)
-            {
-                throw new InvalidOperationException("Directions must be calculated before directions can be retrieved.");
-            }
-            
-            var directions = new Direction[GridSize.x, GridSize.y];
-            
-            for (var x = 0; x < GridSize.x; x++)
-            {
-                for (var y = 0; y < GridSize.y; y++)
+                for (int y = -1; y < 2; y++)
                 {
-                    var cell = Cells[x][y];
-                    directions[x, y] = cell.Direction;
+                    if (x == 0 && y == 0) continue;
+                    if (skipInterCardinal && x != 0 && y != 0) continue;
+
+                    var neighborPositionX = position.x + x;
+                    var neighborPositionY = position.y + y;
+
+                    if (neighborPositionX < 0 || neighborPositionX >= GridSize.x ||
+                        neighborPositionY < 0 || neighborPositionY >= GridSize.y)
+                    {
+                        continue;
+                    }
+
+                    var neighborCell = Cells[neighborPositionX][neighborPositionY];
+                    if (neighborCell.IsObstacle) continue;
+
+                    neighborCells[3 * (x + 1) + (y + 1)] = neighborCell;
+
                 }
-            }
-            
-            return directions;
-        }
-
-        PathfindingCell GetNeighborCell(Vector2Int position, Direction direction)
-        {
-            var neighborPosition = position + direction.ToVector2Int();
-
-            if (neighborPosition.x < 0 || neighborPosition.x >= GridSize.x ||
-                neighborPosition.y < 0 || neighborPosition.y >= GridSize.y)
-            {
-                return null;
-            }
-                
-            var neighborCell = Cells[neighborPosition.x][neighborPosition.y];
-                
-            return neighborCell.IsObstacle ? null : neighborCell;
-        }
-        
-        PathfindingCell[][] GetNeighborCells(Vector2Int position, IEnumerable<Direction> directions)
-        {
-            var neighborCells = new PathfindingCell[3][];
-            for (var i = 0; i < 3; i++)
-            {
-                neighborCells[i] = new PathfindingCell[3];
-            }
-
-            foreach (var direction in directions)
-            {
-                var relativePosition = direction.ToVector2Int();
-                var neighborCell = GetNeighborCell(position, direction);
-                neighborCells[relativePosition.x + 1][relativePosition.y + 1] = neighborCell;
             }
 
             return neighborCells;
