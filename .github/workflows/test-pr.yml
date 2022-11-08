@@ -38,9 +38,7 @@ jobs:
         id: run-tests
         uses: game-ci/unity-test-runner@v2
         env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
           projectPath: WorkingTitle/
           githubToken: ${{ secrets.GITHUB_TOKEN }}
