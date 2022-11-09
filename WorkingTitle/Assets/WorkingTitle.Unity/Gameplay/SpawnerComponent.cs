@@ -24,6 +24,8 @@ namespace WorkingTitle.Unity.Gameplay
         Dictionary<GameObject, float> EnemySpawnTable { get; set; } = new();
         
         float LastSpawnTime { get; set; }
+
+        public event EventHandler<EnemySpawnedEventArgs> EnemySpawned;
         
         # region Editor
         
@@ -49,6 +51,8 @@ namespace WorkingTitle.Unity.Gameplay
             var position = GetRandomPosition();
             var enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
             enemy.transform.SetParent(transform);
+            
+            EnemySpawned?.Invoke(this, new EnemySpawnedEventArgs(enemy));
         }
         
         GameObject GetRandomEnemy()
@@ -73,6 +77,16 @@ namespace WorkingTitle.Unity.Gameplay
         {
             var random = Random.insideUnitCircle * SpawnRadius;
             return new Vector3(random.x, random.y);
+        }
+    }
+
+    public class EnemySpawnedEventArgs
+    {
+        public GameObject Enemy { get; }
+        
+        public EnemySpawnedEventArgs(GameObject enemy)
+        {
+            Enemy = enemy;
         }
     }
 }
