@@ -24,6 +24,9 @@ namespace WorkingTitle.Unity.Gameplay
         float Cooldown { get; set; }
         
         [OdinSerialize]
+        public float Damage { get; set; }
+        
+        [OdinSerialize]
         public int Ricochets { get; set; }
         
         float LastAttackTime { get; set; }
@@ -47,6 +50,8 @@ namespace WorkingTitle.Unity.Gameplay
             var bullet = Instantiate(ProjectilePrefab, WeaponPoint.transform.position, transform.rotation);
             var bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
             var projectileComponent = bullet.GetComponent<ProjectileComponent>();
+            
+            projectileComponent.Damage = Damage;
             projectileComponent.Ricochets = Ricochets;
             bulletRigidbody.velocity = transform.up * BulletSpeed;
         }

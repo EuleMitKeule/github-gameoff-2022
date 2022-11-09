@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 5348554541934575929}
   - component: {fileID: 1438854557121849440}
   m_Layer: 7
-  m_Name: tank_ai
+  m_Name: tank_enemy_ricochet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,32 +190,32 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 0da93fdeaffff944e9dee03edf4c03a9, type: 2}
     - {fileID: 6064423492455411463}
     - {fileID: 6064423493732264457}
+    - {fileID: 11400000, guid: 0da93fdeaffff944e9dee03edf4c03a9, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TankAsset
-      Entry: 10
-      Data: 0
     - Name: TankBody
       Entry: 10
-      Data: 1
+      Data: 0
     - Name: TankCannon
       Entry: 10
-      Data: 2
+      Data: 1
     - Name: WallMask
       Entry: 7
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 0
+      Data: 256
     - Name: 
       Entry: 8
       Data: 
+    - Name: TankAsset
+      Entry: 10
+      Data: 2
 --- !u!114 &8006970213262483037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,7 +570,7 @@ MonoBehaviour:
       Data: 0.5
     - Name: Ricochets
       Entry: 3
-      Data: 0
+      Data: 1
 --- !u!1 &7985236468272663950
 GameObject:
   m_ObjectHideFlags: 0

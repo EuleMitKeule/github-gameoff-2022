@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace WorkingTitle.Unity.Gameplay.PowerUps
 {
-    [CreateAssetMenu(menuName = nameof(RicochetPowerUpAsset), fileName = nameof(RicochetPowerUpAsset))]
+    [CreateAssetMenu(menuName = "PowerUpAsset/" + nameof(RicochetPowerUpAsset), fileName = nameof(RicochetPowerUpAsset))]
     public class RicochetPowerUpAsset : PowerUpAsset
     {
         [OdinSerialize]

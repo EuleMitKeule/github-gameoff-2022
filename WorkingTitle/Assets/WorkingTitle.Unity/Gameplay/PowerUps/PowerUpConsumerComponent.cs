@@ -23,23 +23,18 @@ namespace WorkingTitle.Unity.Gameplay.PowerUps
 
             var powerUpAsset = powerUpComponent.PowerUpAsset;
 
-            if (powerUpAsset is RicochetPowerUpAsset ricochetsPowerUpAsset)
+            if (powerUpAsset is RicochetPowerUpAsset ricochetPowerUpAsset)
             {
-                PrimaryAttackComponent.Ricochets += ricochetsPowerUpAsset.Ricochets;
+                PrimaryAttackComponent.Ricochets += ricochetPowerUpAsset.Ricochets;
+            }
+
+            if (powerUpAsset is DamagePowerUpAsset damagePowerUpAsset)
+            {
+                PrimaryAttackComponent.Damage *= 1 + damagePowerUpAsset.DamagePercentageIncrease / 100;
             }
 
             PowerUpConsumed?.Invoke(this, new PowerUpConsumedEventArgs(powerUpAsset));
             Destroy(other.gameObject);
-        }
-    }
-
-    public class PowerUpConsumedEventArgs : EventArgs
-    {
-        public PowerUpAsset PowerUpAsset { get; set; }
-
-        public PowerUpConsumedEventArgs(PowerUpAsset powerUpAsset)
-        {
-            PowerUpAsset = powerUpAsset;
         }
     }
 }

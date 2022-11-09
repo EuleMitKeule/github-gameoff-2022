@@ -11,9 +11,10 @@ namespace WorkingTitle.Unity.Physics
     public class ProjectileComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
-        float Damage { get; set; }
+        public float Damage { get; set; }
         
-        [OdinSerialize] public float Ricochets { get; set; }
+        [OdinSerialize]
+        public float Ricochets { get; set; }
         
         [OdinSerialize]
         ContactFilter2D ContactFilter { get; set; }
