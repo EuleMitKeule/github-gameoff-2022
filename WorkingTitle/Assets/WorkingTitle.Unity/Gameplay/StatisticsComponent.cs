@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using WorkingTitle.Unity.Gameplay.PowerUps;
 
 namespace WorkingTitle.Unity.Gameplay
 {
@@ -12,6 +13,9 @@ namespace WorkingTitle.Unity.Gameplay
         
         [ShowInInspector]
         Dictionary<TankAsset, float> DamageDone { get; set; } = new();
+        
+        [ShowInInspector]
+        Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; } = new();
         
         [ShowInInspector]
         float DamageTaken { get; set; }
@@ -30,12 +34,14 @@ namespace WorkingTitle.Unity.Gameplay
             SpawnerComponent = GetComponentInChildren<SpawnerComponent>();
             GameComponent = GetComponent<GameComponent>();
             var playerHealthComponent = GameComponent.PlayerObject.GetComponent<HealthComponent>();
+            var playerPowerUpConsumerComponent = GameComponent.PlayerObject.GetComponent<PowerUpConsumerComponent>();
 
             StartTime = Time.time;
 
             SpawnerComponent.EnemySpawned += OnEnemySpawned;
             playerHealthComponent.HealthChanged += OnPlayerHealthChanged;
             playerHealthComponent.Death += OnPlayerDeath;
+            playerPowerUpConsumerComponent.PowerUpConsumed += OnPowerUpConsumed;
         }
 
         void OnEnemySpawned(object sender, EnemySpawnedEventArgs e)
@@ -51,7 +57,7 @@ namespace WorkingTitle.Unity.Gameplay
         {
             if (sender is not HealthComponent healthComponent) return;
             
-            var tankComponent = healthComponent.GetComponent<TankComponent>();
+            var tankComponent = healthComponent.GetComponent<EnemyTankComponent>();
             if (!tankComponent) return;
             
             var tankAsset = tankComponent.TankAsset;
@@ -65,20 +71,20 @@ namespace WorkingTitle.Unity.Gameplay
             if (e.HealthChange >= 0) return;
             if (sender is not HealthComponent healthComponent) return;
             
-            var tankComponent = healthComponent.GetComponent<TankComponent>();
+            var tankComponent = healthComponent.GetComponent<EnemyTankComponent>();
             if (!tankComponent) return;
             
             var tankAsset = tankComponent.TankAsset;
             
             if (!DamageDone.ContainsKey(tankAsset)) DamageDone[tankAsset] = 0;
-            DamageDone[tankAsset] += 1;
+            DamageDone[tankAsset] += -e.HealthChange;
         }
 
         void OnPlayerHealthChanged(object sender, HealthChangedEventArgs e)
         {
             if (e.HealthChange < 0)
             {
-                DamageTaken += e.HealthChange;
+                DamageTaken += -e.HealthChange;
             }
             else
             {
@@ -89,6 +95,12 @@ namespace WorkingTitle.Unity.Gameplay
         void OnPlayerDeath(object sender, EventArgs e)
         {
             TimeSurvived = Time.time - StartTime;
+        }
+
+        void OnPowerUpConsumed(object sender, PowerUpConsumedEventArgs e)
+        {
+            if (!PowerUpsConsumed.ContainsKey(e.PowerUpAsset)) PowerUpsConsumed[e.PowerUpAsset] = 0;
+            PowerUpsConsumed[e.PowerUpAsset] += 1;
         }
     }
 }

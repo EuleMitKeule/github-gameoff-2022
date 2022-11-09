@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 261747514512489440}
   - component: {fileID: 5305068983622510912}
   - component: {fileID: 5348554541934575929}
+  - component: {fileID: 1438854557121849440}
   m_Layer: 7
   m_Name: tank_ai
   m_TagString: Untagged
@@ -182,7 +183,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6064423492359556233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22667a775abb4059bb314791cff87137, type: 3}
+  m_Script: {fileID: 11500000, guid: b30c405bb3314b79a5b7f52d2856f227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -211,7 +212,7 @@ MonoBehaviour:
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 256
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -360,6 +361,27 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+--- !u!114 &1438854557121849440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07fe864e116b4e29a3b87b85701a1290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +486,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -630298223
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 54aeffb6ff6f7de42b389d698afd4dc8, type: 3}
   m_Color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
@@ -520,7 +542,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6064423493732264457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89fc9ab534ee4425b5610bb49e55df83, type: 3}
+  m_Script: {fileID: 11500000, guid: b5893374fe7439b45aeeba86a5a286de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -546,6 +568,9 @@ MonoBehaviour:
     - Name: Cooldown
       Entry: 4
       Data: 0.5
+    - Name: Ricochets
+      Entry: 3
+      Data: 0
 --- !u!1 &7985236468272663950
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +643,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -630298223
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 54aeffb6ff6f7de42b389d698afd4dc8, type: 3}
   m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}

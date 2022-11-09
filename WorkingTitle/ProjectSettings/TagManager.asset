@@ -16,7 +16,7 @@ TagManager:
   - Wall
   - PlayerProjectile
   - EnemyProjectile
-  - 
+  - PowerUp
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 4203983421
+    locked: 0
+  - name: PowerUp
+    uniqueID: 163339975
     locked: 0
   - name: Projectile
     uniqueID: 3923941647

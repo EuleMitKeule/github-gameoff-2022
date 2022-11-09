@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 5396467893550582058}
   - component: {fileID: 7097692813728323970}
   - component: {fileID: 5308713483449493257}
+  - component: {fileID: 4219437254338961742}
   m_Layer: 6
   m_Name: tank_player
   m_TagString: Untagged
@@ -195,13 +196,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6064423492359556233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22667a775abb4059bb314791cff87137, type: 3}
+  m_Script: {fileID: 11500000, guid: e0423ce7b35e47e49e7492fe0bc9fc3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 0da93fdeaffff944e9dee03edf4c03a9, type: 2}
     - {fileID: 6064423492455411463}
     - {fileID: 6064423493732264457}
     SerializedBytesString: 
@@ -209,18 +211,21 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TankBody
+    - Name: TankAsset
       Entry: 10
       Data: 0
-    - Name: TankCannon
+    - Name: TankBody
       Entry: 10
       Data: 1
+    - Name: TankCannon
+      Entry: 10
+      Data: 2
     - Name: WallMask
       Entry: 7
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule
     - Name: 
       Entry: 3
-      Data: 256
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -293,6 +298,27 @@ MonoBehaviour:
     - Name: MaxHealth
       Entry: 4
       Data: 100
+--- !u!114 &4219437254338961742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07fe864e116b4e29a3b87b85701a1290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +423,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 353169175
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 54aeffb6ff6f7de42b389d698afd4dc8, type: 3}
   m_Color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
@@ -419,7 +445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6064423493732264458}
-  - component: {fileID: 1315535321}
+  - component: {fileID: 5163445319011664122}
   m_Layer: 6
   m_Name: tank_cannon
   m_TagString: Untagged
@@ -444,7 +470,7 @@ Transform:
   m_Father: {fileID: 6064423492455411456}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1315535321
+--- !u!114 &5163445319011664122
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -453,7 +479,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6064423493732264457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89fc9ab534ee4425b5610bb49e55df83, type: 3}
+  m_Script: {fileID: 11500000, guid: b5893374fe7439b45aeeba86a5a286de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
@@ -479,6 +505,9 @@ MonoBehaviour:
     - Name: Cooldown
       Entry: 4
       Data: 0.5
+    - Name: Ricochets
+      Entry: 3
+      Data: 0
 --- !u!1 &6068097513344209145
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,7 +580,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 353169175
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 54aeffb6ff6f7de42b389d698afd4dc8, type: 3}
   m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}

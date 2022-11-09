@@ -83,6 +83,11 @@ namespace WorkingTitle.Unity.Physics
             return hits;
         }
 
+        void OnBecameInvisible()
+        {
+            Destroy(gameObject);
+        }
+
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
