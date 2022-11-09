@@ -13,8 +13,7 @@ namespace WorkingTitle.Unity.Physics
         [OdinSerialize]
         float Damage { get; set; }
         
-        [OdinSerialize]
-        float Ricochets { get; set; }
+        [OdinSerialize] public float Ricochets { get; set; }
         
         [OdinSerialize]
         ContactFilter2D ContactFilter { get; set; }

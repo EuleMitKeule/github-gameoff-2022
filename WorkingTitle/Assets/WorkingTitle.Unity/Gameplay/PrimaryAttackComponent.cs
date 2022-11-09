@@ -3,10 +3,11 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Input;
+using WorkingTitle.Unity.Physics;
 
 namespace WorkingTitle.Unity.Gameplay
 {
-    public class AttackComponent : SerializedMonoBehaviour
+    public class PrimaryAttackComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
         GameObject WeaponPoint { get; set; }
@@ -22,8 +23,11 @@ namespace WorkingTitle.Unity.Gameplay
         [OdinSerialize]
         float Cooldown { get; set; }
         
-        float LastAttackTime { get; set; }
+        [OdinSerialize]
+        public int Ricochets { get; set; }
         
+        float LastAttackTime { get; set; }
+
         void Awake()
         {
             InputComponent = GetComponentInParent<InputComponent>();
@@ -42,6 +46,8 @@ namespace WorkingTitle.Unity.Gameplay
         {
             var bullet = Instantiate(ProjectilePrefab, WeaponPoint.transform.position, transform.rotation);
             var bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
+            var projectileComponent = bullet.GetComponent<ProjectileComponent>();
+            projectileComponent.Ricochets = Ricochets;
             bulletRigidbody.velocity = transform.up * BulletSpeed;
         }
     }
