@@ -41,6 +41,9 @@ namespace WorkingTitle.Unity.Gameplay.PowerUps
                 case MovementSpeedPowerUpAsset movementSpeedPowerUpAsset:
                     TankMovementComponent.Speed *= 1 + movementSpeedPowerUpAsset.MovementSpeedPercentageIncrease / 100;
                     break;
+                case AttackCooldownPowerUpAsset attackCooldownPowerUpAsset:
+                    PrimaryAttackComponent.AttackCooldown *= 1 - attackCooldownPowerUpAsset.AttackCooldownPercentageDecrease / 100;
+                    break;
             }
 
             PowerUpConsumed?.Invoke(this, new PowerUpConsumedEventArgs(powerUpAsset));

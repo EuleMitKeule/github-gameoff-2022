@@ -20,7 +20,7 @@ namespace WorkingTitle.Unity.Gameplay
         [OdinSerialize] public float ProjectileSpeed { get; set; }
         
         [OdinSerialize]
-        float Cooldown { get; set; }
+        public float AttackCooldown { get; set; }
         
         [OdinSerialize]
         public float Damage { get; set; }
@@ -38,7 +38,7 @@ namespace WorkingTitle.Unity.Gameplay
         void Update()
         {
             if (!InputComponent.InputPrimaryAttack) return;
-            if (LastAttackTime + Cooldown > Time.time) return;
+            if (LastAttackTime + AttackCooldown > Time.time) return;
 
             LastAttackTime = Time.time;
             Attack();
