@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 5305068983622510912}
   - component: {fileID: 5348554541934575929}
   - component: {fileID: 1438854557121849440}
+  - component: {fileID: 8978087642996351711}
   m_Layer: 7
   m_Name: tank_enemy_base
   m_TagString: Untagged
@@ -260,7 +261,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Health
       Entry: 4
-      Data: 100
+      Data: 10
     - Name: MaxHealth
       Entry: 4
       Data: 100
@@ -382,6 +383,45 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+--- !u!114 &8978087642996351711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13c7bf060101471a8694f4bc591308d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: Radius
+      Entry: 4
+      Data: 0
+    - Name: AccelerationPerDistance
+      Entry: 4
+      Data: 10
+    - Name: MaxAcceleration
+      Entry: 4
+      Data: 10
+    - Name: LayerMask
+      Entry: 7
+      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0

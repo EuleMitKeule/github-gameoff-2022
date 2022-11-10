@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7654974256448244777
+--- !u!1001 &1400483370618467648
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -38,39 +38,19 @@ PrefabInstance:
     - target: {fileID: 779659689631481611, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 417da6162aa87804d8f767f9faafc8f6, type: 2}
+      objectReference: {fileID: 11400000, guid: 7409a01eb583ab949a82ebcd30038a2d, type: 2}
     - target: {fileID: 779659689631481611, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 4472856794427630382}
+      objectReference: {fileID: 5135982905668442695}
     - target: {fileID: 779659689631481611, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[2]
       value: 
-      objectReference: {fileID: 4472856793288697376}
+      objectReference: {fileID: 5135982906677649225}
     - target: {fileID: 1071046310477133252, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 1071046310477133252, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-    - target: {fileID: 1071046310477133252, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1071046310477133252, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"AttackCooldown","value":{"$id":0,"$type":"System.Single, mscorlib",0.5}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 1071046310477133252, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[1]
-      value: '"path":"WeaponPoint","value":$eref:0'
-      objectReference: {fileID: 0}
-    - target: {fileID: 1071046310477133252, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1071046310477133252, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 7644809851408136092}
     - target: {fileID: 1438854557121849440, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -93,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 5348554541934575929, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
     - target: {fileID: 6064423492359556233, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: m_Name
-      value: tank_enemy_attack_cooldown
+      value: tank_enemy_magnet
       objectReference: {fileID: 0}
     - target: {fileID: 6064423492359556234, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.Prefab
@@ -166,7 +146,7 @@ PrefabInstance:
     - target: {fileID: 7126493908852175553, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 7609402754099853257}
+      objectReference: {fileID: 1211026085044915872}
     - target: {fileID: 8006970213262483037, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -175,22 +155,24 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 8978087642996351711, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+    - target: {fileID: 8978087642996351711, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978087642996351711, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"Radius","value":{"$id":0,"$type":"System.Single, mscorlib",3}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8978087642996351711, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
---- !u!1 &4472856793288697376 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6064423493732264457, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-  m_PrefabInstance: {fileID: 7654974256448244777}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4472856794427630382 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6064423492455411463, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-  m_PrefabInstance: {fileID: 7654974256448244777}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7609402754099853257 stripped
+--- !u!114 &1211026085044915872 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 261747514512489440, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-  m_PrefabInstance: {fileID: 7654974256448244777}
+  m_PrefabInstance: {fileID: 1400483370618467648}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -198,8 +180,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142b3888c12a4cd5a120a385d09338c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7644809851408136092 stripped
+--- !u!1 &5135982905668442695 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 12451458499558325, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
-  m_PrefabInstance: {fileID: 7654974256448244777}
+  m_CorrespondingSourceObject: {fileID: 6064423492455411463, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+  m_PrefabInstance: {fileID: 1400483370618467648}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5135982906677649225 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6064423493732264457, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+  m_PrefabInstance: {fileID: 1400483370618467648}
   m_PrefabAsset: {fileID: 0}

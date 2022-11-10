@@ -8,15 +8,16 @@ namespace WorkingTitle.Unity.Gameplay.PowerUps
     public class PowerUpConsumerComponent : SerializedMonoBehaviour
     {
         PrimaryAttackComponent PrimaryAttackComponent { get; set; }
+        TankMovementComponent TankMovementComponent { get; set; }
+        MagnetComponent MagnetComponent { get; set; }
 
         public event EventHandler<PowerUpConsumedEventArgs> PowerUpConsumed;
-
-        TankMovementComponent TankMovementComponent { get; set; }
         
         void Awake()
         {
             PrimaryAttackComponent = GetComponentInChildren<PrimaryAttackComponent>();
             TankMovementComponent = GetComponent<TankMovementComponent>();
+            MagnetComponent = GetComponent<MagnetComponent>();
         }
         
         void OnTriggerEnter2D(Collider2D other)
@@ -52,6 +53,16 @@ namespace WorkingTitle.Unity.Gameplay.PowerUps
                     else
                     {
                         PrimaryAttackComponent.LifeSteal += lifeStealPowerUpAsset.LifeSteal;
+                    }
+                    break;
+                case MagnetPowerUpAsset magnetPowerUpAsset:
+                    if (MagnetComponent.Radius > 0)
+                    {
+                        MagnetComponent.Radius *= 1 + magnetPowerUpAsset.RadiusPercentage / 100;
+                    }
+                    else
+                    {
+                        MagnetComponent.Radius += magnetPowerUpAsset.Radius;
                     }
                     break;
             }
