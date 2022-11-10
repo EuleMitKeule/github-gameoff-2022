@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -32,14 +33,20 @@ namespace WorkingTitle.Unity.Gameplay
         
         float LastAttackTime { get; set; }
         
+        List<GameObject> Projectiles { get; set; }
+        
         InputComponent InputComponent { get; set; }
         
         HealthComponent HealthComponent { get; set; }
 
         void Awake()
         {
+            Projectiles = new List<GameObject>();
+            
             InputComponent = GetComponentInParent<InputComponent>();
             HealthComponent = GetComponentInParent<HealthComponent>();
+            
+            HealthComponent.Death += OnDeath;
         }
 
         void Update()
@@ -53,13 +60,15 @@ namespace WorkingTitle.Unity.Gameplay
 
         void Attack()
         {
-            var bullet = Instantiate(ProjectilePrefab, WeaponPoint.transform.position, transform.rotation);
-            var bulletRigidbody = bullet.GetComponent<Rigidbody2D>();
-            var projectileComponent = bullet.GetComponent<ProjectileComponent>();
+            var projectile = Instantiate(ProjectilePrefab, WeaponPoint.transform.position, transform.rotation);
+            var projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
+            var projectileComponent = projectile.GetComponent<ProjectileComponent>();
             
             projectileComponent.Damage = Damage;
             projectileComponent.Ricochets = Ricochets;
-            bulletRigidbody.velocity = transform.up * ProjectileSpeed;
+            projectileRigidbody.velocity = transform.up * ProjectileSpeed;
+            
+            Projectiles.Add(projectile);
             
             projectileComponent.DamageInflicted += OnDamageInflicted;
         }
@@ -68,6 +77,19 @@ namespace WorkingTitle.Unity.Gameplay
         {
             var healAmount = e.Damage * LifeSteal;
             HealthComponent.ChangeHealth(healAmount);
+        }
+
+        void OnDeath(object sender, EventArgs e)
+        {
+            foreach (var projectile in Projectiles)
+            {
+                if (!projectile) continue;
+                
+                var projectileComponent = projectile.GetComponent<ProjectileComponent>();
+                if (!projectileComponent) continue;
+                
+                projectileComponent.DamageInflicted -= OnDamageInflicted;
+            }
         }
     }
 }

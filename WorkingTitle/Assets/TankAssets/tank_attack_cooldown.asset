@@ -15,12 +15,13 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 4041634152683501491, guid: b758160d0de3c4b43a3ac8dfdfa222cf, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
     - Name: PowerUpPrefab
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0

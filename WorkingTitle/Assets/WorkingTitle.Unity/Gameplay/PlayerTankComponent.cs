@@ -6,7 +6,7 @@ namespace WorkingTitle.Unity.Gameplay
     {
         protected override void OnDeath(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
