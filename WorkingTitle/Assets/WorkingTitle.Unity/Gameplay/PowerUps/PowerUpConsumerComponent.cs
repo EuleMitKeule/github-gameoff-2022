@@ -23,14 +23,17 @@ namespace WorkingTitle.Unity.Gameplay.PowerUps
 
             var powerUpAsset = powerUpComponent.PowerUpAsset;
 
-            if (powerUpAsset is RicochetPowerUpAsset ricochetPowerUpAsset)
+            switch (powerUpAsset)
             {
-                PrimaryAttackComponent.Ricochets += ricochetPowerUpAsset.Ricochets;
-            }
-
-            if (powerUpAsset is DamagePowerUpAsset damagePowerUpAsset)
-            {
-                PrimaryAttackComponent.Damage *= 1 + damagePowerUpAsset.DamagePercentageIncrease / 100;
+                case RicochetPowerUpAsset ricochetPowerUpAsset:
+                    PrimaryAttackComponent.Ricochets += ricochetPowerUpAsset.Ricochets;
+                    break;
+                case DamagePowerUpAsset damagePowerUpAsset:
+                    PrimaryAttackComponent.Damage *= 1 + damagePowerUpAsset.DamagePercentageIncrease / 100;
+                    break;
+                case ProjectileSpeedPowerUpAsset projectileSpeedPowerUpAsset:
+                    PrimaryAttackComponent.ProjectileSpeed *= 1 + projectileSpeedPowerUpAsset.ProjectileSpeedPercentageIncrease / 100;
+                    break;
             }
 
             PowerUpConsumed?.Invoke(this, new PowerUpConsumedEventArgs(powerUpAsset));

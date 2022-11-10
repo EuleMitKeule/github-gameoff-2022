@@ -17,8 +17,7 @@ namespace WorkingTitle.Unity.Gameplay
         [OdinSerialize]
         GameObject ProjectilePrefab { get; set; }
         
-        [OdinSerialize]
-        float BulletSpeed { get; set; }
+        [OdinSerialize] public float ProjectileSpeed { get; set; }
         
         [OdinSerialize]
         float Cooldown { get; set; }
@@ -53,7 +52,7 @@ namespace WorkingTitle.Unity.Gameplay
             
             projectileComponent.Damage = Damage;
             projectileComponent.Ricochets = Ricochets;
-            bulletRigidbody.velocity = transform.up * BulletSpeed;
+            bulletRigidbody.velocity = transform.up * ProjectileSpeed;
         }
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51bca2bd188b4d668df72602f861c53b, type: 3}
-  m_Name: RicochetsPowerUpAsset
+  m_Name: powerup_ricochet
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
