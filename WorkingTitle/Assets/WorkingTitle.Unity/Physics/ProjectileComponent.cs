@@ -22,6 +22,8 @@ namespace WorkingTitle.Unity.Physics
         Rigidbody2D Rigidbody { get; set; }
         Collider2D Collider { get; set; }
 
+        public event EventHandler<DamageInflictedEventArgs> DamageInflicted;
+
         void Awake()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
@@ -54,6 +56,7 @@ namespace WorkingTitle.Unity.Physics
         {
             var healthComponent = other.GetComponentInParent<HealthComponent>();
             if (healthComponent) healthComponent.ChangeHealth(-Damage);
+            DamageInflicted?.Invoke(this, new DamageInflictedEventArgs(Damage));
         }
 
         void HandleRicochet(Vector2 contactNormal)

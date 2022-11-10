@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 5348554541934575929}
   - component: {fileID: 1438854557121849440}
   m_Layer: 7
-  m_Name: tank_enemy_ricochet
+  m_Name: tank_enemy_life_steal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 6064423492455411463}
     - {fileID: 6064423493732264457}
-    - {fileID: 11400000, guid: 0da93fdeaffff944e9dee03edf4c03a9, type: 2}
+    - {fileID: 11400000, guid: 51350b26a7613794d8ebe2fa861f8f0c, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -573,10 +573,10 @@ MonoBehaviour:
       Data: 1
     - Name: Ricochets
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: LifeSteal
       Entry: 4
-      Data: 0
+      Data: 20
 --- !u!1 &7985236468272663950
 GameObject:
   m_ObjectHideFlags: 0

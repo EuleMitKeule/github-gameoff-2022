@@ -564,15 +564,18 @@ MonoBehaviour:
       Data: 1
     - Name: ProjectileSpeed
       Entry: 4
-      Data: 0
+      Data: 5
     - Name: AttackCooldown
       Entry: 4
-      Data: 0
+      Data: 0.5
     - Name: Damage
       Entry: 4
-      Data: 0
+      Data: 1
     - Name: Ricochets
       Entry: 3
+      Data: 0
+    - Name: LifeSteal
+      Entry: 4
       Data: 0
 --- !u!1 &7985236468272663950
 GameObject:

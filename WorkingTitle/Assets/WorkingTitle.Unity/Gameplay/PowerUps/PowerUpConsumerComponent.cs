@@ -44,6 +44,16 @@ namespace WorkingTitle.Unity.Gameplay.PowerUps
                 case AttackCooldownPowerUpAsset attackCooldownPowerUpAsset:
                     PrimaryAttackComponent.AttackCooldown *= 1 - attackCooldownPowerUpAsset.AttackCooldownPercentageDecrease / 100;
                     break;
+                case LifeStealPowerUpAsset lifeStealPowerUpAsset:
+                    if (PrimaryAttackComponent.LifeSteal > 0)
+                    {
+                        PrimaryAttackComponent.LifeSteal *= 1 + lifeStealPowerUpAsset.LifeStealPercentage / 100;
+                    }
+                    else
+                    {
+                        PrimaryAttackComponent.LifeSteal += lifeStealPowerUpAsset.LifeSteal;
+                    }
+                    break;
             }
 
             PowerUpConsumed?.Invoke(this, new PowerUpConsumedEventArgs(powerUpAsset));

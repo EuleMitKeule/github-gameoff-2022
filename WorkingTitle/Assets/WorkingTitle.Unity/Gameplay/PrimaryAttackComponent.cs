@@ -12,12 +12,11 @@ namespace WorkingTitle.Unity.Gameplay
         [OdinSerialize]
         GameObject WeaponPoint { get; set; }
         
-        InputComponent InputComponent { get; set; }
-        
         [OdinSerialize]
         GameObject ProjectilePrefab { get; set; }
         
-        [OdinSerialize] public float ProjectileSpeed { get; set; }
+        [OdinSerialize]
+        public float ProjectileSpeed { get; set; }
         
         [OdinSerialize]
         public float AttackCooldown { get; set; }
@@ -28,11 +27,19 @@ namespace WorkingTitle.Unity.Gameplay
         [OdinSerialize]
         public int Ricochets { get; set; }
         
+        [OdinSerialize]
+        public float LifeSteal { get; set; }
+        
         float LastAttackTime { get; set; }
+        
+        InputComponent InputComponent { get; set; }
+        
+        HealthComponent HealthComponent { get; set; }
 
         void Awake()
         {
             InputComponent = GetComponentInParent<InputComponent>();
+            HealthComponent = GetComponentInParent<HealthComponent>();
         }
 
         void Update()
@@ -53,6 +60,14 @@ namespace WorkingTitle.Unity.Gameplay
             projectileComponent.Damage = Damage;
             projectileComponent.Ricochets = Ricochets;
             bulletRigidbody.velocity = transform.up * ProjectileSpeed;
+            
+            projectileComponent.DamageInflicted += OnDamageInflicted;
+        }
+
+        void OnDamageInflicted(object sender, DamageInflictedEventArgs e)
+        {
+            var healAmount = e.Damage * LifeSteal;
+            HealthComponent.ChangeHealth(healAmount);
         }
     }
 }
