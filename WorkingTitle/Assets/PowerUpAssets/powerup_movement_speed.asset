@@ -9,19 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81dd02f2c2e64688ab1cd7fc2de2775d, type: 3}
-  m_Name: tank_projectile_speed
+  m_Script: {fileID: 11500000, guid: 960fd9f645e142f289507acf6cbfc980, type: 3}
+  m_Name: powerup_movement_speed
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 2639209785973192634, guid: 243ed52a7c25f9944b23f4cb244cd6b2, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: PowerUpPrefab
-      Entry: 10
-      Data: 0
+    - Name: MovementSpeedPercentageIncrease
+      Entry: 4
+      Data: 5

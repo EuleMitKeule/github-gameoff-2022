@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81dd02f2c2e64688ab1cd7fc2de2775d, type: 3}
-  m_Name: tank_projectile_speed
+  m_Name: tank_movement_speed
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 2639209785973192634, guid: 243ed52a7c25f9944b23f4cb244cd6b2, type: 3}
+    - {fileID: 2639209785973192634, guid: 68fb3d95c82bd13478ccf8afaa0888dd, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []

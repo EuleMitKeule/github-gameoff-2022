@@ -1,6 +1,7 @@
 ﻿using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using WorkingTitle.Unity.Physics;
 
 namespace WorkingTitle.Unity.Gameplay.PowerUps
 {
@@ -10,9 +11,12 @@ namespace WorkingTitle.Unity.Gameplay.PowerUps
 
         public event EventHandler<PowerUpConsumedEventArgs> PowerUpConsumed;
 
+        TankMovementComponent TankMovementComponent { get; set; }
+        
         void Awake()
         {
             PrimaryAttackComponent = GetComponentInChildren<PrimaryAttackComponent>();
+            TankMovementComponent = GetComponent<TankMovementComponent>();
         }
         
         void OnTriggerEnter2D(Collider2D other)
@@ -33,6 +37,9 @@ namespace WorkingTitle.Unity.Gameplay.PowerUps
                     break;
                 case ProjectileSpeedPowerUpAsset projectileSpeedPowerUpAsset:
                     PrimaryAttackComponent.ProjectileSpeed *= 1 + projectileSpeedPowerUpAsset.ProjectileSpeedPercentageIncrease / 100;
+                    break;
+                case MovementSpeedPowerUpAsset movementSpeedPowerUpAsset:
+                    TankMovementComponent.Speed *= 1 + movementSpeedPowerUpAsset.MovementSpeedPercentageIncrease / 100;
                     break;
             }
 
