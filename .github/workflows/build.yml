@@ -77,7 +77,9 @@ jobs:
       - name: Build ${{ matrix.buildTarget }}
         uses: game-ci/unity-builder@v2
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
           targetPlatform: ${{ matrix.buildTarget }}
           projectPath: ${{ env.PROJECT_DIR }}
