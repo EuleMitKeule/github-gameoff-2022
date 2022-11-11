@@ -14,7 +14,7 @@ namespace WorkingTitle.Unity.Physics
     {
         [TitleGroup("Physics")]
         [OdinSerialize]
-        float Speed { get; set; }
+        public float Speed { get; set; }
         
         [OdinSerialize]
         float SpeedBoostModifier { get; set; }
