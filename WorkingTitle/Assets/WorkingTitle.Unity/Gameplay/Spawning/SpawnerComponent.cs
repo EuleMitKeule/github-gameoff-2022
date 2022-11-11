@@ -4,10 +4,16 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using WorkingTitle.Lib.Pathfinding;
+using WorkingTitle.Unity.Extensions;
+using WorkingTitle.Unity.Map;
+using WorkingTitle.Unity.Physics;
 using Random = UnityEngine.Random;
 
-namespace WorkingTitle.Unity.Gameplay
+namespace WorkingTitle.Unity.Gameplay.Spawning
 {
+    [RequireComponent(typeof(PathfindingComponent))]
     public class SpawnerComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
@@ -25,6 +31,9 @@ namespace WorkingTitle.Unity.Gameplay
         
         float LastSpawnTime { get; set; }
 
+        PathfindingComponent PathfindingComponent { get; set; }
+        EntityComponent PlayerEntityComponent { get; set; }
+        
         public event EventHandler<EnemySpawnedEventArgs> EnemySpawned;
         
         # region Editor
@@ -35,6 +44,16 @@ namespace WorkingTitle.Unity.Gameplay
         bool IsEnemySpawnTableNotContainsZero => EnemySpawnTable?.Values.All(value => value != 0) ?? true;
         
         # endregion
+
+        void Awake()
+        {
+            PathfindingComponent = GetComponent<PathfindingComponent>();
+        }
+        
+        void Start()
+        {
+            PlayerEntityComponent = GetComponentInChildren<EntityComponent>();
+        }
         
         void Update()
         {
@@ -75,18 +94,29 @@ namespace WorkingTitle.Unity.Gameplay
         
         Vector3 GetRandomPosition()
         {
-            var random = Random.insideUnitCircle * SpawnRadius;
-            return new Vector3(random.x, random.y);
-        }
-    }
+            var positionsInRadius = new List<Vector2Int>();
 
-    public class EnemySpawnedEventArgs
-    {
-        public GameObject Enemy { get; }
-        
-        public EnemySpawnedEventArgs(GameObject enemy)
-        {
-            Enemy = enemy;
+            for (var x = (int)-SpawnRadius; x < SpawnRadius; x++)
+            {
+                for (var y = (int)-SpawnRadius; y < SpawnRadius; y++)
+                {
+                    var deltaPosition = new Vector2Int(x, y);
+                    if (deltaPosition.magnitude > SpawnRadius) continue;
+
+                    var position = PlayerEntityComponent.CellPosition + deltaPosition;
+                    var cell = PathfindingComponent.GetCell(position);
+
+                    if (cell is null) continue;
+                    if (cell.IsObstacle) continue;
+                    
+                    positionsInRadius.Add(position);
+                }
+            }
+            
+            var randomIndex = Random.Range(0, positionsInRadius.Count);
+            var randomPosition = positionsInRadius[randomIndex];
+            
+            return randomPosition.ToWorld();
         }
     }
 }

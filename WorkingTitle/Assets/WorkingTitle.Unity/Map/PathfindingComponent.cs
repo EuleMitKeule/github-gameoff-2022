@@ -20,7 +20,6 @@ namespace WorkingTitle.Unity.Map
         public FlowField FlowField { get; private set; }
         
         public Vector2Int TargetCellPosition { get; private set; }
-        public Vector2Int TargetPositiveCellPosition { get; private set; }
         
         MapComponent MapComponent { get; set; }
         public EntityComponent PlayerEntityComponent { get; private set; }
@@ -43,9 +42,9 @@ namespace WorkingTitle.Unity.Map
             PlayerEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;
 
             var obstaclePositions = MapComponent
-                .ObstacleTilemaps
+                .GetObstacleTilemaps()
                 .GetTilePositions()
-                .ToPositive(MapComponent.Bounds)
+                .ToPositive(MapComponent.MapBounds)
                 .ToList();
             
             UpdateTarget();
@@ -61,9 +60,9 @@ namespace WorkingTitle.Unity.Map
                 if (HasTargetPositionChanged)
                 {
                     var obstaclePositions = MapComponent
-                        .ObstacleTilemaps
+                        .GetObstacleTilemaps()
                         .GetTilePositions()
-                        .ToPositive(MapComponent.Bounds)
+                        .ToPositive(MapComponent.MapBounds)
                         .ToList();
             
                     var thread = new Thread(() =>
@@ -84,22 +83,24 @@ namespace WorkingTitle.Unity.Map
         
         public PathfindingCell GetCell(Vector2Int position)
         {
+            var positivePosition = position.ToPositive(MapComponent.MapBounds);
+            
             if (FlowField is null)
             {
                 Debug.LogWarning("Cannot get cell because FlowField doesn't exist.");
                 return null;
             }
 
-            if (FlowField.GridSize.x <= position.x ||
-                FlowField.GridSize.y <= position.y ||
-                position.x < 0 ||
-                position.y < 0)
+            if (FlowField.GridSize.x <= positivePosition.x ||
+                FlowField.GridSize.y <= positivePosition.y ||
+                positivePosition.x < 0 ||
+                positivePosition.y < 0)
             {
                 
                 return null;
             }
             
-            return FlowField?.Cells[position.x][position.y];
+            return FlowField.Cells[positivePosition.x][positivePosition.y];
         }
 
         void OnPlayerCellPositionChanged(object sender, Vector2Int position)
@@ -112,14 +113,18 @@ namespace WorkingTitle.Unity.Map
             if (!PlayerEntityComponent) return;
          
             TargetCellPosition = PlayerEntityComponent.CellPosition;
-            TargetPositiveCellPosition = PlayerEntityComponent.PositiveCellPosition;
         }
 
         FlowField CalcFlowField(List<Vector2Int> obstaclePositions)
         {
             if (!PlayerEntityComponent) return null;
+
+            var targetPositiveCellPosition = TargetCellPosition.ToPositive(MapComponent.MapBounds);
             
-            var flowField = new FlowField(TargetPositiveCellPosition, obstaclePositions, MapComponent.GridSize);
+            var flowField = new FlowField(
+                targetPositiveCellPosition, 
+                obstaclePositions, 
+                MapComponent.MapSize);
             flowField.CalcCosts();
             flowField.CalcDirections();
 

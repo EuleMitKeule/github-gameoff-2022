@@ -24,7 +24,10 @@ namespace WorkingTitle.Unity.Gameplay
             var playerComponent = FindObjectOfType<PlayerComponent>();
             
             MapObject = mapComponent ? mapComponent.gameObject : Instantiate(MapPrefab, transform);
-            PlayerObject = playerComponent ? playerComponent.gameObject : Instantiate(PlayerPrefab, MapObject.transform);
+            mapComponent = MapObject.GetComponent<MapComponent>();
+
+            var centerPosition = new Vector2(mapComponent.ChunkSize / 2f, mapComponent.ChunkSize / 2f);
+            PlayerObject = playerComponent ? playerComponent.gameObject : Instantiate(PlayerPrefab, centerPosition, Quaternion.identity, MapObject.transform);
         }
     }
 }

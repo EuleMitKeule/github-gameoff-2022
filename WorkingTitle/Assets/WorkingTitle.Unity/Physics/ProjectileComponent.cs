@@ -11,16 +11,18 @@ namespace WorkingTitle.Unity.Physics
     public class ProjectileComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
-        float Damage { get; set; }
+        public float Damage { get; set; }
         
         [OdinSerialize]
-        float Ricochets { get; set; }
+        public float Ricochets { get; set; }
         
         [OdinSerialize]
         ContactFilter2D ContactFilter { get; set; }
         
         Rigidbody2D Rigidbody { get; set; }
         Collider2D Collider { get; set; }
+
+        public event EventHandler<DamageInflictedEventArgs> DamageInflicted;
 
         void Awake()
         {
@@ -54,6 +56,7 @@ namespace WorkingTitle.Unity.Physics
         {
             var healthComponent = other.GetComponentInParent<HealthComponent>();
             if (healthComponent) healthComponent.ChangeHealth(-Damage);
+            DamageInflicted?.Invoke(this, new DamageInflictedEventArgs(Damage));
         }
 
         void HandleRicochet(Vector2 contactNormal)
@@ -82,6 +85,11 @@ namespace WorkingTitle.Unity.Physics
                 distance);
             Array.Resize(ref hits, hitCount);
             return hits;
+        }
+
+        void OnBecameInvisible()
+        {
+            Destroy(gameObject);
         }
 
 #if UNITY_EDITOR

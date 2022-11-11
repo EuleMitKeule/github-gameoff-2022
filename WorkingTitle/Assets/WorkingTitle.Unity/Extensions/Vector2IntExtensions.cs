@@ -11,5 +11,8 @@ namespace WorkingTitle.Unity.Extensions
         
         public static IEnumerable<Vector2Int> ToPositive(this IEnumerable<Vector2Int> positions, BoundsInt bounds) => positions
             .Select(position => position.ToPositive(bounds));
+        
+        public static Vector2 ToWorld(this Vector2Int position) =>
+            new (position.x + 0.5f, position.y + 0.5f);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using WorkingTitle.Lib.Extensions;
 using WorkingTitle.Lib.Pathfinding;
 using WorkingTitle.Unity.Extensions;
 using WorkingTitle.Unity.Map;
@@ -15,10 +16,6 @@ namespace WorkingTitle.Unity.Physics
         [ShowInInspector]
         [ReadOnly]
         public Vector2Int CellPosition { get; private set; }
-        
-        [ShowInInspector]
-        [ReadOnly]
-        public Vector2Int PositiveCellPosition { get; private set; }
         
         [ShowInInspector]
         [ReadOnly]
@@ -38,7 +35,7 @@ namespace WorkingTitle.Unity.Physics
             MapComponent = GetComponentInParent<MapComponent>();
             
             UpdateCellPosition(true);
-            UpdateChunkDirection();
+            ChunkDirection = Direction.None;
         }
         
         void Update()
@@ -51,23 +48,37 @@ namespace WorkingTitle.Unity.Physics
         {
             if (!MapComponent) return;
             
-            var currentCellPosition = MapComponent.ToCell(Position);
+            var currentCellPosition = Position.ToCell();
 
             if (currentCellPosition == CellPosition && !force) return;
             
             CellPosition = currentCellPosition;
-            PositiveCellPosition = CellPosition.ToPositive(MapComponent.Bounds);
+            
             CellPositionChanged?.Invoke(this, CellPosition);
         }
 
         void UpdateChunkDirection()
         {
             if (!MapComponent) return;
+
+            var centerBounds = MapComponent.CenterChunkBounds;
+
+            var horizontalDirection = CellPosition.x < centerBounds.xMin
+                ? Direction.Left
+                : CellPosition.x > centerBounds.xMax ? 
+                    Direction.Right :
+                    Direction.None;
+            var verticalDirection = CellPosition.y < centerBounds.yMin
+                ? Direction.Down
+                : CellPosition.y > centerBounds.yMax ? 
+                    Direction.Up :
+                    Direction.None;
             
-            var currentChunkDirection = MapComponent.ToChunkDirection(CellPosition);
+            var direction = (horizontalDirection.ToVector2Int() + verticalDirection.ToVector2Int()).ToDirection();
             
-            if (currentChunkDirection == ChunkDirection) return;
-            ChunkDirection = currentChunkDirection;
+            if (direction == ChunkDirection) return;
+            
+            ChunkDirection = direction;
             ChunkChanged?.Invoke(this, ChunkDirection);
         }
     }
