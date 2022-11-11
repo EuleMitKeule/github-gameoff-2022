@@ -84,22 +84,24 @@ namespace WorkingTitle.Unity.Map
         
         public PathfindingCell GetCell(Vector2Int position)
         {
+            var positivePosition = position.ToPositive(MapComponent.Bounds);
+            
             if (FlowField is null)
             {
                 Debug.LogWarning("Cannot get cell because FlowField doesn't exist.");
                 return null;
             }
 
-            if (FlowField.GridSize.x <= position.x ||
-                FlowField.GridSize.y <= position.y ||
-                position.x < 0 ||
-                position.y < 0)
+            if (FlowField.GridSize.x <= positivePosition.x ||
+                FlowField.GridSize.y <= positivePosition.y ||
+                positivePosition.x < 0 ||
+                positivePosition.y < 0)
             {
                 
                 return null;
             }
             
-            return FlowField?.Cells[position.x][position.y];
+            return FlowField.Cells[positivePosition.x][positivePosition.y];
         }
 
         void OnPlayerCellPositionChanged(object sender, Vector2Int position)

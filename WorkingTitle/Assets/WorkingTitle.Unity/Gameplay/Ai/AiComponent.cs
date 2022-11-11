@@ -119,7 +119,7 @@ namespace WorkingTitle.Unity.Gameplay.Ai
         {
             if (!PathfindingComponent) return;
             
-            CurrentCell = PathfindingComponent.GetCell(EntityComponent.PositiveCellPosition);
+            CurrentCell = PathfindingComponent.GetCell(EntityComponent.CellPosition);
 
             if (CurrentCell is null) return;
 
