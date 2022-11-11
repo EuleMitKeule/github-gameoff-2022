@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using WorkingTitle.Lib.Extensions;
 using WorkingTitle.Lib.Pathfinding;
 using WorkingTitle.Unity.Extensions;
 using WorkingTitle.Unity.Gameplay;
@@ -18,39 +17,35 @@ namespace WorkingTitle.Unity.Map
     public class MapComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
+        public int ChunkSize { get; set; }
+
+        [OdinSerialize]
         [ValidateInput(nameof(IsAtLeastOneChunk), "There must be at least one chunk")]
         [ValidateInput(nameof(IsChunksSameSize), "All chunks must be the same size")]
         public List<GameObject> ChunkPrefabs { get; set; } = new();
-
-        [TitleGroup("Map")]
-        [ShowInInspector]
-        [ReadOnly]
-        public List<Tilemap> Tilemaps { get; private set; } = new();
         
-        [ShowInInspector]
-        [ReadOnly]
-        public List<Tilemap> WalkableTilemaps { get; private set; } = new();
+        [OdinSerialize]
+        Dictionary<TilemapType, Tilemap> Tilemaps { get; set; } = new();
         
-        [ShowInInspector]
-        [ReadOnly]
-        public List<Tilemap> ObstacleTilemaps { get; private set; } = new();
-        
-        [ShowInInspector]
-        [ReadOnly]
-        public BoundsInt Bounds { get; private set; }
-        
-        [ShowInInspector]
-        [ReadOnly]
-        public Vector2Int GridSize { get; private set; }
+        [OdinSerialize]
+        Dictionary<TilemapType, bool> TilemapIsWalkable { get; set; } = new();
 
         [ShowInInspector]
         [ReadOnly]
-        public Dictionary<Direction, ChunkComponent> ChunkComponents { get; private set; } = new();
+        public Vector2Int MapSize { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
-        Direction PlayerChunk { get; set; }
-
+        public BoundsInt MapBounds { get; set; }
+        
+        [ShowInInspector]
+        [ReadOnly]
+        public BoundsInt CenterChunkBounds { get; set; }
+        
+        [ShowInInspector]
+        [ReadOnly]
+        Vector2Int CenterChunkPosition { get; set; }
+        
         Grid Grid { get; set; }
         EntityComponent PlayerEntityComponent { get; set; }
 
@@ -68,6 +63,7 @@ namespace WorkingTitle.Unity.Map
         void Awake()
         {
             Grid = GetComponent<Grid>();
+            MapSize = new Vector2Int(3 * ChunkSize, 3 * ChunkSize);
         }
 
         void Start()
@@ -81,14 +77,66 @@ namespace WorkingTitle.Unity.Map
                 PlayerEntityComponent.ChunkChanged += OnChunkChanged;
             }
             
-            SpawnInitialChunk();
-            SpawnChunks(DirectionExtensions.CardinalAndInterCardinal);
+            SpawnChunks(DirectionExtensions.All);
+            UpdateBounds();
+        }
 
-            UpdateChunks();
+        void SpawnChunk(Direction direction)
+        {
+            var randomChunkIndex = Random.Range(0, ChunkPrefabs.Count);
+            var randomChunk = ChunkPrefabs[randomChunkIndex];
+            var chunkComponent = randomChunk.GetComponent<ChunkComponent>();
+            
+            var chunkPosition = (Vector3Int)(CenterChunkPosition + direction.ToVector2Int() * ChunkSize);
+            var fromBounds = new BoundsInt(Vector3Int.zero, new Vector3Int(ChunkSize, ChunkSize, 1));
+            var toBounds = new BoundsInt(chunkPosition, new Vector3Int(ChunkSize, ChunkSize, 1));
+            
+            foreach (var (sourceTilemapType, sourceTilemap) in chunkComponent.Tilemaps)
+            {
+                if (!Tilemaps.Keys.Contains(sourceTilemapType)) continue;
+                
+                var destinationTilemap = Tilemaps[sourceTilemapType];
+                
+                var tiles = sourceTilemap.GetTilesBlock(fromBounds);
+                destinationTilemap.SetTilesBlock(toBounds, tiles);
+                
+                destinationTilemap.CompressBounds();
+            }
+        }
+
+        void SpawnChunks(IEnumerable<Direction> directions)
+        {
+            foreach (var direction in directions)
+            {
+                SpawnChunk(direction);
+            }
+        }
+
+        void DeleteChunk(Direction direction)
+        {
+            var chunkPosition = (Vector3Int)(CenterChunkPosition + direction.ToVector2Int() * ChunkSize);
+            var bounds = new BoundsInt(chunkPosition, new Vector3Int(ChunkSize, ChunkSize, 1));
+            var tiles = new TileBase[ChunkSize * ChunkSize];
+            
+            foreach (var (_, tilemap) in Tilemaps)
+            {
+                tilemap.SetTilesBlock(bounds, tiles);
+                tilemap.CompressBounds();
+            }
+        }
+        
+        void DeleteChunks(IEnumerable<Direction> directions)
+        {
+            foreach (var direction in directions)
+            {
+                DeleteChunk(direction);
+            }
         }
 
         void OnChunkChanged(object sender, Direction direction)
         {
+            if (direction == Direction.None) return;
+            
             var directionsToAdd = direction switch
             {
                 _ when DirectionExtensions.Upwards.Contains(direction) => DirectionExtensions.Upwards.ToList(),
@@ -101,123 +149,35 @@ namespace WorkingTitle.Unity.Map
             var directionsToDelete = directionsToAdd.ToOpposite();
 
             DeleteChunks(directionsToDelete);
-            MoveChunks(direction.ToOpposite());
+            
+            CenterChunkPosition += direction.ToVector2Int() * ChunkSize;
+            
             SpawnChunks(directionsToAdd);
-            UpdateChunks();
+            UpdateBounds();
+            
+        }
+
+        void UpdateBounds()
+        {
+            var mapBounds = new BoundsInt(
+                (Vector3Int)CenterChunkPosition - new Vector3Int(ChunkSize, ChunkSize), 
+                new Vector3Int(ChunkSize * 3, ChunkSize * 3, 1));
+            mapBounds.ClampToBounds(mapBounds);
+            MapBounds = mapBounds;
+            
+            var centerBounds = new BoundsInt((Vector3Int)CenterChunkPosition, new Vector3Int(ChunkSize, ChunkSize, 1));
+            centerBounds.ClampToBounds(centerBounds);
+            CenterChunkBounds = centerBounds;
         }
         
-        void DeleteChunks(IEnumerable<Direction> directions)
-        {
-            foreach (var direction in directions)
-            {
-                if (!ChunkComponents[direction]) continue;
-                
-                var chunk = ChunkComponents[direction].gameObject;
-                Destroy(chunk);
-                ChunkComponents[direction] = null;
-            }
-        }
+        IEnumerable<Tilemap> GetWalkableTilemaps() => TilemapIsWalkable
+            .Keys
+            .Where(e => TilemapIsWalkable[e])
+            .Select(e => Tilemaps[e]);
 
-        void MoveChunks(Direction direction)
-        {
-            var chunkComponents = new Dictionary<Direction, ChunkComponent>();
-            var directionsNotToMove = direction switch
-            {
-                _ when DirectionExtensions.Upwards.Contains(direction) => DirectionExtensions.Upwards.ToList(),
-                _ when DirectionExtensions.Leftwards.Contains(direction) => DirectionExtensions.Leftwards.ToList(),
-                _ when DirectionExtensions.Downwards.Contains(direction) => DirectionExtensions.Downwards.ToList(),
-                _ when DirectionExtensions.Rightwards.Contains(direction) => DirectionExtensions.Rightwards.ToList(),
-                _ => new List<Direction>()
-            };
-            
-            var directionsToMove = DirectionExtensions.All.Except(directionsNotToMove);
-            
-            foreach (var chunkDirection in directionsToMove)
-            {
-                var chunkComponent = ChunkComponents[chunkDirection];
-                
-                if (!chunkComponent) continue;
-                
-                var newDirection = chunkDirection.MoveDirection(direction);
-                
-                chunkComponents[newDirection] = chunkComponent;
-            }
-
-            ChunkComponents = chunkComponents;
-        }
-        
-        void SpawnInitialChunk()
-        {
-            var randomIndex = Random.Range(0, ChunkPrefabs.Count);
-            var chunkPrefab = ChunkPrefabs[randomIndex];
-            
-            var chunk = Instantiate(chunkPrefab, transform);
-            var chunkComponent = chunk.GetComponent<ChunkComponent>();
-            
-            ChunkComponents[Direction.None] = chunkComponent;
-        }
-
-        void SpawnChunks(IEnumerable<Direction> directions)
-        {
-            foreach (var direction in directions)
-            {
-                SpawnChunk(direction);
-            }
-        }
-
-        void SpawnChunk(Direction direction)
-        {
-            if (direction == Direction.None) return;
-            if (!ChunkComponents[Direction.None]) return;
-            
-            var randomIndex = Random.Range(0, ChunkPrefabs.Count);
-            var chunkPrefab = ChunkPrefabs[randomIndex];
-
-            var centerBounds = ChunkComponents[Direction.None].Bounds;
-            var moveBounds = centerBounds.MoveBounds(direction);
-            
-            var chunk = Instantiate(chunkPrefab, transform);
-            var chunkComponent = chunk.GetComponent<ChunkComponent>();
-            
-            var tilemaps = chunk.GetComponentsInChildren<Tilemap>();
-            var oldChunkBounds = chunkComponent.Bounds;
-            
-            foreach (var tilemap in tilemaps)
-            {
-                tilemap.MoveTiles(oldChunkBounds, moveBounds);
-            }
-            
-            chunkComponent.Initialize(moveBounds.position);
-            ChunkComponents[direction] = chunkComponent;
-        }
-
-        void UpdateChunks()
-        {
-            var chunkComponents = ChunkComponents.Values;
-            
-            WalkableTilemaps = chunkComponents
-                .SelectMany(c => c.WalkableTilemaps)
-                .ToList();
-            ObstacleTilemaps = chunkComponents
-                .SelectMany(c => c.ObstacleTilemaps)
-                .ToList();
-            Tilemaps = chunkComponents
-                .SelectMany(c => c.Tilemaps)
-                .ToList();
-
-            var centerChunk = ChunkComponents[Direction.None];
-            
-            Bounds = Tilemaps.GetBounds(centerChunk.Bounds.position);
-            GridSize = (Vector2Int)Bounds.ToPositive().size;
-        }
-        
-        public Vector2 ToWorld(Vector2Int position) =>
-            Grid.CellToWorld((Vector3Int)position) + Grid.cellSize / 2;
-
-        public Vector2Int ToCell(Vector2 position) =>
-            (Vector2Int)Grid.WorldToCell(position);
-
-        public Direction ToChunkDirection(Vector2Int position) =>
-            ChunkComponents.GetChunk(position);
+        public IEnumerable<Tilemap> GetObstacleTilemaps() => TilemapIsWalkable
+            .Keys
+            .Where(e => !TilemapIsWalkable[e])
+            .Select(e => Tilemaps[e]);
     }
 }
