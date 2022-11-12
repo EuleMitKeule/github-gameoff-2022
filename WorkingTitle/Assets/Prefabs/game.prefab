@@ -53,6 +53,13 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 152961888976396738, guid: cf3884a4d56ac984ba25ab2c8f2bdacc, type: 3}
     - {fileID: 6064423492359556233, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
+    - {fileID: 11400000, guid: 044b86e224a071d42877a870feb4734c, type: 2}
+    - {fileID: 11400000, guid: b57325b1d5b30f449a42a38c95ec3c4f, type: 2}
+    - {fileID: 11400000, guid: 14ccc0737b2603c44ace66eab6e7e4ad, type: 2}
+    - {fileID: 11400000, guid: 826db66ec7dd60246a33e639e4f17d17, type: 2}
+    - {fileID: 11400000, guid: 4e242b58a46d4344d9ef5b6f9ffc5880, type: 2}
+    - {fileID: 11400000, guid: a4e4adbe1d2c42f48b75d7042225130b, type: 2}
+    - {fileID: 11400000, guid: f731ba0cc23823647ab41459f90c5ba5, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -64,6 +71,117 @@ MonoBehaviour:
     - Name: PlayerPrefab
       Entry: 10
       Data: 1
+    - Name: SkillAssets
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Gameplay.SkillType,
+        WorkingTitle.Unity],[WorkingTitle.Unity.Gameplay.SkillAsset, WorkingTitle.Unity]],
+        mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[WorkingTitle.Unity.Gameplay.SkillType,
+        WorkingTitle.Unity]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 7
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 10
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 10
+      Data: 6
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 10
+      Data: 7
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 11
+    - Name: $v
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!114 &7644001349263171074
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,7 +7,8 @@ namespace WorkingTitle.Unity.Gameplay
     public class DifficultyComponent : SerializedMonoBehaviour
     {
         [ShowInInspector]
-        public float Difficulty { get; private set; }
+        [ReadOnly]
+        public float Difficulty { get; private set; } = 1f;
         
         [OdinSerialize]
         [SuffixLabel("%/s")]

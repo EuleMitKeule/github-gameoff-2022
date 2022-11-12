@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Map;
@@ -14,6 +15,9 @@ namespace WorkingTitle.Unity.Gameplay
         [OdinSerialize]
         [Optional]
         GameObject PlayerPrefab { get; set; }
+        
+        [OdinSerialize]
+        public Dictionary<SkillType, SkillAsset> SkillAssets { get; set; }
 
         GameObject MapObject { get; set; }
         public GameObject PlayerObject { get; set; }

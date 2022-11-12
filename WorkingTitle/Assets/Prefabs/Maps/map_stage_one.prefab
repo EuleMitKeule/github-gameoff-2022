@@ -220,13 +220,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 4136862187117868514, guid: 186c16aee48d2934591f2da0206b70f7, type: 3}
-    - {fileID: 4472856794074153120, guid: 97753afdfd0e1954bb7a5ebf0d15c9e1, type: 3}
-    - {fileID: 7005487724714998332, guid: 38825d59e19870c4d9c35b74eecdb038, type: 3}
-    - {fileID: 6062020859922841093, guid: 116e5a31640d14e49b277652a1dc19b4, type: 3}
-    - {fileID: 429489426995876441, guid: 057356ae0c28aac4e8a15b8254fa0157, type: 3}
-    - {fileID: 5328066834422354929, guid: a3f1f51768881f44898dcb9c8acc9293, type: 3}
-    - {fileID: 5135982904818416073, guid: 170963ac58467e94d869fdb6fc976169, type: 3}
+    - {fileID: 11400000, guid: f1ce3b3cd5b776f40ae56ed097e80448, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -235,113 +229,18 @@ MonoBehaviour:
     - Name: SpawnRadius
       Entry: 4
       Data: 10
-    - Name: SpawnInterval
-      Entry: 4
-      Data: 5
-    - Name: EnemySpawnTable
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[UnityEngine.GameObject, UnityEngine.CoreModule],[System.Single,
-        mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.ObjectEqualityComparer`1[[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 7
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
+    - Name: SpawnTableAsset
       Entry: 10
       Data: 0
-    - Name: $v
+    - Name: MaxSpawnCooldown
       Entry: 4
-      Data: 0.1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
+      Data: 10
+    - Name: MinSpawnCooldown
+      Entry: 4
+      Data: 0.25
+    - Name: SpawnCooldownDifficultyModifier
+      Entry: 4
       Data: 1
-    - Name: $v
-      Entry: 4
-      Data: 0.1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
-      Data: 2
-    - Name: $v
-      Entry: 4
-      Data: 0.1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
-      Data: 3
-    - Name: $v
-      Entry: 4
-      Data: 0.1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
-      Data: 4
-    - Name: $v
-      Entry: 4
-      Data: 0.1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
-      Data: 5
-    - Name: $v
-      Entry: 4
-      Data: 0.1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 10
-      Data: 6
-    - Name: $v
-      Entry: 4
-      Data: 0.4
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!1 &705970985960160275
 GameObject:
   m_ObjectHideFlags: 0

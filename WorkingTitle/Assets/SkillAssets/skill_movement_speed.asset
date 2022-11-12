@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c97f1bbea3c24c9ca3ddd3fe918801b9, type: 3}
+  m_Name: skill_movement_speed
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 6062020859922841093, guid: 116e5a31640d14e49b277652a1dc19b4, type: 3}
+    - {fileID: 11400000, guid: 4bb5815739801154db963382014ae0a1, type: 2}
+    - {fileID: 6671529252599617783, guid: 68fb3d95c82bd13478ccf8afaa0888dd, type: 3}
+    - {fileID: 11400000, guid: 6e514e8ad81a2ad41b07621735fc25e0, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: TankPrefab
+      Entry: 10
+      Data: 0
+    - Name: TankAsset
+      Entry: 10
+      Data: 1
+    - Name: PowerUpPrefab
+      Entry: 10
+      Data: 2
+    - Name: PowerUpAsset
+      Entry: 10
+      Data: 3
