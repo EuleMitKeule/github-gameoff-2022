@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a951240eddc24422a57e9539f1ee4566, type: 3}
+  m_Name: tile_tumbleweed
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -919027030, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: 391062031, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: 1604844731, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: -1044412108, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: -766530702, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: -1038526163, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: -1933535955, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: 217189067, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: 1693677149, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: -1040923842, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: -528972073, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: -111662076, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: 989876086, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  - {fileID: 1031434983, guid: 25bfb92bb3ba27445a4e799e687f13e8, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

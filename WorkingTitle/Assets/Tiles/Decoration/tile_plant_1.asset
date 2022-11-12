@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a951240eddc24422a57e9539f1ee4566, type: 3}
+  m_Name: tile_plant_1
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -1083494616, guid: b1f2324bbcfb9c94e9a069e5ae17b372, type: 3}
+  - {fileID: 1079040778, guid: b1f2324bbcfb9c94e9a069e5ae17b372, type: 3}
+  - {fileID: 1879289358, guid: b1f2324bbcfb9c94e9a069e5ae17b372, type: 3}
+  - {fileID: -1279302219, guid: b1f2324bbcfb9c94e9a069e5ae17b372, type: 3}
+  - {fileID: -1220085075, guid: b1f2324bbcfb9c94e9a069e5ae17b372, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 5
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 54d3af22d726aa240b750d754c66f647
+guid: a26d21c3781214344942553224ef4b6f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,7 +117,595 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: desert_ground_0
+      name: street_details_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7429cb2058016a43b9f1f48077ce84e
+      internalID: -1764973676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2699d19093683a45b9bf065da06c241
+      internalID: -1756685998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abf9f6d883c0ef643b4a110a6629a7a3
+      internalID: 1278324315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aac998ade33f2846bac72834b5d7bbc
+      internalID: -16030205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_4
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c2c622a1eb186448a1e64c3ec0d246f
+      internalID: 1413885605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef52038964e52e749bfa8d28283e7c93
+      internalID: -997627961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d9438f4d66764146a1109dd6287fabb
+      internalID: -1464230437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_7
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63b22365538e47f46ac4ce8b94c7edcc
+      internalID: 232148188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_8
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64323b778a5362a4b9ea493e16d279e7
+      internalID: -1197076976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38828426cfa738845ba8d61efaf925ce
+      internalID: 227353741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_10
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 447796f8440b15241891da4103646718
+      internalID: 1906980493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_11
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1731bbbfa8153a649a2ec3bf7a036994
+      internalID: -681100451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62caed4d711268145bbd09b3f25e217e
+      internalID: 452098175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_13
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6eda6d01db76344995dfd6565021b04
+      internalID: -1379143220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_14
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0badde908f783094080bef9839a5882f
+      internalID: -1522140581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2009d498faf0bc488c5043088da8458
+      internalID: -182123421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_16
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8b6e08d5045a9a43a59e8a50884b6a7
+      internalID: -1795502952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_17
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a241ff28633d6a44a8b516248ac60bde
+      internalID: -782309730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd59a5bc654a9b54ea4e8e8e3b5f8abc
+      internalID: 1063933292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_19
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18ee423902b9dfd4d8ac8e4993718a45
+      internalID: 1763742285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_20
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9b6c999802838243976252094560b5b
+      internalID: -617041761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc4b47c9db87b694bb023960946aadf4
+      internalID: -1379732620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_22
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d68a326bb709d3241996b6aa2e859e95
+      internalID: 1913940477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_23
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44f3348b8fad63448a9df32f0e09ef80
+      internalID: 131640772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0697d1f5d4d05f7488677e03f6eed6c7
+      internalID: 1382012706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_25
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a9945bf7f64d4a4397d39af78e65586
+      internalID: -1079096729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_26
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92c13dbb64216cf419aa08bb4ab2c30e
+      internalID: 503899338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_27
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 555b6930e8acd1a48af3cc9a4f3b11eb
+      internalID: -606101301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: street_details_28
       rect:
         serializedVersion: 2
         x: 16
@@ -131,14 +719,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4892853ffe736c04b947b6b108064799
-      internalID: 688078644
+      spriteID: 877d61645495a684d85096cd12577690
+      internalID: 1902897413
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_1
+      name: street_details_29
       rect:
         serializedVersion: 2
         x: 32
@@ -152,77 +740,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10d5cb78d232b7b4889b59b2b6a2deb4
-      internalID: 1266619107
+      spriteID: d389b473beb04c14baf1eba206682232
+      internalID: 444748301
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_2
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 96
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 48b3d54003c1e024280ef30bc35e7bab
-      internalID: -1111762046
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_3
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 96
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96c964dc58eaba54a8ac8faaa20629af
-      internalID: 1703128312
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_4
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 96
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63b132a4cc3317c43a3a09c214361f7e
-      internalID: -1397830764
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_5
+      name: street_details_30
       rect:
         serializedVersion: 2
         x: 0
@@ -236,14 +761,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f283049d602989146b682a62f09c74d4
-      internalID: -648507356
+      spriteID: 52321dfd331f0f945a6c367e46213757
+      internalID: -2143543897
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_6
+      name: street_details_31
       rect:
         serializedVersion: 2
         x: 16
@@ -257,14 +782,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efe116644fd634e4396567fafcea78d6
-      internalID: -126415766
+      spriteID: 65c41003851dc0747bd4119fbf406852
+      internalID: 1928635102
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_7
+      name: street_details_32
       rect:
         serializedVersion: 2
         x: 32
@@ -278,98 +803,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9742fd99a836aed48b10ae790a6f5197
-      internalID: -587368257
+      spriteID: 2c320c9ee5456ed4ebc14897f65a1a4f
+      internalID: 598903789
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_8
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 38b33f53e5d057f4bbf382ac49c93b0d
-      internalID: -1247928558
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_9
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4fc6e567b75a50d46bc7011d01fb858c
-      internalID: 868016625
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_10
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53e85bf457fcbb34ba2397643528a166
-      internalID: -1745480320
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_11
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 80
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dd7477b83b2275c4b953db637287376c
-      internalID: -1204845086
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_12
+      name: street_details_33
       rect:
         serializedVersion: 2
         x: 0
@@ -383,14 +824,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 233dabd807db7b0459ed14ab334604e3
-      internalID: -1928749496
+      spriteID: 41dfde52c04d1e041bcdd2e28eda3380
+      internalID: -386336403
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_13
+      name: street_details_34
       rect:
         serializedVersion: 2
         x: 16
@@ -404,14 +845,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f43c8079ae00b348b0bf0576f534984
-      internalID: -758189375
+      spriteID: 3c26c05fbfc0adf4283f38c9851fcd92
+      internalID: -401565234
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_14
+      name: street_details_35
       rect:
         serializedVersion: 2
         x: 32
@@ -425,98 +866,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b9e8fed5679d774e9660e4640e24aec
-      internalID: -1297897280
+      spriteID: bea143b5fa7f1b84da2a685112ca4943
+      internalID: -1697916632
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_15
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 64
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 293b911648c31f448b15d04ddd98300f
-      internalID: 2086526219
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_16
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ccab7767e4dd9d84a869dfa2552356da
-      internalID: -1379067211
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_17
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 64
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8110a206a7db2d54ba8f3d621797ef88
-      internalID: -425432116
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_18
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 64
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 34e643ebf9f146245895a136f4f605b6
-      internalID: 710447926
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_19
+      name: street_details_36
       rect:
         serializedVersion: 2
         x: 0
@@ -530,14 +887,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c0c5b765f7ba6b4d9c072b059b2e04c
-      internalID: 1223661844
+      spriteID: 23423832e82b66a4aa638d175abcb333
+      internalID: 867176355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_20
+      name: street_details_37
       rect:
         serializedVersion: 2
         x: 16
@@ -551,14 +908,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6f5980a8735d71044a87f6eaf34ebe4b
-      internalID: 1038634210
+      spriteID: badff680a00069a40b7fb84c29713a52
+      internalID: -232968305
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_21
+      name: street_details_38
       rect:
         serializedVersion: 2
         x: 32
@@ -572,77 +929,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d1bf4946224bf248882a06828bc2d6a
-      internalID: 1201761793
+      spriteID: 46a343af6841c724bac4c763a79fa7f1
+      internalID: -1737366729
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_22
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e5481f7acf9cfb4192f12c428a9d5dd
-      internalID: 784309187
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_23
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a3025237578cba249aa176d41a238a18
-      internalID: 1367345643
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_24
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 485470b74c00fc448b19e177cdc0dc98
-      internalID: -778114124
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_25
+      name: street_details_39
       rect:
         serializedVersion: 2
         x: 0
@@ -656,14 +950,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d3bfb3ba212579428cdfabbf2ca71cf
-      internalID: 1597490741
+      spriteID: e8a0f377d162b284cb02144a0176b172
+      internalID: 1077880935
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_26
+      name: street_details_40
       rect:
         serializedVersion: 2
         x: 16
@@ -677,14 +971,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92161e55a91c10e4cbe473982dd546b8
-      internalID: 1895070881
+      spriteID: a4a07e497c305cf46a49b481bc83c82f
+      internalID: -196520592
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_27
+      name: street_details_41
       rect:
         serializedVersion: 2
         x: 32
@@ -698,98 +992,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 762a4f04dfbdac74e9da33938d836d1c
-      internalID: -9699576
+      spriteID: c2718add76919004b8ddbbb99d320f8c
+      internalID: -1291591587
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_28
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f2498590d35e5e74e9393d06adf8bb0c
-      internalID: 799554338
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_29
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6072dcdcca9842343b192f617a0fb263
-      internalID: 353936658
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_30
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 85ab9785a68f99d4a9f09eb313b8fc09
-      internalID: 1143411841
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_31
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 23e0f80c9150d1f42acbdaa8f1aa6ba8
-      internalID: -1306229042
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_32
+      name: street_details_42
       rect:
         serializedVersion: 2
         x: 0
@@ -803,14 +1013,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb0824fb8e1b9f24bbc0d5d6224832b3
-      internalID: -1579741198
+      spriteID: 4037e71eae8502d4f8aff785d36c60b6
+      internalID: 1130494088
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_33
+      name: street_details_43
       rect:
         serializedVersion: 2
         x: 16
@@ -824,14 +1034,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fab1238983d34db41975b23c62c66077
-      internalID: -511262960
+      spriteID: 67e75585382dd254a96ca2e7c20fa348
+      internalID: 1790629067
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_34
+      name: street_details_44
       rect:
         serializedVersion: 2
         x: 32
@@ -845,18 +1055,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 428a27a073481f04faa083137bcbe30a
-      internalID: -1633097409
+      spriteID: c1e8888deb6af964a9f0e6b2898da3bf
+      internalID: 1012807144
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_35
+      name: street_details_45
       rect:
         serializedVersion: 2
-        x: 48
-        y: 16
+        x: 0
+        y: 0
         width: 16
         height: 16
       alignment: 0
@@ -866,77 +1076,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9627ababc61676740b4384e1aece6117
-      internalID: 870921787
+      spriteID: 05f1afd92630c714592fc099790e3921
+      internalID: 1610897860
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_36
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b75da60cd996ba742bd5d5a2ff437593
-      internalID: 1586072471
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_37
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e447821a471f3f84d8829a659dab805a
-      internalID: -105402510
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_38
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b45dba4bb2d76da4d813fb65da56bf85
-      internalID: 1947968232
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_39
+      name: street_details_46
       rect:
         serializedVersion: 2
         x: 16
@@ -950,14 +1097,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73c918ad2289b4f4ab12b99315b43171
-      internalID: 1443672434
+      spriteID: 2636acb7e47f8964c9303ec6dfd75936
+      internalID: -925680219
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: desert_ground_40
+      name: street_details_47
       rect:
         serializedVersion: 2
         x: 32
@@ -971,71 +1118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d45083be12a63db448a6b6c074126694
-      internalID: -1212925317
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_41
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0dd1f61d32ee92346876cadcc861c9e6
-      internalID: -1617382959
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_42
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2f224cc3b2a8f234da0e7630c5f44cb8
-      internalID: -290531940
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: desert_ground_43
-      rect:
-        serializedVersion: 2
-        x: 80
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ca0b92f87b870ef40849d3374c76b480
-      internalID: -1634732281
+      spriteID: 2892408937bea10499f250d47f39bfa0
+      internalID: 1342176939
       vertices: []
       indices: 
       edges: []
@@ -1051,50 +1135,54 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      desert_ground_14: -1297897280
-      desert_ground_38: 1947968232
-      desert_ground_8: -1247928558
-      desert_ground_2: -1111762046
-      desert_ground_1: 1266619107
-      desert_ground_12: -1928749496
-      desert_ground_37: -105402510
-      desert_ground_19: 1223661844
-      desert_ground_29: 353936658
-      desert_ground_34: -1633097409
-      desert_ground_6: -126415766
-      desert_ground_28: 799554338
-      desert_ground_43: -1634732281
-      desert_ground_20: 1038634210
-      desert_ground_24: -778114124
-      desert_ground_5: -648507356
-      desert_ground_13: -758189375
-      desert_ground_40: -1212925317
-      desert_ground_15: 2086526219
-      desert_ground_36: 1586072471
-      desert_ground_9: 868016625
-      desert_ground_23: 1367345643
-      desert_ground_18: 710447926
-      desert_ground_22: 784309187
-      desert_ground_39: 1443672434
-      desert_ground_35: 870921787
-      desert_ground_42: -290531940
-      desert_ground_17: -425432116
-      desert_ground_41: -1617382959
-      desert_ground_11: -1204845086
-      desert_ground_21: 1201761793
-      desert_ground_10: -1745480320
-      desert_ground_4: -1397830764
-      desert_ground_0: 688078644
-      desert_ground_33: -511262960
-      desert_ground_26: 1895070881
-      desert_ground_7: -587368257
-      desert_ground_32: -1579741198
-      desert_ground_27: -9699576
-      desert_ground_30: 1143411841
-      desert_ground_3: 1703128312
-      desert_ground_31: -1306229042
-      desert_ground_25: 1597490741
-      desert_ground_16: -1379067211
+      street_details_31: 1928635102
+      street_details_47: 1342176939
+      street_details_39: 1077880935
+      street_details_27: -606101301
+      street_details_1: -1756685998
+      street_details_21: -1379732620
+      street_details_36: 867176355
+      street_details_22: 1913940477
+      street_details_20: -617041761
+      street_details_2: 1278324315
+      street_details_33: -386336403
+      street_details_46: -925680219
+      street_details_11: -681100451
+      street_details_37: -232968305
+      street_details_40: -196520592
+      street_details_8: -1197076976
+      street_details_30: -2143543897
+      street_details_28: 1902897413
+      street_details_13: -1379143220
+      street_details_17: -782309730
+      street_details_14: -1522140581
+      street_details_23: 131640772
+      street_details_38: -1737366729
+      street_details_5: -997627961
+      street_details_42: 1130494088
+      street_details_3: -16030205
+      street_details_41: -1291591587
+      street_details_0: -1764973676
+      street_details_15: -182123421
+      street_details_26: 503899338
+      street_details_44: 1012807144
+      street_details_16: -1795502952
+      street_details_6: -1464230437
+      street_details_24: 1382012706
+      street_details_35: -1697916632
+      street_details_9: 227353741
+      street_details_32: 598903789
+      street_details_43: 1790629067
+      street_details_25: -1079096729
+      street_details_19: 1763742285
+      street_details_10: 1906980493
+      street_details_29: 444748301
+      street_details_34: -401565234
+      street_details_45: 1610897860
+      street_details_12: 452098175
+      street_details_7: 232148188
+      street_details_4: 1413885605
+      street_details_18: 1063933292
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
