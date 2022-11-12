@@ -272,6 +272,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: game
       objectReference: {fileID: 0}
+    - target: {fileID: 3024224066351827714, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3080588550860022913, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
@@ -300,6 +304,10 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7644001349263171074, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 7644001349263171074, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
     - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: serializationData.Prefab
       value: 

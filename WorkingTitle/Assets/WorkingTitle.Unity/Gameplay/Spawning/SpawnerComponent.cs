@@ -13,53 +13,52 @@ using Random = UnityEngine.Random;
 
 namespace WorkingTitle.Unity.Gameplay.Spawning
 {
-    [RequireComponent(typeof(PathfindingComponent))]
     public class SpawnerComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
         float SpawnRadius { get; set; }
         
         [OdinSerialize]
-        float SpawnInterval { get; set; }
-
+        SpawnTableAsset SpawnTableAsset { get; set; }
+        
         [OdinSerialize]
-        [ValidateInput(nameof(IsEnemySpawnTableNotEmpty), "Enemy Spawn Table must contain at least one entry")]
-        [ValidateInput(nameof(IsEnemySpawnTableNotContainsNull), "Enemy Spawn Table must not contain null entries")]
-        [ValidateInput(nameof(IsEnemySpawnTableWeightsSumOne), "Enemy Spawn Table weights must sum up to 1")]
-        [ValidateInput(nameof(IsEnemySpawnTableNotContainsZero), "Enemy Spawn Table must not contain zero weights")]
-        Dictionary<GameObject, float> EnemySpawnTable { get; set; } = new();
+        [MinValue(0)]
+        float MaxSpawnCooldown { get; set; }
+        
+        [OdinSerialize]
+        [MinValue(0)]
+        float MinSpawnCooldown { get; set; }
+        
+        [OdinSerialize]
+        [MinValue(0)]
+        float SpawnCooldownDifficultyModifier { get; set; }
         
         float LastSpawnTime { get; set; }
+        
+        float SpawnCooldown { get; set; }
 
         PathfindingComponent PathfindingComponent { get; set; }
         EntityComponent PlayerEntityComponent { get; set; }
+        DifficultyComponent DifficultyComponent { get; set; }
+        GameComponent GameComponent { get; set; }
         
         public event EventHandler<EnemySpawnedEventArgs> EnemySpawned;
-        
-        # region Editor
-        
-        bool IsEnemySpawnTableNotEmpty => EnemySpawnTable is null || EnemySpawnTable.Count > 0;
-        bool IsEnemySpawnTableWeightsSumOne => EnemySpawnTable is null || Math.Abs(EnemySpawnTable.Values.Sum() - 1) < float.Epsilon;
-        bool IsEnemySpawnTableNotContainsNull => EnemySpawnTable?.Keys.All(key => key != null) ?? true;
-        bool IsEnemySpawnTableNotContainsZero => EnemySpawnTable?.Values.All(value => value != 0) ?? true;
-        
-        # endregion
-
-        void Awake()
-        {
-            PathfindingComponent = GetComponent<PathfindingComponent>();
-        }
         
         void Start()
         {
             PlayerEntityComponent = GetComponentInChildren<EntityComponent>();
+            PathfindingComponent = GetComponentInChildren<PathfindingComponent>();
+            DifficultyComponent = GetComponentInParent<DifficultyComponent>();
+            GameComponent = GetComponentInParent<GameComponent>();
         }
         
         void Update()
         {
-            if (Time.time - LastSpawnTime > SpawnInterval)
+            if (Time.time - LastSpawnTime > SpawnCooldown)
             {
                 SpawnEnemy();
+
+                SpawnCooldown = CalculateSpawnCooldown();
                 LastSpawnTime = Time.time;
             }
         }
@@ -68,24 +67,40 @@ namespace WorkingTitle.Unity.Gameplay.Spawning
         {
             var enemyPrefab = GetRandomEnemy();
             var position = GetRandomPosition();
+            
             var enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
             enemy.transform.SetParent(transform);
             
+            var healthComponent = enemy.GetComponent<HealthComponent>();
+            if (healthComponent) healthComponent.MaxHealth *= DifficultyComponent.Difficulty;
+
             EnemySpawned?.Invoke(this, new EnemySpawnedEventArgs(enemy));
         }
         
         GameObject GetRandomEnemy()
         {
             var random = Random.Range(0f, 1f);
-            var sum = 0f;
             
-            foreach (var entry in EnemySpawnTable)
+            var availableEntries = SpawnTableAsset.SpawnTable
+                .Where(pair => pair.Value.MinSpawnDifficulty <= DifficultyComponent.Difficulty)
+                .ToList();
+
+            var weights = availableEntries
+                .Select(pair => new KeyValuePair<SkillType, float>(pair.Key, pair.Value.CalculateSpawnWeight(DifficultyComponent.Difficulty)))
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
+
+            var weightSum = weights.Sum(pair => pair.Value);
+
+            var runningWeight = 0f;
+            
+            foreach (var (skillType, weight) in weights)
             {
-                sum += entry.Value;
+                var scaledWeight = weight / weightSum;
+                runningWeight += scaledWeight;
                 
-                if (random <= sum)
+                if (runningWeight >= random)
                 {
-                    return entry.Key;
+                    return GameComponent.SkillAssets[skillType].TankPrefab;
                 }
             }
             
@@ -118,5 +133,9 @@ namespace WorkingTitle.Unity.Gameplay.Spawning
             
             return randomPosition.ToWorld();
         }
+
+        float CalculateSpawnCooldown() => 
+            MaxSpawnCooldown - 2 * (MaxSpawnCooldown - MinSpawnCooldown) / Mathf.PI *
+            Mathf.Atan(SpawnCooldownDifficultyModifier * DifficultyComponent.Difficulty);
     }
 }

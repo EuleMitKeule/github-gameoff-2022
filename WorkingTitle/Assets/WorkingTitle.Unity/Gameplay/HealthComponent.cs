@@ -12,7 +12,7 @@ namespace WorkingTitle.Unity.Gameplay
         float Health { get; set; }
         
         [OdinSerialize]
-        float MaxHealth { get; set; }
+        public float MaxHealth { get; set; }
 
         public event EventHandler Death;
         public event EventHandler<HealthChangedEventArgs> HealthChanged;

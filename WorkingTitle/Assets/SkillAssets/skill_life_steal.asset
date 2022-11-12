@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c97f1bbea3c24c9ca3ddd3fe918801b9, type: 3}
+  m_Name: skill_life_steal
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 7005487724714998332, guid: 38825d59e19870c4d9c35b74eecdb038, type: 3}
+    - {fileID: 11400000, guid: 51350b26a7613794d8ebe2fa861f8f0c, type: 2}
+    - {fileID: 787429869459007135, guid: cece9c66597a0384b9fd690085d8f5b9, type: 3}
+    - {fileID: 11400000, guid: d3ed7aaaedc3c98478ad10d2db099e8f, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: TankPrefab
+      Entry: 10
+      Data: 0
+    - Name: TankAsset
+      Entry: 10
+      Data: 1
+    - Name: PowerUpPrefab
+      Entry: 10
+      Data: 2
+    - Name: PowerUpAsset
+      Entry: 10
+      Data: 3
