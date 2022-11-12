@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 723799196888635256}
   - component: {fileID: 723799196888635257}
   - component: {fileID: 7644001349263171074}
+  - component: {fileID: 3024224066351827714}
   m_Layer: 0
   m_Name: game
   m_TagString: Untagged
@@ -84,6 +85,30 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+--- !u!114 &3024224066351827714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723799196888635258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecdd0302a642453794313345ed472ac6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: DifficultyScaling
+      Entry: 4
+      Data: 1
 --- !u!1 &3080588550860022916
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,34 +20,48 @@ namespace WorkingTitle.Unity.Gameplay.Spawning
         float SpawnRadius { get; set; }
         
         [OdinSerialize]
-        float SpawnInterval { get; set; }
+        float SpawnCooldown { get; set; }
 
         [OdinSerialize]
-        [ValidateInput(nameof(IsEnemySpawnTableNotEmpty), "Enemy Spawn Table must contain at least one entry")]
-        [ValidateInput(nameof(IsEnemySpawnTableNotContainsNull), "Enemy Spawn Table must not contain null entries")]
-        [ValidateInput(nameof(IsEnemySpawnTableWeightsSumOne), "Enemy Spawn Table weights must sum up to 1")]
-        [ValidateInput(nameof(IsEnemySpawnTableNotContainsZero), "Enemy Spawn Table must not contain zero weights")]
+        // [ValidateInput(nameof(IsEnemySpawnTableNotEmpty), "Enemy Spawn Table must contain at least one entry")]
+        // [ValidateInput(nameof(IsEnemySpawnTableNotContainsNull), "Enemy Spawn Table must not contain null entries")]
+        // [ValidateInput(nameof(IsEnemySpawnTableWeightsSumOne), "Enemy Spawn Table weights must sum up to 1")]
+        // [ValidateInput(nameof(IsEnemySpawnTableNotContainsZero), "Enemy Spawn Table must not contain zero weights")]
         Dictionary<GameObject, float> EnemySpawnTable { get; set; } = new();
+        
+        [OdinSerialize]
+        [MinValue(0)]
+        float MaxSpawnCooldown { get; set; }
+        
+        [OdinSerialize]
+        [MinValue(0)]
+        float MinSpawnCooldown { get; set; }
+        
+        [OdinSerialize]
+        [MinValue(0)]
+        float SpawnCooldownDifficultyModifier { get; set; }
         
         float LastSpawnTime { get; set; }
 
         PathfindingComponent PathfindingComponent { get; set; }
         EntityComponent PlayerEntityComponent { get; set; }
+        DifficultyComponent DifficultyComponent { get; set; }
         
         public event EventHandler<EnemySpawnedEventArgs> EnemySpawned;
         
         # region Editor
         
-        bool IsEnemySpawnTableNotEmpty => EnemySpawnTable is null || EnemySpawnTable.Count > 0;
-        bool IsEnemySpawnTableWeightsSumOne => EnemySpawnTable is null || Math.Abs(EnemySpawnTable.Values.Sum() - 1) < float.Epsilon;
-        bool IsEnemySpawnTableNotContainsNull => EnemySpawnTable?.Keys.All(key => key != null) ?? true;
-        bool IsEnemySpawnTableNotContainsZero => EnemySpawnTable?.Values.All(value => value != 0) ?? true;
+        // bool IsEnemySpawnTableNotEmpty => EnemySpawnTable is null || EnemySpawnTable.Count > 0;
+        // bool IsEnemySpawnTableWeightsSumOne => EnemySpawnTable is null || Math.Abs(EnemySpawnTable.Values.Sum() - 1) < float.Epsilon;
+        // bool IsEnemySpawnTableNotContainsNull => EnemySpawnTable?.Keys.All(key => key != null) ?? true;
+        // bool IsEnemySpawnTableNotContainsZero => EnemySpawnTable?.Values.All(value => value != 0) ?? true;
         
         # endregion
 
         void Awake()
         {
             PathfindingComponent = GetComponent<PathfindingComponent>();
+            DifficultyComponent = GetComponentInParent<DifficultyComponent>();
         }
         
         void Start()
@@ -57,9 +71,11 @@ namespace WorkingTitle.Unity.Gameplay.Spawning
         
         void Update()
         {
-            if (Time.time - LastSpawnTime > SpawnInterval)
+            if (Time.time - LastSpawnTime > SpawnCooldown)
             {
                 SpawnEnemy();
+
+                SpawnCooldown = CalculateSpawnCooldown();
                 LastSpawnTime = Time.time;
             }
         }
@@ -68,9 +84,13 @@ namespace WorkingTitle.Unity.Gameplay.Spawning
         {
             var enemyPrefab = GetRandomEnemy();
             var position = GetRandomPosition();
+            
             var enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
             enemy.transform.SetParent(transform);
             
+            var healthComponent = GetComponent<HealthComponent>();
+            healthComponent.MaxHealth *= DifficultyComponent.Difficulty;
+
             EnemySpawned?.Invoke(this, new EnemySpawnedEventArgs(enemy));
         }
         
@@ -78,6 +98,7 @@ namespace WorkingTitle.Unity.Gameplay.Spawning
         {
             var random = Random.Range(0f, 1f);
             var sum = 0f;
+            
             
             foreach (var entry in EnemySpawnTable)
             {
@@ -118,5 +139,9 @@ namespace WorkingTitle.Unity.Gameplay.Spawning
             
             return randomPosition.ToWorld();
         }
+
+        float CalculateSpawnCooldown() => 
+            MaxSpawnCooldown - 2 * (MaxSpawnCooldown - MinSpawnCooldown) / Mathf.PI *
+            Mathf.Atan(SpawnCooldownDifficultyModifier * DifficultyComponent.Difficulty);
     }
 }
