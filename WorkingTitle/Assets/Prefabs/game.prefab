@@ -51,137 +51,15 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 152961888976396738, guid: cf3884a4d56ac984ba25ab2c8f2bdacc, type: 3}
-    - {fileID: 6064423492359556233, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
-    - {fileID: 11400000, guid: 044b86e224a071d42877a870feb4734c, type: 2}
-    - {fileID: 11400000, guid: b57325b1d5b30f449a42a38c95ec3c4f, type: 2}
-    - {fileID: 11400000, guid: 14ccc0737b2603c44ace66eab6e7e4ad, type: 2}
-    - {fileID: 11400000, guid: 826db66ec7dd60246a33e639e4f17d17, type: 2}
-    - {fileID: 11400000, guid: 4e242b58a46d4344d9ef5b6f9ffc5880, type: 2}
-    - {fileID: 11400000, guid: a4e4adbe1d2c42f48b75d7042225130b, type: 2}
-    - {fileID: 11400000, guid: f731ba0cc23823647ab41459f90c5ba5, type: 2}
+    - {fileID: 11400000, guid: 327c8243594d3a44288cfbe623339d8c, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: MapPrefab
+    - Name: GameAsset
       Entry: 10
       Data: 0
-    - Name: PlayerPrefab
-      Entry: 10
-      Data: 1
-    - Name: SkillAssets
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Gameplay.SkillType,
-        WorkingTitle.Unity],[WorkingTitle.Unity.Gameplay.SkillAsset, WorkingTitle.Unity]],
-        mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[WorkingTitle.Unity.Gameplay.SkillType,
-        WorkingTitle.Unity]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 7
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
-    - Name: $v
-      Entry: 10
-      Data: 4
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 4
-    - Name: $v
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 5
-    - Name: $v
-      Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 6
-    - Name: $v
-      Entry: 10
-      Data: 7
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 11
-    - Name: $v
-      Entry: 10
-      Data: 8
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!114 &7644001349263171074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,15 +96,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: ad366549fd6305d40befc98ff89de53e, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: DifficultyScaling
-      Entry: 4
-      Data: 1
+    - Name: DifficultyAsset
+      Entry: 10
+      Data: 0
 --- !u!1 &3080588550860022916
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +120,7 @@ GameObject:
   - component: {fileID: 3080588550860022912}
   - component: {fileID: 1362492140843822863}
   - component: {fileID: 8640920481240166805}
+  - component: {fileID: 293397272}
   m_Layer: 0
   m_Name: camera_main
   m_TagString: MainCamera
@@ -255,7 +135,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3080588550860022916}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -287,11 +167,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -401,21 +281,50 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 44aa77cc63e4dd344a382e84a2cb888e, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: MaxDistance
-      Entry: 4
-      Data: 8
-    - Name: MouseFollowDamping
-      Entry: 4
-      Data: 0.5
-    - Name: CameraCorrectionMode
-      Entry: 3
-      Data: 2
+    - Name: CameraAsset
+      Entry: 10
+      Data: 0
+--- !u!114 &293397272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3080588550860022916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5081341724362525028
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2192406163711527557}
   - component: {fileID: 6601285349627229928}
+  - component: {fileID: 1450496992}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -460,3 +370,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1450496992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5081341724362525028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BindingMode: 1
+  m_FollowOffset: {x: 0, y: 0, z: -10}
+  m_XDamping: 2.5
+  m_YDamping: 2.5
+  m_ZDamping: 2.5
+  m_AngularDampingMode: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AngularDamping: 0
