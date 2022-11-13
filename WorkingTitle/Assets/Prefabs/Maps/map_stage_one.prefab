@@ -53,7 +53,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 3531549421207840464, guid: 2720f3eb8f964e443a9d2bbfc80cf775, type: 3}
+    - {fileID: 11400000, guid: cdb7d5ef949530c43963782967c32467, type: 2}
     - {fileID: 229573937279413141}
     - {fileID: 1626386099338604879}
     SerializedBytesString: 
@@ -61,33 +61,17 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: ChunkSize
-      Entry: 3
-      Data: 22
-    - Name: ChunkPrefabs
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
+    - Name: MapAsset
       Entry: 10
       Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: Tilemaps
       Entry: 7
-      Data: 1|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Map.TilemapType,
+      Data: 0|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Components.Map.TilemapType,
         WorkingTitle.Unity],[UnityEngine.Tilemaps.Tilemap, UnityEngine.TilemapModule]],
         mscorlib
     - Name: comparer
       Entry: 7
-      Data: 2|System.Collections.Generic.EnumEqualityComparer`1[[WorkingTitle.Unity.Map.TilemapType,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[WorkingTitle.Unity.Components.Map.TilemapType,
         WorkingTitle.Unity]], mscorlib
     - Name: 
       Entry: 12
@@ -122,46 +106,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: TilemapIsWalkable
-      Entry: 7
-      Data: 3|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Map.TilemapType,
-        WorkingTitle.Unity],[System.Boolean, mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 9
-      Data: 2
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 5
-      Data: false
     - Name: 
       Entry: 8
       Data: 
@@ -220,26 +164,18 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: fe6bb1c73d6b94845913c959c868987a, type: 2}
     - {fileID: 11400000, guid: f1ce3b3cd5b776f40ae56ed097e80448, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: SpawnRadius
-      Entry: 4
-      Data: 10
-    - Name: SpawnTableAsset
+    - Name: SpawnerAsset
       Entry: 10
       Data: 0
-    - Name: MaxSpawnCooldown
-      Entry: 4
-      Data: 10
-    - Name: MinSpawnCooldown
-      Entry: 4
-      Data: 0.25
-    - Name: SpawnCooldownDifficultyModifier
-      Entry: 4
+    - Name: SpawnTableAsset
+      Entry: 10
       Data: 1
 --- !u!1 &705970985960160275
 GameObject:

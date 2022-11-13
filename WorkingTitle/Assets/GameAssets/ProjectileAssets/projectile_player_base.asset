@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd7afb08c6c47998f77f3455c14bceb, type: 3}
+  m_Name: projectile_player_base
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: ContactFilter
+      Entry: 7
+      Data: UnityEngine.ContactFilter2D, UnityEngine.Physics2DModule
+    - Name: useTriggers
+      Entry: 5
+      Data: false
+    - Name: useLayerMask
+      Entry: 5
+      Data: true
+    - Name: useDepth
+      Entry: 5
+      Data: false
+    - Name: useOutsideDepth
+      Entry: 5
+      Data: false
+    - Name: useNormalAngle
+      Entry: 5
+      Data: false
+    - Name: useOutsideNormalAngle
+      Entry: 5
+      Data: false
+    - Name: layerMask
+      Entry: 7
+      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 1152
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: minDepth
+      Entry: 4
+      Data: 0
+    - Name: maxDepth
+      Entry: 4
+      Data: 0
+    - Name: minNormalAngle
+      Entry: 4
+      Data: 0
+    - Name: maxNormalAngle
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 

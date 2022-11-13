@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using WorkingTitle.Lib.Pathfinding;
-using WorkingTitle.Unity.Map;
+using WorkingTitle.Unity.Components.Map;
 
 namespace WorkingTitle.Unity.Extensions
 {

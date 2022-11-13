@@ -92,21 +92,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 73ca7f15c98b839499cc4cf094f7fd99, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Speed
-      Entry: 4
-      Data: 100
-    - Name: SpeedBoostModifier
-      Entry: 4
+    - Name: TankMovementAsset
+      Entry: 10
       Data: 0
-    - Name: RotationSpeed
-      Entry: 4
-      Data: 100
 --- !u!114 &6064423492359556246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,15 +117,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: cc2e2d1dde00d8947a82bdfb26785456, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: RotationSpeed
-      Entry: 4
-      Data: 50
+    - Name: TankCannonAsset
+      Entry: 10
+      Data: 0
 --- !u!114 &4209170925603678806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,15 +142,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 8f880c3b9b2fcaf48af07211b61d638d, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: AimRotationThreshold
-      Entry: 4
-      Data: 1
+    - Name: AiInputAsset
+      Entry: 10
+      Data: 0
 --- !u!50 &6064423492359556245
 Rigidbody2D:
   serializedVersion: 4
@@ -192,30 +189,21 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: ee99238ed99f65d41a271e74b0c97d1c, type: 2}
     - {fileID: 6064423492455411463}
     - {fileID: 6064423493732264457}
-    - {fileID: 11400000, guid: ee99238ed99f65d41a271e74b0c97d1c, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TankBody
+    - Name: TankAsset
       Entry: 10
       Data: 0
-    - Name: TankCannon
+    - Name: TankBody
       Entry: 10
       Data: 1
-    - Name: WallMask
-      Entry: 7
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 256
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: TankAsset
+    - Name: TankCannon
       Entry: 10
       Data: 2
 --- !u!114 &8006970213262483037
@@ -254,18 +242,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 28715ff61482291458a4c7e7bd720858, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Health
-      Entry: 4
-      Data: 10
-    - Name: MaxHealth
-      Entry: 4
-      Data: 100
+    - Name: HealthAsset
+      Entry: 10
+      Data: 0
 --- !u!114 &7126493908852175553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +269,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 261747514512489440}
+    - {fileID: 11400000, guid: 7bd3282b433bc4b4fbc9657c98cb03f1, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -291,15 +278,9 @@ MonoBehaviour:
     - Name: InitialStateComponent
       Entry: 10
       Data: 0
-    - Name: TargetDirectionThreshold
-      Entry: 4
-      Data: 5
-    - Name: TargetDistanceThreshold
-      Entry: 4
-      Data: 3
-    - Name: AimOnTargetThreshold
-      Entry: 4
-      Data: 30
+    - Name: AiAsset
+      Entry: 10
+      Data: 1
 --- !u!114 &261747514512489440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -399,30 +380,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 6f7f13711e224264abf16bb09606cab4, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Radius
-      Entry: 4
+    - Name: MagnetAsset
+      Entry: 10
       Data: 0
-    - Name: AccelerationPerDistance
-      Entry: 4
-      Data: 10
-    - Name: MaxAcceleration
-      Entry: 4
-      Data: 10
-    - Name: LayerMask
-      Entry: 7
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!95 &5299276843899523050
 Animator:
   serializedVersion: 4
@@ -610,34 +577,19 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 4b294bd17e0ecde489be4683bcaf9ee9, type: 2}
     - {fileID: 12451458499558325}
-    - {fileID: 4844500482265526459, guid: 0ddf024f6aad5924692bf34054a518ae, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: AttackAsset
+      Entry: 10
+      Data: 0
     - Name: WeaponPoint
       Entry: 10
-      Data: 0
-    - Name: ProjectilePrefab
-      Entry: 10
       Data: 1
-    - Name: ProjectileSpeed
-      Entry: 4
-      Data: 5
-    - Name: AttackCooldown
-      Entry: 4
-      Data: 1
-    - Name: Damage
-      Entry: 4
-      Data: 1
-    - Name: Ricochets
-      Entry: 3
-      Data: 0
-    - Name: LifeSteal
-      Entry: 4
-      Data: 0
 --- !u!1 &7985236468272663950
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +664,7 @@ SpriteRenderer:
   m_SortingLayerID: -630298223
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 54aeffb6ff6f7de42b389d698afd4dc8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a71ff90d60812694cbccba8be64ff1a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -738,9 +690,9 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.5625, y: 0.4375, z: 0.5625, w: 0.4375}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

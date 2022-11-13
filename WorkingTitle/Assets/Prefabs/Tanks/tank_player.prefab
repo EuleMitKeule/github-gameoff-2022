@@ -89,21 +89,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 7c7d9fbcd3a9f9c489827488546856ef, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Speed
-      Entry: 4
-      Data: 100
-    - Name: SpeedBoostModifier
-      Entry: 4
-      Data: 1.75
-    - Name: RotationSpeed
-      Entry: 4
-      Data: 100
+    - Name: TankMovementAsset
+      Entry: 10
+      Data: 0
 --- !u!114 &6064423492359556246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,14 +114,15 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: fba28932425f17e4bb9151729e66d1fe, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: RotationSpeed
-      Entry: 4
+    - Name: TankCannonAsset
+      Entry: 10
       Data: 0
 --- !u!114 &6064423492359556244
 MonoBehaviour:
@@ -144,30 +140,15 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: -944628639613478452, guid: 1a7648d6fbba4fb4d90864fe802345d6, type: 3}
+    - {fileID: 11400000, guid: 1b264220cf2df504d976ea9f8f2b454b, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: InputActionAsset
+    - Name: PlayerInputAsset
       Entry: 10
       Data: 0
-    - Name: InputActionMapName
-      Entry: 1
-      Data: player
-    - Name: InputActionMovementName
-      Entry: 1
-      Data: movement
-    - Name: InputActionRotationName
-      Entry: 1
-      Data: rotation
-    - Name: InputActionPrimaryAttackName
-      Entry: 1
-      Data: primary_attack
-    - Name: InputActionBoostName
-      Entry: 1
-      Data: boost
 --- !u!50 &6064423492359556245
 Rigidbody2D:
   serializedVersion: 4
@@ -205,6 +186,7 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 1fdf335b79e44fc408c50b250f798637, type: 2}
     - {fileID: 6064423492455411463}
     - {fileID: 6064423493732264457}
     SerializedBytesString: 
@@ -212,21 +194,15 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: TankAsset
+      Entry: 10
+      Data: 0
     - Name: TankBody
       Entry: 10
-      Data: 0
+      Data: 1
     - Name: TankCannon
       Entry: 10
-      Data: 1
-    - Name: WallMask
-      Entry: 7
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
+      Data: 2
 --- !u!114 &5396467893550582058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,18 +260,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 9f3e0ff1a2b93c041aa467d91dc9e62a, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Health
-      Entry: 4
-      Data: 100
-    - Name: MaxHealth
-      Entry: 4
-      Data: 100
+    - Name: HealthAsset
+      Entry: 10
+      Data: 0
 --- !u!114 &4219437254338961742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,30 +306,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 6f7f13711e224264abf16bb09606cab4, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Radius
-      Entry: 4
+    - Name: MagnetAsset
+      Entry: 10
       Data: 0
-    - Name: AccelerationPerDistance
-      Entry: 4
-      Data: 10
-    - Name: MaxAcceleration
-      Entry: 4
-      Data: 10
-    - Name: LayerMask
-      Entry: 7
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 2048
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!95 &5299276843899523050
 Animator:
   serializedVersion: 4
@@ -543,34 +503,19 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: bd6a7e1fa1573c54aa2f77c14a8b0fb6, type: 2}
     - {fileID: 58997272}
-    - {fileID: 4844500482265526459, guid: 6d32debf0a9276a41b2705cd18d4bb23, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: AttackAsset
+      Entry: 10
+      Data: 0
     - Name: WeaponPoint
       Entry: 10
-      Data: 0
-    - Name: ProjectilePrefab
-      Entry: 10
       Data: 1
-    - Name: ProjectileSpeed
-      Entry: 4
-      Data: 5
-    - Name: AttackCooldown
-      Entry: 4
-      Data: 1
-    - Name: Damage
-      Entry: 4
-      Data: 10
-    - Name: Ricochets
-      Entry: 3
-      Data: 0
-    - Name: LifeSteal
-      Entry: 4
-      Data: 0
 --- !u!1 &6068097513344209145
 GameObject:
   m_ObjectHideFlags: 0
