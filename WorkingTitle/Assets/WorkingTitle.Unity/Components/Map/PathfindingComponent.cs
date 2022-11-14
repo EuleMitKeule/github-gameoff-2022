@@ -101,7 +101,7 @@ namespace WorkingTitle.Unity.Components.Map
             return FlowField.Cells[positivePosition.x][positivePosition.y];
         }
 
-        void OnPlayerCellPositionChanged(object sender, Vector2Int position)
+        void OnPlayerCellPositionChanged(object sender, CellPositionChangedEventArgs e)
         {
             HasTargetPositionChanged = true;
         }

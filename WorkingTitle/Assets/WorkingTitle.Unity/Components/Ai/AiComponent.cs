@@ -106,11 +106,11 @@ namespace WorkingTitle.Unity.Components.Ai
             IsWithinTargetDistanceThreshold = TargetDistance < AiAsset.TargetDistanceThreshold;
         }
         
-        void OnCellPositionChanged(object sender, Vector2Int position)
+        void OnCellPositionChanged(object sender, CellPositionChangedEventArgs e)
         {
             if (!PathfindingComponent) return;
             
-            CurrentCell = PathfindingComponent.GetCell(EntityComponent.CellPosition);
+            CurrentCell = PathfindingComponent.GetCell(e.NewCellPosition);
 
             if (CurrentCell is null) return;
 

@@ -23,7 +23,7 @@ namespace WorkingTitle.Unity.Components.Physics
         [ReadOnly]
         public Direction ChunkDirection { get; private set; }
         
-        public event EventHandler<Vector2Int> CellPositionChanged;
+        public event EventHandler<CellPositionChangedEventArgs> CellPositionChanged;
         public event EventHandler<Direction> ChunkChanged;
 
         MapComponent MapComponent { get; set; }
@@ -39,20 +39,22 @@ namespace WorkingTitle.Unity.Components.Physics
         void Update()
         {
             UpdateCellPosition();
-            UpdateChunkDirection();
         }
 
-        void UpdateCellPosition(bool force = false)
+        void UpdateCellPosition(bool ignoreChange = false)
         {
             if (!MapComponent) return;
             
             var currentCellPosition = Position.ToCell();
 
-            if (currentCellPosition == CellPosition && !force) return;
-            
+            if (currentCellPosition == CellPosition) return;
+
+            var oldCellPosition = CellPosition;
             CellPosition = currentCellPosition;
             
-            CellPositionChanged?.Invoke(this, CellPosition);
+            UpdateChunkDirection();
+            
+            CellPositionChanged?.Invoke(this, new CellPositionChangedEventArgs(CellPosition, ignoreChange ? CellPosition : oldCellPosition));
         }
 
         void UpdateChunkDirection()
