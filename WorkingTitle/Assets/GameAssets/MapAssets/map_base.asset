@@ -24,7 +24,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: ChunkSize
       Entry: 3
-      Data: 21
+      Data: 22
     - Name: ChunkPrefabs
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],

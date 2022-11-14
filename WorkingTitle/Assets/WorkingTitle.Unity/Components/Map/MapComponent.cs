@@ -35,6 +35,8 @@ namespace WorkingTitle.Unity.Components.Map
         [ShowInInspector]
         [ReadOnly]
         Vector2Int CenterChunkPosition { get; set; }
+
+        List<Dictionary<TilemapType, TileBase[]>> ChunkTiles { get; } = new();
         
         Grid Grid { get; set; }
         EntityComponent PlayerEntityComponent { get; set; }
@@ -43,6 +45,27 @@ namespace WorkingTitle.Unity.Components.Map
         {
             Grid = GetComponent<Grid>();
             MapSize = new Vector2Int(3 * MapAsset.ChunkSize, 3 * MapAsset.ChunkSize);
+
+            var bounds = new BoundsInt(Vector3Int.zero, new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
+            
+            foreach (var chunkPrefab in MapAsset.ChunkPrefabs)
+            {
+                var chunkComponent = chunkPrefab.GetComponent<ChunkComponent>();
+                var chunkTilesEntry = new Dictionary<TilemapType, TileBase[]>();
+                
+                foreach (var tilemapType in Tilemaps.Keys)
+                {
+                    if (!chunkComponent.Tilemaps.ContainsKey(tilemapType)) continue;
+
+                    var tilemap = chunkComponent.Tilemaps[tilemapType];
+                    var chunkTiles = new TileBase[MapAsset.ChunkSize * MapAsset.ChunkSize];
+                    tilemap.GetTilesBlockNonAlloc(bounds, chunkTiles);
+                    
+                    chunkTilesEntry.Add(tilemapType, chunkTiles);
+                }
+                
+                ChunkTiles.Add(chunkTilesEntry);
+            }
         }
 
         void Start()
@@ -62,24 +85,19 @@ namespace WorkingTitle.Unity.Components.Map
 
         void SpawnChunk(Direction direction)
         {
-            var randomChunkIndex = Random.Range(0, MapAsset.ChunkPrefabs.Count);
-            var randomChunk = MapAsset.ChunkPrefabs[randomChunkIndex];
-            var chunkComponent = randomChunk.GetComponent<ChunkComponent>();
+            var randomChunkIndex = Random.Range(0, ChunkTiles.Count);
+            var randomChunkTiles = ChunkTiles[randomChunkIndex];
             
             var chunkPosition = (Vector3Int)(CenterChunkPosition + direction.ToVector2Int() * MapAsset.ChunkSize);
-            var fromBounds = new BoundsInt(Vector3Int.zero, new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
             var toBounds = new BoundsInt(chunkPosition, new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
             
-            foreach (var (sourceTilemapType, sourceTilemap) in chunkComponent.Tilemaps)
+            foreach (var (sourceTilemapType, sourceTiles) in randomChunkTiles)
             {
                 if (!Tilemaps.Keys.Contains(sourceTilemapType)) continue;
                 
                 var destinationTilemap = Tilemaps[sourceTilemapType];
                 
-                var tiles = sourceTilemap.GetTilesBlock(fromBounds);
-                destinationTilemap.SetTilesBlock(toBounds, tiles);
-                
-                destinationTilemap.CompressBounds();
+                destinationTilemap.SetTilesBlock(toBounds, sourceTiles);
             }
         }
 
