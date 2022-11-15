@@ -13,7 +13,7 @@ namespace WorkingTitle.Unity.Components.Physics
         [TitleGroup("Position")]
         [ShowInInspector]
         [ReadOnly]
-        public Vector2Int CellPosition { get; private set; }
+        public Vector2Int CellPosition { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
@@ -32,7 +32,6 @@ namespace WorkingTitle.Unity.Components.Physics
         {
             MapComponent = GetComponentInParent<MapComponent>();
             
-            UpdateCellPosition(true);
             ChunkDirection = Direction.None;
         }
         
@@ -41,10 +40,14 @@ namespace WorkingTitle.Unity.Components.Physics
             UpdateCellPosition();
         }
 
+        public void SetPosition(Vector2 position)
+        {
+            transform.position = position;
+            UpdateCellPosition(true);
+        }
+
         void UpdateCellPosition(bool ignoreChange = false)
         {
-            if (!MapComponent) return;
-            
             var currentCellPosition = Position.ToCell();
 
             if (currentCellPosition == CellPosition) return;

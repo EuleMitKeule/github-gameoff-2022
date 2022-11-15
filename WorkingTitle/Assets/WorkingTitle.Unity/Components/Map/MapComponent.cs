@@ -52,7 +52,7 @@ namespace WorkingTitle.Unity.Components.Map
         void Awake()
         {
             Grid = GetComponent<Grid>();
-            MapSize = new Vector2Int(MapAsset.ChunkSize, MapAsset.ChunkSize);
+            MapSize = new Vector2Int(MapAsset.ViewDistance * 2, MapAsset.ViewDistance * 2);
 
             CacheChunks();
         }
@@ -69,9 +69,9 @@ namespace WorkingTitle.Unity.Components.Map
                 PlayerEntityComponent.CellPositionChanged += OnCellPositionChanged; 
             }
             
-            var relativeStartPosition = new Vector3Int(MapAsset.ChunkSize / 2, MapAsset.ChunkSize / 2);
+            PlayerEntityComponent.SetPosition(new Vector2Int(MapAsset.ChunkSize / 2, MapAsset.ChunkSize / 2));
             
-            UpdateMap(relativeStartPosition, true);
+            UpdateMap(true);
             UpdateBounds();
         }
 
@@ -132,37 +132,55 @@ namespace WorkingTitle.Unity.Components.Map
 
         void OnCellPositionChanged(object sender, CellPositionChangedEventArgs e)
         {
-            UpdateMap((Vector3Int)e.NewCellPosition);
+            UpdateMap();
             
             UpdateBounds();
         }
 
-        void UpdateMap(Vector3Int position, bool ignoreMinDistance = false)
+        void UpdateMap(bool ignoreMinDistance = false)
         {
             var tilesToSpawn = new List<TileBase>();
             var tilePositionsToSpawn = new List<Vector3Int>();
             
             foreach (var (tilemapType, destinationTilemap) in Tilemaps)
             {
-                for (int x = -MapAsset.ViewDistance - 2; x < MapAsset.ViewDistance + 2; x++)
+                for (int x = -MapAsset.ViewDistance - 1; x < MapAsset.ViewDistance + 2; x++)
                 {
-                    for (int y = -MapAsset.ViewDistance - 2; y < MapAsset.ViewDistance + 2; y++)
+                    for (int y = -MapAsset.ViewDistance - 1; y < MapAsset.ViewDistance + 2; y++)
                     {
                         var relativePosition = new Vector3Int(x, y);
-                        
-                        if (relativePosition.magnitude < MapAsset.ViewDistance - 2 && !ignoreMinDistance) continue;
-                        if (relativePosition.magnitude > MapAsset.ViewDistance + 2) continue;
 
-                        var cellPosition = position + relativePosition;
+                        var absoluteX = Mathf.Abs(relativePosition.x);
+                        var absoluteY = Mathf.Abs(relativePosition.y);
                         
-                        if (relativePosition.magnitude > MapAsset.ViewDistance)
+                        if ((absoluteX < MapAsset.ViewDistance - 1 &&
+                            absoluteY < MapAsset.ViewDistance - 1) &&
+                            !ignoreMinDistance)
                         {
+                            continue;
+                        }
+
+                        if (absoluteX > MapAsset.ViewDistance + 1 ||
+                            absoluteY > MapAsset.ViewDistance + 1)
+                        {
+                            continue;
+                        }
+
+                        var position = (Vector3Int)PlayerEntityComponent.CellPosition;
+                        var cellPosition = position + relativePosition;
+                        var hasTile = destinationTilemap.HasTile(cellPosition);
+                        
+                        if (absoluteX > MapAsset.ViewDistance ||
+                            absoluteY > MapAsset.ViewDistance)
+                        {
+                            if (!hasTile) continue;
+                            
                             tilesToSpawn.Add(null);
                             tilePositionsToSpawn.Add(cellPosition);
                             continue;
                         }
 
-                        if (destinationTilemap.HasTile(cellPosition)) continue;
+                        if (hasTile) continue;
                         
                         var relativeChunkPosition = new Vector2Int(
                             Modulo(cellPosition.x, MapAsset.ChunkSize),
@@ -184,6 +202,7 @@ namespace WorkingTitle.Unity.Components.Map
                 }
                 
                 destinationTilemap.SetTiles(tilePositionsToSpawn.ToArray(), tilesToSpawn.ToArray());
+                destinationTilemap.CompressBounds();
                 
                 tilesToSpawn.Clear();
                 tilePositionsToSpawn.Clear();
@@ -193,8 +212,8 @@ namespace WorkingTitle.Unity.Components.Map
         void UpdateBounds()
         {
             var mapBounds = new BoundsInt(
-                (Vector3Int)ChunkPosition - new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize), 
-                new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
+                (Vector3Int)PlayerEntityComponent.CellPosition - new Vector3Int(MapAsset.ViewDistance, MapAsset.ViewDistance), 
+                new Vector3Int(MapAsset.ViewDistance * 2, MapAsset.ViewDistance * 2, 1));
             mapBounds.ClampToBounds(mapBounds);
             MapBounds = mapBounds;
             

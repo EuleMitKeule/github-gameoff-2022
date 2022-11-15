@@ -41,7 +41,7 @@ namespace WorkingTitle.Unity.Components.Map
 
             var obstaclePositions = MapComponent
                 .GetObstacleTilemaps()
-                .GetTilePositions()
+                .GetTilePositions(MapComponent.MapBounds)
                 .ToPositive(MapComponent.MapBounds)
                 .ToList();
             
@@ -59,7 +59,7 @@ namespace WorkingTitle.Unity.Components.Map
                 {
                     var obstaclePositions = MapComponent
                         .GetObstacleTilemaps()
-                        .GetTilePositions()
+                        .GetTilePositions(MapComponent.MapBounds)
                         .ToPositive(MapComponent.MapBounds)
                         .ToList();
             
@@ -128,5 +128,20 @@ namespace WorkingTitle.Unity.Components.Map
 
             return flowField;
         }
+            
+#if UNITY_EDITOR
+    
+        void OnDrawGizmos()
+        {
+            foreach (var cells in FlowField.Cells)
+            {
+                foreach (var cell in cells)
+                {
+                    Debug.DrawRay((Vector3)(Vector2)cell.Position + MapComponent.MapBounds.position, cell.Direction * 0.5f, Color.red);
+                }
+            }
+        }
+    
+#endif
     }
 }
