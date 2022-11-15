@@ -25,6 +25,9 @@ MonoBehaviour:
     - Name: ChunkSize
       Entry: 3
       Data: 22
+    - Name: ViewDistance
+      Entry: 3
+      Data: 25
     - Name: ChunkPrefabs
       Entry: 7
       Data: 0|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
