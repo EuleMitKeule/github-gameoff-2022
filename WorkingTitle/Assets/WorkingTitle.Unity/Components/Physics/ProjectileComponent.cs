@@ -4,10 +4,11 @@ using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Health;
+using WorkingTitle.Unity.Components.Pooling;
 
 namespace WorkingTitle.Unity.Components.Physics
 {
-    public class ProjectileComponent : SerializedMonoBehaviour
+    public class ProjectileComponent : SerializedMonoBehaviour, IPoolable
     {
         [OdinSerialize]
         ProjectileAsset ProjectileAsset { get; set; }
@@ -35,6 +36,16 @@ namespace WorkingTitle.Unity.Components.Physics
         void FixedUpdate()
         {
             CheckCollision();
+        }
+
+        public void Reset()
+        {
+            Damage = 0;
+            Ricochets = 0;
+            
+            Rigidbody.transform.position = Vector3.zero;
+            Rigidbody.transform.rotation = Quaternion.identity;
+            Rigidbody.velocity = Vector2.zero;
         }
 
         void CheckCollision()
