@@ -61,16 +61,16 @@ namespace WorkingTitle.Unity.Components.Physics
         {
             if (!MapComponent) return;
 
-            var centerBounds = MapComponent.CenterChunkBounds;
-
-            var horizontalDirection = CellPosition.x < centerBounds.xMin
+            var relativeCellPosition = CellPosition - MapComponent.ChunkPosition;
+            
+            var horizontalDirection = relativeCellPosition.x < 0
                 ? Direction.Left
-                : CellPosition.x > centerBounds.xMax ? 
+                : relativeCellPosition.x >= MapComponent.MapAsset.ChunkSize ? 
                     Direction.Right :
                     Direction.None;
-            var verticalDirection = CellPosition.y < centerBounds.yMin
+            var verticalDirection = relativeCellPosition.y < 0
                 ? Direction.Down
-                : CellPosition.y > centerBounds.yMax ? 
+                : relativeCellPosition.y >= MapComponent.MapAsset.ChunkSize ? 
                     Direction.Up :
                     Direction.None;
             

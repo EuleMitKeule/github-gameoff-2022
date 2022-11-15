@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
@@ -32,15 +33,15 @@ namespace WorkingTitle.Unity.Components.Map
         
         [ShowInInspector]
         [ReadOnly]
-        public BoundsInt CenterChunkBounds { get; set; }
+        public BoundsInt ChunkBounds { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
-        Vector2Int CenterChunkIndex { get; set; }
+        Vector2Int ChunkIndex { get; set; }
 
         [ShowInInspector]
         [ReadOnly]
-        Vector2Int CenterChunkPosition { get; set; }
+        public Vector2Int ChunkPosition { get; set; }
 
         List<Dictionary<TilemapType, TileBase[]>> ChunkTiles { get; } = new();
         Dictionary<Vector2Int, Dictionary<TilemapType, TileBase[]>> Chunks { get; } = new();
@@ -51,8 +52,38 @@ namespace WorkingTitle.Unity.Components.Map
         void Awake()
         {
             Grid = GetComponent<Grid>();
-            MapSize = new Vector2Int(3 * MapAsset.ChunkSize, 3 * MapAsset.ChunkSize);
+            MapSize = new Vector2Int(MapAsset.ChunkSize, MapAsset.ChunkSize);
 
+            CacheChunks();
+        }
+
+        void Start()
+        {
+            PlayerEntityComponent = 
+                GetComponentInChildren<PlayerComponent>()
+                .GetComponent<EntityComponent>();
+            
+            if (PlayerEntityComponent)
+            {
+                PlayerEntityComponent.ChunkChanged += OnChunkChanged;
+                PlayerEntityComponent.CellPositionChanged += OnCellPositionChanged; 
+            }
+            
+            ChooseChunks(DirectionExtensions.All.Select(e => e.ToVector2Int()).ToList());
+            SpawnChunk(Vector2Int.zero);
+            
+            if (MapAsset.ChunkSize % 2 == 0)
+            {
+                var relativeCellPosition = new Vector2Int(MapAsset.ChunkSize / 2, MapAsset.ChunkSize / 2);
+                ExtendMap(Direction.Up, relativeCellPosition);
+                ExtendMap(Direction.Right, relativeCellPosition);
+            }
+            
+            UpdateBounds();
+        }
+
+        void CacheChunks()
+        {
             var bounds = new BoundsInt(Vector3Int.zero, new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
             
             foreach (var chunkPrefab in MapAsset.ChunkPrefabs)
@@ -75,43 +106,12 @@ namespace WorkingTitle.Unity.Components.Map
             }
         }
 
-        void Start()
+        void SpawnChunk(Vector2Int chunkIndex)
         {
-            PlayerEntityComponent = 
-                GetComponentInChildren<PlayerComponent>()
-                .GetComponent<EntityComponent>();
-            
-            if (PlayerEntityComponent)
-            {
-                PlayerEntityComponent.ChunkChanged += OnChunkChanged;
-                PlayerEntityComponent.CellPositionChanged += OnCellPositionChanged; 
-            }
-
-            var chunkDirections = DirectionExtensions.All.Select(e => e.ToVector2Int()).ToList();
-            chunkDirections.AddRange(DirectionExtensions.Upwards.Select(e => e.ToVector2Int() + Vector2Int.up).ToList());
-            chunkDirections.AddRange(DirectionExtensions.Leftwards.Select(e => e.ToVector2Int() + Vector2Int.left).ToList());
-            chunkDirections.AddRange(DirectionExtensions.Downwards.Select(e => e.ToVector2Int() + Vector2Int.down).ToList());
-            chunkDirections.AddRange(DirectionExtensions.Rightwards.Select(e => e.ToVector2Int() + Vector2Int.right).ToList());
-            
-            ChooseChunks(chunkDirections);
-            SpawnChunks(DirectionExtensions.All);
-            if (MapAsset.ChunkSize % 2 == 0)
-            {
-                ExtendMap(Direction.Up);
-                ExtendMap(Direction.Right);
-            }
-            UpdateBounds();
-        }
-
-        void SpawnChunk(Direction direction)
-        {
-            var chunkIndex = CenterChunkIndex + direction.ToVector2Int();
             if (!Chunks.ContainsKey(chunkIndex)) return;
 
             var chunk = Chunks[chunkIndex];
-            
-            
-            var chunkPosition = (Vector3Int)(CenterChunkPosition + direction.ToVector2Int() * MapAsset.ChunkSize);
+            var chunkPosition = (Vector3Int)(ChunkPosition + chunkIndex * MapAsset.ChunkSize);
             var toBounds = new BoundsInt(chunkPosition, new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
             
             foreach (var (sourceTilemapType, sourceTiles) in chunk)
@@ -124,95 +124,124 @@ namespace WorkingTitle.Unity.Components.Map
             }
         }
 
-        void SpawnChunks(IEnumerable<Direction> directions)
+        void ChooseChunk(Vector2Int chunkIndex)
         {
-            foreach (var direction in directions)
-            {
-                SpawnChunk(direction);
-            }
-        }
-
-        void ChooseChunk(Vector2Int direction)
-        {
-            var chunkPosition = CenterChunkIndex + direction;
-            if (Chunks.ContainsKey(chunkPosition)) return;
+            if (Chunks.ContainsKey(chunkIndex)) return;
                 
             var randomChunkIndex = Random.Range(0, ChunkTiles.Count);
             var randomChunkTiles = ChunkTiles[randomChunkIndex];
                 
-            Chunks.Add(chunkPosition, randomChunkTiles);
+            Chunks.Add(chunkIndex, randomChunkTiles);
         }
         
-        void ChooseChunks(IEnumerable<Direction> directions)
+        void ChooseChunks(IEnumerable<Vector2Int> chunkIndices)
         {
-            foreach (var direction in directions)
+            foreach (var chunkIndex in chunkIndices)
             {
-                ChooseChunk(direction.ToVector2Int());
-            }
-        }
-        
-        void ChooseChunks(IEnumerable<Vector2Int> directions)
-        {
-            foreach (var direction in directions)
-            {
-                ChooseChunk(direction);
+                ChooseChunk(chunkIndex);
             }
         }
 
-        void ExtendMap(Direction direction)
+        Vector2Int PositionToChunkIndex(Vector2Int position)
         {
-            if (direction == Direction.None) return;
+            return new Vector2Int(
+                Mathf.FloorToInt(position.x / (float) MapAsset.ChunkSize),
+                Mathf.FloorToInt(position.y / (float) MapAsset.ChunkSize)
+            );
+        }
+        
+        int Modulo(int x, int m)
+        {
+            return (x % m + m) % m;
+        }
+        
+        void ExtendMap(Direction cardinalDirection, Vector2Int? playerCellPosition = null)
+        {
+            if (cardinalDirection == Direction.None) return;
             
-            var relativeCellPosition = new Vector2Int(
-                PlayerEntityComponent.CellPosition.x % MapAsset.ChunkSize, 
-                PlayerEntityComponent.CellPosition.y % MapAsset.ChunkSize);
+            playerCellPosition ??= new Vector2Int(
+                PlayerEntityComponent.CellPosition.x,
+                PlayerEntityComponent.CellPosition.y);
 
-            foreach (var tilemapType in Tilemaps.Keys)
+            var chunkDirections = cardinalDirection switch
             {
-                var chunkIndex = CenterChunkIndex + direction.ToVector2Int() * 2;
+                _ when DirectionExtensions.Upwards.Contains(cardinalDirection) => DirectionExtensions.Upwards.ToList(),
+                _ when DirectionExtensions.Leftwards.Contains(cardinalDirection) => DirectionExtensions.Leftwards.ToList(),
+                _ when DirectionExtensions.Downwards.Contains(cardinalDirection) => DirectionExtensions.Downwards.ToList(),
+                _ when DirectionExtensions.Rightwards.Contains(cardinalDirection) => DirectionExtensions.Rightwards.ToList(),
+                _ => throw new ArgumentOutOfRangeException(nameof(cardinalDirection), cardinalDirection, null)
+            };
+            
+            var movedPlayerCellPosition = playerCellPosition.Value + cardinalDirection.ToVector2Int() * MapAsset.ChunkSize / 2;
+            var baseChunkIndex = PositionToChunkIndex(movedPlayerCellPosition);
+
+            var chunkIndices = new List<Vector2Int>();
+            
+            foreach (var chunkDirection in chunkDirections)
+            {
+                var chunkIndex = baseChunkIndex + chunkDirection.ToVector2Int() - cardinalDirection.ToVector2Int();
+                chunkIndices.Add(chunkIndex);
+            }
+            
+            foreach (var chunkIndex in chunkIndices)
+            {
                 var chunkPosition = chunkIndex * MapAsset.ChunkSize;
+
                 var tilesToSpawn = new List<TileBase>();
                 var tilePositionsToSpawn = new List<Vector3Int>();
-                var x = 0;
-                var y = 0;
-
-                switch (direction)
+                
+                var relativeX = Modulo(
+                    Modulo(playerCellPosition.Value.x, MapAsset.ChunkSize) + cardinalDirection.ToVector2Int().x * MapAsset.ChunkSize / 2,
+                    MapAsset.ChunkSize);
+                var relativeY = Modulo(
+                    Modulo(playerCellPosition.Value.y, MapAsset.ChunkSize) +
+                    cardinalDirection.ToVector2Int().y * MapAsset.ChunkSize / 2,
+                    MapAsset.ChunkSize);
+                
+                foreach (var tilemapType in Tilemaps.Keys)
                 {
-                    case Direction.Left:
-                    case Direction.Right:
-                        tilesToSpawn.AddRange(Chunks[chunkIndex][tilemapType]
-                        [(relativeCellPosition.x * MapAsset.ChunkSize)..
-                            (relativeCellPosition.x * MapAsset.ChunkSize + MapAsset.ChunkSize)]);
-
-                        x = relativeCellPosition.x - MapAsset.ChunkSize * direction.ToVector2Int().x / 2;
-
-                        for (y = 0; y < MapAsset.ChunkSize; y++)
+                    if (cardinalDirection is Direction.Right or Direction.Left)
+                    {
+                        for (relativeY = 0; relativeY < MapAsset.ChunkSize; relativeY++)
                         {
-                            var position = (Vector3Int) chunkPosition + new Vector3Int(x, y);
-                            tilePositionsToSpawn.Add(position);
-                        }
-
-                        break;
-
-                    case Direction.Up:
-                    case Direction.Down:
-                        y = relativeCellPosition.y - MapAsset.ChunkSize * direction.ToVector2Int().y / 2;
-
-                        for (x = 0; x < MapAsset.ChunkSize; x++)
-                        {
-                            var tileIndex = x * MapAsset.ChunkSize + relativeCellPosition.y;
+                            var tileIndex = relativeX * MapAsset.ChunkSize + relativeY;
                             var tile = Chunks[chunkIndex][tilemapType][tileIndex];
-                            tilesToSpawn.Add(tile);
 
-                            var position = (Vector3Int) chunkPosition + new Vector3Int(x, y);
+                            if (!tile) continue;
+                            
+                            var relativePosition = new Vector3Int(relativeX, relativeY);
+                            var cellPosition = (Vector3Int)chunkPosition + relativePosition;
+                            
+                            tilesToSpawn.Add(tile);
+                            tilePositionsToSpawn.Add(cellPosition);
+                        }
+                        
+                        Debug.Log($"SPAWNING COL AT x = {relativeX} of chunk with index {chunkIndex}");
+                    }
+                    else if (cardinalDirection is Direction.Up or Direction.Down)
+                    {
+                        
+                        for (relativeX = 0; relativeX < MapAsset.ChunkSize; relativeX++)
+                        {
+                            var tileIndex = relativeX * MapAsset.ChunkSize + relativeY;
+                            var tile = Chunks[chunkIndex][tilemapType][tileIndex];
+                            
+                            if (!tile) continue;
+                            
+                            var relativePosition = new Vector3Int(relativeX, relativeY);
+                            var position = (Vector3Int)chunkPosition + relativePosition;
+
+                            tilesToSpawn.Add(tile);
                             tilePositionsToSpawn.Add(position);
                         }
+                    }
 
-                        break;
+                    var destinationTilemap = Tilemaps[tilemapType];
+                    destinationTilemap.SetTiles(tilePositionsToSpawn.ToArray(), tilesToSpawn.ToArray());
+                    
+                    tilesToSpawn.Clear();
+                    tilePositionsToSpawn.Clear();
                 }
-
-                var destinationTilemap = Tilemaps[tilemapType];
-                destinationTilemap.SetTiles(tilePositionsToSpawn.ToArray(), tilesToSpawn.ToArray());
             }
         }
 
@@ -220,39 +249,21 @@ namespace WorkingTitle.Unity.Components.Map
         {
             if (direction == Direction.None) return;
             
-            var directionsToAdd = new List<Vector2Int>();
-            switch (direction)
+            ChunkIndex += direction.ToVector2Int();
+            ChunkPosition += direction.ToVector2Int() * MapAsset.ChunkSize;
+
+            var directionsToAdd = direction switch
             {
-                case Direction.Up:
-                    directionsToAdd.AddRange(DirectionExtensions.Upwards
-                        .Select(e => e.ToVector2Int() + Vector2Int.up * 2).ToList());
-                    directionsToAdd.Add(Direction.UpLeft.ToVector2Int() * 2);
-                    directionsToAdd.Add(Direction.UpRight.ToVector2Int() * 2);
-                    break;
-                case Direction.Left:
-                    directionsToAdd.AddRange(DirectionExtensions.Leftwards
-                        .Select(e => e.ToVector2Int() + Vector2Int.left * 2).ToList());
-                    directionsToAdd.Add(Direction.UpLeft.ToVector2Int() * 2);
-                    directionsToAdd.Add(Direction.DownLeft.ToVector2Int() * 2);
-                    break;
-                case Direction.Down:
-                    directionsToAdd.AddRange(DirectionExtensions.Downwards
-                        .Select(e => e.ToVector2Int() + Vector2Int.down * 2).ToList());
-                    directionsToAdd.Add(Direction.DownLeft.ToVector2Int() * 2);
-                    directionsToAdd.Add(Direction.DownRight.ToVector2Int() * 2);
-                    break;
-                case Direction.Right:
-                    directionsToAdd.AddRange(DirectionExtensions.Rightwards
-                        .Select(e => e.ToVector2Int() + Vector2Int.right * 2).ToList());
-                    directionsToAdd.Add(Direction.DownRight.ToVector2Int() * 2);
-                    directionsToAdd.Add(Direction.UpRight.ToVector2Int() * 2);
-                    break;
-            }
+                _ when DirectionExtensions.Upwards.Contains(direction) => DirectionExtensions.Upwards.ToList(),
+                _ when DirectionExtensions.Leftwards.Contains(direction) => DirectionExtensions.Leftwards.ToList(),
+                _ when DirectionExtensions.Downwards.Contains(direction) => DirectionExtensions.Downwards.ToList(),
+                _ when DirectionExtensions.Rightwards.Contains(direction) => DirectionExtensions.Rightwards.ToList(),
+                _ => new List<Direction>()
+            };
             
-            ChooseChunks(directionsToAdd);
+            var chunkIndicesToAdd = directionsToAdd.Select(d => ChunkIndex + d.ToVector2Int()).ToList();
             
-            CenterChunkIndex += direction.ToVector2Int();
-            CenterChunkPosition += direction.ToVector2Int() * MapAsset.ChunkSize;
+            ChooseChunks(chunkIndicesToAdd);
         }
 
         void OnCellPositionChanged(object sender, CellPositionChangedEventArgs e)
@@ -260,20 +271,21 @@ namespace WorkingTitle.Unity.Components.Map
             var direction = (e.NewCellPosition - e.OldCellPosition).ToDirection();
             
             ExtendMap(direction);
+            
             UpdateBounds();
         }
 
         void UpdateBounds()
         {
             var mapBounds = new BoundsInt(
-                (Vector3Int)CenterChunkPosition - new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize), 
-                new Vector3Int(MapAsset.ChunkSize * 3, MapAsset.ChunkSize * 3, 1));
+                (Vector3Int)ChunkPosition - new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize), 
+                new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
             mapBounds.ClampToBounds(mapBounds);
             MapBounds = mapBounds;
             
-            var centerBounds = new BoundsInt((Vector3Int)CenterChunkPosition, new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
-            centerBounds.ClampToBounds(centerBounds);
-            CenterChunkBounds = centerBounds;
+            var chunkBounds = new BoundsInt((Vector3Int)ChunkPosition, new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
+            chunkBounds.ClampToBounds(chunkBounds);
+            ChunkBounds = chunkBounds;
         }
         
         IEnumerable<Tilemap> GetWalkableTilemaps() => MapAsset.TilemapIsWalkable
