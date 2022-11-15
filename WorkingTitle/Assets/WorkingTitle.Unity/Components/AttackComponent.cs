@@ -7,6 +7,7 @@ using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Health;
 using WorkingTitle.Unity.Components.Input;
 using WorkingTitle.Unity.Components.Physics;
+using WorkingTitle.Unity.Components.Spawning;
 
 namespace WorkingTitle.Unity.Components
 {
@@ -42,18 +43,21 @@ namespace WorkingTitle.Unity.Components
         [ReadOnly]
         float LastAttackTime { get; set; }
         
-        List<GameObject> Projectiles { get; set; }
+        List<ProjectileComponent> ProjectileComponents { get; set; }
         
         InputComponent InputComponent { get; set; }
         
         HealthComponent HealthComponent { get; set; }
+        
+        ProjectilePoolComponent ProjectilePoolComponent { get; set; }
 
         void Awake()
         {
-            Projectiles = new List<GameObject>();
+            ProjectileComponents = new List<ProjectileComponent>();
             
             InputComponent = GetComponentInParent<InputComponent>();
             HealthComponent = GetComponentInParent<HealthComponent>();
+            ProjectilePoolComponent = FindObjectOfType<ProjectilePoolComponent>();
             
             HealthComponent.Death += OnDeath;
             
@@ -75,18 +79,17 @@ namespace WorkingTitle.Unity.Components
 
         void Attack()
         {
-            var projectile = Instantiate(
-                AttackAsset.ProjectilePrefab, 
-                WeaponPoint.transform.position, 
-                transform.rotation);
-            var projectileRigidbody = projectile.GetComponent<Rigidbody2D>();
-            var projectileComponent = projectile.GetComponent<ProjectileComponent>();
+            var projectileComponent = ProjectilePoolComponent.AllocateProjectile(AttackAsset.ProjectilePrefab);
+            var projectileRigidbody = projectileComponent.GetComponent<Rigidbody2D>();
             
             projectileComponent.Damage = Damage;
             projectileComponent.Ricochets = Ricochets;
+            
+            projectileRigidbody.transform.position = WeaponPoint.transform.position;
+            projectileRigidbody.transform.rotation = WeaponPoint.transform.rotation;
             projectileRigidbody.velocity = transform.up * ProjectileSpeed;
             
-            Projectiles.Add(projectile);
+            ProjectileComponents.Add(projectileComponent);
             
             projectileComponent.DamageInflicted += OnDamageInflicted;
         }
@@ -99,11 +102,8 @@ namespace WorkingTitle.Unity.Components
 
         void OnDeath(object sender, EventArgs e)
         {
-            foreach (var projectile in Projectiles)
+            foreach (var projectileComponent in ProjectileComponents)
             {
-                if (!projectile) continue;
-                
-                var projectileComponent = projectile.GetComponent<ProjectileComponent>();
                 if (!projectileComponent) continue;
                 
                 projectileComponent.DamageInflicted -= OnDamageInflicted;
