@@ -24,6 +24,7 @@ namespace WorkingTitle.Unity.Components.Physics
         Collider2D Collider { get; set; }
 
         public event EventHandler<DamageInflictedEventArgs> DamageInflicted;
+        public event EventHandler Destroyed;
 
         void Awake()
         {
@@ -64,7 +65,7 @@ namespace WorkingTitle.Unity.Components.Physics
         {
             if (Ricochets <= 0)
             {
-                Destroy(gameObject);
+                Destroyed?.Invoke(this, EventArgs.Empty);
                 return;
             }
             
@@ -90,7 +91,7 @@ namespace WorkingTitle.Unity.Components.Physics
 
         void OnBecameInvisible()
         {
-            Destroy(gameObject);
+            Destroyed?.Invoke(this, EventArgs.Empty);
         }
 
 #if UNITY_EDITOR
