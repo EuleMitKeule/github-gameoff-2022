@@ -69,16 +69,9 @@ namespace WorkingTitle.Unity.Components.Map
                 PlayerEntityComponent.CellPositionChanged += OnCellPositionChanged; 
             }
             
-            ChooseChunks(DirectionExtensions.All.Select(e => e.ToVector2Int()).ToList());
-            SpawnChunk(Vector2Int.zero);
+            var relativeStartPosition = new Vector3Int(MapAsset.ChunkSize / 2, MapAsset.ChunkSize / 2);
             
-            if (MapAsset.ChunkSize % 2 == 0)
-            {
-                var relativeCellPosition = new Vector2Int(MapAsset.ChunkSize / 2, MapAsset.ChunkSize / 2);
-                ExtendMap(Direction.Up, relativeCellPosition);
-                ExtendMap(Direction.Right, relativeCellPosition);
-            }
-            
+            UpdateMap(relativeStartPosition, true);
             UpdateBounds();
         }
 
@@ -106,24 +99,6 @@ namespace WorkingTitle.Unity.Components.Map
             }
         }
 
-        void SpawnChunk(Vector2Int chunkIndex)
-        {
-            if (!Chunks.ContainsKey(chunkIndex)) return;
-
-            var chunk = Chunks[chunkIndex];
-            var chunkPosition = (Vector3Int)(ChunkPosition + chunkIndex * MapAsset.ChunkSize);
-            var toBounds = new BoundsInt(chunkPosition, new Vector3Int(MapAsset.ChunkSize, MapAsset.ChunkSize, 1));
-            
-            foreach (var (sourceTilemapType, sourceTiles) in chunk)
-            {
-                if (!Tilemaps.Keys.Contains(sourceTilemapType)) continue;
-                
-                var destinationTilemap = Tilemaps[sourceTilemapType];
-                
-                destinationTilemap.SetTilesBlock(toBounds, sourceTiles);
-            }
-        }
-
         void ChooseChunk(Vector2Int chunkIndex)
         {
             if (Chunks.ContainsKey(chunkIndex)) return;
@@ -134,15 +109,7 @@ namespace WorkingTitle.Unity.Components.Map
             Chunks.Add(chunkIndex, randomChunkTiles);
         }
         
-        void ChooseChunks(IEnumerable<Vector2Int> chunkIndices)
-        {
-            foreach (var chunkIndex in chunkIndices)
-            {
-                ChooseChunk(chunkIndex);
-            }
-        }
-
-        Vector2Int PositionToChunkIndex(Vector2Int position)
+        Vector2Int PositionToChunkIndex(Vector3Int position)
         {
             return new Vector2Int(
                 Mathf.FloorToInt(position.x / (float) MapAsset.ChunkSize),
@@ -154,96 +121,6 @@ namespace WorkingTitle.Unity.Components.Map
         {
             return (x % m + m) % m;
         }
-        
-        void ExtendMap(Direction cardinalDirection, Vector2Int? playerCellPosition = null)
-        {
-            if (cardinalDirection == Direction.None) return;
-            
-            playerCellPosition ??= new Vector2Int(
-                PlayerEntityComponent.CellPosition.x,
-                PlayerEntityComponent.CellPosition.y);
-
-            var chunkDirections = cardinalDirection switch
-            {
-                _ when DirectionExtensions.Upwards.Contains(cardinalDirection) => DirectionExtensions.Upwards.ToList(),
-                _ when DirectionExtensions.Leftwards.Contains(cardinalDirection) => DirectionExtensions.Leftwards.ToList(),
-                _ when DirectionExtensions.Downwards.Contains(cardinalDirection) => DirectionExtensions.Downwards.ToList(),
-                _ when DirectionExtensions.Rightwards.Contains(cardinalDirection) => DirectionExtensions.Rightwards.ToList(),
-                _ => throw new ArgumentOutOfRangeException(nameof(cardinalDirection), cardinalDirection, null)
-            };
-            
-            var movedPlayerCellPosition = playerCellPosition.Value + cardinalDirection.ToVector2Int() * MapAsset.ChunkSize / 2;
-            var baseChunkIndex = PositionToChunkIndex(movedPlayerCellPosition);
-
-            var chunkIndices = new List<Vector2Int>();
-            
-            foreach (var chunkDirection in chunkDirections)
-            {
-                var chunkIndex = baseChunkIndex + chunkDirection.ToVector2Int() - cardinalDirection.ToVector2Int();
-                chunkIndices.Add(chunkIndex);
-            }
-            
-            foreach (var chunkIndex in chunkIndices)
-            {
-                var chunkPosition = chunkIndex * MapAsset.ChunkSize;
-
-                var tilesToSpawn = new List<TileBase>();
-                var tilePositionsToSpawn = new List<Vector3Int>();
-                
-                var relativeX = Modulo(
-                    Modulo(playerCellPosition.Value.x, MapAsset.ChunkSize) + cardinalDirection.ToVector2Int().x * MapAsset.ChunkSize / 2,
-                    MapAsset.ChunkSize);
-                var relativeY = Modulo(
-                    Modulo(playerCellPosition.Value.y, MapAsset.ChunkSize) +
-                    cardinalDirection.ToVector2Int().y * MapAsset.ChunkSize / 2,
-                    MapAsset.ChunkSize);
-                
-                foreach (var tilemapType in Tilemaps.Keys)
-                {
-                    if (cardinalDirection is Direction.Right or Direction.Left)
-                    {
-                        for (relativeY = 0; relativeY < MapAsset.ChunkSize; relativeY++)
-                        {
-                            var tileIndex = relativeX * MapAsset.ChunkSize + relativeY;
-                            var tile = Chunks[chunkIndex][tilemapType][tileIndex];
-
-                            if (!tile) continue;
-                            
-                            var relativePosition = new Vector3Int(relativeX, relativeY);
-                            var cellPosition = (Vector3Int)chunkPosition + relativePosition;
-                            
-                            tilesToSpawn.Add(tile);
-                            tilePositionsToSpawn.Add(cellPosition);
-                        }
-                        
-                        Debug.Log($"SPAWNING COL AT x = {relativeX} of chunk with index {chunkIndex}");
-                    }
-                    else if (cardinalDirection is Direction.Up or Direction.Down)
-                    {
-                        
-                        for (relativeX = 0; relativeX < MapAsset.ChunkSize; relativeX++)
-                        {
-                            var tileIndex = relativeX * MapAsset.ChunkSize + relativeY;
-                            var tile = Chunks[chunkIndex][tilemapType][tileIndex];
-                            
-                            if (!tile) continue;
-                            
-                            var relativePosition = new Vector3Int(relativeX, relativeY);
-                            var position = (Vector3Int)chunkPosition + relativePosition;
-
-                            tilesToSpawn.Add(tile);
-                            tilePositionsToSpawn.Add(position);
-                        }
-                    }
-
-                    var destinationTilemap = Tilemaps[tilemapType];
-                    destinationTilemap.SetTiles(tilePositionsToSpawn.ToArray(), tilesToSpawn.ToArray());
-                    
-                    tilesToSpawn.Clear();
-                    tilePositionsToSpawn.Clear();
-                }
-            }
-        }
 
         void OnChunkChanged(object sender, Direction direction)
         {
@@ -251,28 +128,66 @@ namespace WorkingTitle.Unity.Components.Map
             
             ChunkIndex += direction.ToVector2Int();
             ChunkPosition += direction.ToVector2Int() * MapAsset.ChunkSize;
-
-            var directionsToAdd = direction switch
-            {
-                _ when DirectionExtensions.Upwards.Contains(direction) => DirectionExtensions.Upwards.ToList(),
-                _ when DirectionExtensions.Leftwards.Contains(direction) => DirectionExtensions.Leftwards.ToList(),
-                _ when DirectionExtensions.Downwards.Contains(direction) => DirectionExtensions.Downwards.ToList(),
-                _ when DirectionExtensions.Rightwards.Contains(direction) => DirectionExtensions.Rightwards.ToList(),
-                _ => new List<Direction>()
-            };
-            
-            var chunkIndicesToAdd = directionsToAdd.Select(d => ChunkIndex + d.ToVector2Int()).ToList();
-            
-            ChooseChunks(chunkIndicesToAdd);
         }
 
         void OnCellPositionChanged(object sender, CellPositionChangedEventArgs e)
         {
-            var direction = (e.NewCellPosition - e.OldCellPosition).ToDirection();
-            
-            ExtendMap(direction);
+            UpdateMap((Vector3Int)e.NewCellPosition);
             
             UpdateBounds();
+        }
+
+        void UpdateMap(Vector3Int position, bool ignoreMinDistance = false)
+        {
+            var tilesToSpawn = new List<TileBase>();
+            var tilePositionsToSpawn = new List<Vector3Int>();
+            
+            foreach (var (tilemapType, destinationTilemap) in Tilemaps)
+            {
+                for (int x = -MapAsset.ViewDistance - 2; x < MapAsset.ViewDistance + 2; x++)
+                {
+                    for (int y = -MapAsset.ViewDistance - 2; y < MapAsset.ViewDistance + 2; y++)
+                    {
+                        var relativePosition = new Vector3Int(x, y);
+                        
+                        if (relativePosition.magnitude < MapAsset.ViewDistance - 2 && !ignoreMinDistance) continue;
+                        if (relativePosition.magnitude > MapAsset.ViewDistance + 2) continue;
+
+                        var cellPosition = position + relativePosition;
+                        
+                        if (relativePosition.magnitude > MapAsset.ViewDistance)
+                        {
+                            tilesToSpawn.Add(null);
+                            tilePositionsToSpawn.Add(cellPosition);
+                            continue;
+                        }
+
+                        if (destinationTilemap.HasTile(cellPosition)) continue;
+                        
+                        var relativeChunkPosition = new Vector2Int(
+                            Modulo(cellPosition.x, MapAsset.ChunkSize),
+                            Modulo(cellPosition.y, MapAsset.ChunkSize));
+                        
+                        var chunkIndex = PositionToChunkIndex(cellPosition);
+                        
+                        if (!Chunks.ContainsKey(chunkIndex)) ChooseChunk(chunkIndex);
+                        
+                        var chunk = Chunks[chunkIndex];
+                        var tileIndex = relativeChunkPosition.y * MapAsset.ChunkSize + relativeChunkPosition.x;
+                        var tile = chunk[tilemapType][tileIndex];
+                        
+                        if (!tile) continue;
+                        
+                        tilesToSpawn.Add(tile);
+                        tilePositionsToSpawn.Add(cellPosition);
+                    }
+                }
+                
+                destinationTilemap.SetTiles(tilePositionsToSpawn.ToArray(), tilesToSpawn.ToArray());
+                
+                tilesToSpawn.Clear();
+                tilePositionsToSpawn.Clear();
+            }
         }
 
         void UpdateBounds()
