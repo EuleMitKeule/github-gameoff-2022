@@ -7,6 +7,7 @@ using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Health;
 using WorkingTitle.Unity.Components.Input;
 using WorkingTitle.Unity.Components.Physics;
+using WorkingTitle.Unity.Components.Pooling;
 using WorkingTitle.Unity.Components.Spawning;
 
 namespace WorkingTitle.Unity.Components
@@ -49,7 +50,7 @@ namespace WorkingTitle.Unity.Components
         
         HealthComponent HealthComponent { get; set; }
         
-        ProjectilePoolComponent ProjectilePoolComponent { get; set; }
+        PoolComponent PoolComponent { get; set; }
 
         void Awake()
         {
@@ -57,7 +58,7 @@ namespace WorkingTitle.Unity.Components
             
             InputComponent = GetComponentInParent<InputComponent>();
             HealthComponent = GetComponentInParent<HealthComponent>();
-            ProjectilePoolComponent = FindObjectOfType<ProjectilePoolComponent>();
+            PoolComponent = FindObjectOfType<PoolComponent>();
             
             HealthComponent.Death += OnDeath;
             
@@ -79,7 +80,7 @@ namespace WorkingTitle.Unity.Components
 
         void Attack()
         {
-            var projectileComponent = ProjectilePoolComponent.AllocateProjectile(AttackAsset.ProjectilePrefab);
+            var projectileComponent = PoolComponent.Allocate<ProjectileComponent>(AttackAsset.ProjectilePrefab);
             var projectileRigidbody = projectileComponent.GetComponent<Rigidbody2D>();
             
             projectileComponent.Damage = Damage;
