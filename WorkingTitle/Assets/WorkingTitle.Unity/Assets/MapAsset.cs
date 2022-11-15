@@ -14,6 +14,9 @@ namespace WorkingTitle.Unity.Assets
     {
         [OdinSerialize]
         public int ChunkSize { get; set; }
+        
+        [OdinSerialize]
+        public int ViewDistance { get; set; }
 
         [OdinSerialize]
         [ValidateInput(nameof(IsAtLeastOneChunk), "There must be at least one chunk")]

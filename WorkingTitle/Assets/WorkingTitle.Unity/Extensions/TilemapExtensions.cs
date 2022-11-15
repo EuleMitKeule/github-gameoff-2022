@@ -26,21 +26,27 @@ namespace WorkingTitle.Unity.Extensions
             // => 
             // tilemaps.Aggregate(new BoundsInt(), (current, tilemap) => current.Encapsulate(tilemap.cellBounds));
 
-        public static IEnumerable<Vector2Int> GetTilePositions(this Tilemap tilemap)
+        public static IEnumerable<Vector2Int> GetTilePositions(this Tilemap tilemap, BoundsInt? bounds)
         {
+            bounds ??= tilemap.cellBounds;
             var positions = new List<Vector2Int>();
 
-            foreach (var position in tilemap.cellBounds.allPositionsWithin)
+            for (int x = bounds.Value.xMin; x < bounds.Value.xMax; x++)
             {
-                if (!tilemap.HasTile(position)) continue;
-                positions.Add((Vector2Int)position);
+                for (int y = bounds.Value.yMin; y < bounds.Value.yMax; y++)
+                {
+                    var position = new Vector3Int(x, y);
+                    
+                    if (!tilemap.HasTile(position)) continue;
+                    positions.Add((Vector2Int)position);
+                }
             }
             
             return positions;
         }
         
-        public static IEnumerable<Vector2Int> GetTilePositions(this IEnumerable<Tilemap> tilemaps) => tilemaps
-            .SelectMany(tilemap => tilemap.GetTilePositions())
+        public static IEnumerable<Vector2Int> GetTilePositions(this IEnumerable<Tilemap> tilemaps, BoundsInt? bounds) => tilemaps
+            .SelectMany(tilemap => tilemap.GetTilePositions(bounds))
             .ToList();
 
         public static void MoveTiles(this Tilemap tilemap, BoundsInt fromBounds, BoundsInt toBounds)

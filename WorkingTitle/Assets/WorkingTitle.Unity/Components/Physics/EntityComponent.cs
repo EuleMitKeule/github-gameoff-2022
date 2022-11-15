@@ -13,7 +13,7 @@ namespace WorkingTitle.Unity.Components.Physics
         [TitleGroup("Position")]
         [ShowInInspector]
         [ReadOnly]
-        public Vector2Int CellPosition { get; private set; }
+        public Vector2Int CellPosition { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
@@ -23,7 +23,7 @@ namespace WorkingTitle.Unity.Components.Physics
         [ReadOnly]
         public Direction ChunkDirection { get; private set; }
         
-        public event EventHandler<Vector2Int> CellPositionChanged;
+        public event EventHandler<CellPositionChangedEventArgs> CellPositionChanged;
         public event EventHandler<Direction> ChunkChanged;
 
         MapComponent MapComponent { get; set; }
@@ -32,43 +32,48 @@ namespace WorkingTitle.Unity.Components.Physics
         {
             MapComponent = GetComponentInParent<MapComponent>();
             
-            UpdateCellPosition(true);
             ChunkDirection = Direction.None;
         }
         
         void Update()
         {
             UpdateCellPosition();
-            UpdateChunkDirection();
         }
 
-        void UpdateCellPosition(bool force = false)
+        public void SetPosition(Vector2 position)
         {
-            if (!MapComponent) return;
-            
+            transform.position = position;
+            UpdateCellPosition(true);
+        }
+
+        void UpdateCellPosition(bool ignoreChange = false)
+        {
             var currentCellPosition = Position.ToCell();
 
-            if (currentCellPosition == CellPosition && !force) return;
-            
+            if (currentCellPosition == CellPosition) return;
+
+            var oldCellPosition = CellPosition;
             CellPosition = currentCellPosition;
             
-            CellPositionChanged?.Invoke(this, CellPosition);
+            UpdateChunkDirection();
+            
+            CellPositionChanged?.Invoke(this, new CellPositionChangedEventArgs(CellPosition, ignoreChange ? CellPosition : oldCellPosition));
         }
 
         void UpdateChunkDirection()
         {
             if (!MapComponent) return;
 
-            var centerBounds = MapComponent.CenterChunkBounds;
-
-            var horizontalDirection = CellPosition.x < centerBounds.xMin
+            var relativeCellPosition = CellPosition - MapComponent.ChunkPosition;
+            
+            var horizontalDirection = relativeCellPosition.x < 0
                 ? Direction.Left
-                : CellPosition.x > centerBounds.xMax ? 
+                : relativeCellPosition.x >= MapComponent.MapAsset.ChunkSize ? 
                     Direction.Right :
                     Direction.None;
-            var verticalDirection = CellPosition.y < centerBounds.yMin
+            var verticalDirection = relativeCellPosition.y < 0
                 ? Direction.Down
-                : CellPosition.y > centerBounds.yMax ? 
+                : relativeCellPosition.y >= MapComponent.MapAsset.ChunkSize ? 
                     Direction.Up :
                     Direction.None;
             
