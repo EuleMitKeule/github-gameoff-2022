@@ -5,6 +5,7 @@ using WorkingTitle.Lib.Pathfinding;
 using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Map;
 using WorkingTitle.Unity.Components.Physics;
+using WorkingTitle.Unity.Extensions;
 
 namespace WorkingTitle.Unity.Components.Ai
 {
@@ -112,7 +113,11 @@ namespace WorkingTitle.Unity.Components.Ai
             
             CurrentCell = PathfindingComponent.GetCell(e.NewCellPosition);
 
-            if (CurrentCell is null) return;
+            if (CurrentCell is null || CurrentCell.IsObstacle)
+            {
+                Destroy(gameObject);
+                return;
+            }
 
             PathDirection = CurrentCell.Direction;
         }
