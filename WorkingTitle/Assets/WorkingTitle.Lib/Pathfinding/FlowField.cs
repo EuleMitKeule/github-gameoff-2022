@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using UnityEngine;
 
@@ -8,9 +9,9 @@ namespace WorkingTitle.Lib.Pathfinding
     public class FlowField
     {
         public PathfindingCell TargetCell { get; }
-        public PathfindingCell[][] Cells { get; }
+        public Dictionary<Vector2Int, PathfindingCell> Cells { get; } = new();
 
-        public Vector2Int GridSize { get; }
+        public BoundsInt MapBounds { get; }
 
         public bool IsCostsCalculated { get; private set; }
         public bool IsDirectionsCalculated { get; private set; }
@@ -18,7 +19,7 @@ namespace WorkingTitle.Lib.Pathfinding
         public FlowField(
             Vector2Int targetPosition,
             List<Vector2Int> obstaclePositions,
-            Vector2Int gridSize)
+            BoundsInt mapBounds)
         {
             if (obstaclePositions == null)
             {
@@ -26,34 +27,28 @@ namespace WorkingTitle.Lib.Pathfinding
             }
 
             if (obstaclePositions.Any(e =>
-                e.x < 0 || e.x >= gridSize.x ||
-                e.y < 0 || e.y >= gridSize.y))
+                e.x < mapBounds.xMin || e.x >= mapBounds.xMax ||
+                e.y < mapBounds.yMin || e.y >= mapBounds.yMax))
             {
                 throw new ArgumentException(
-                    $"Items in '{nameof(obstaclePositions)}' must be between (0,0) and {gridSize}",
+                    $"Items in '{nameof(obstaclePositions)}' must be between {mapBounds.min} and {mapBounds.max}",
                     nameof(obstaclePositions));
             }
 
-            if (targetPosition.x < 0 || targetPosition.x >= gridSize.x ||
-                targetPosition.y < 0 || targetPosition.y >= gridSize.y)
+            if (targetPosition.x < mapBounds.xMin || targetPosition.x >= mapBounds.xMax ||
+                targetPosition.y < mapBounds.yMin || targetPosition.y >= mapBounds.yMax)
             {
-                throw new ArgumentException($"'{nameof(targetPosition)}' is out of grid bounds.", nameof(targetPosition));
+                throw new ArgumentException($"'{nameof(targetPosition)}' is out of map bounds.", nameof(targetPosition));
             }
 
-            if (gridSize.x <= 0 || gridSize.y <= 0)
+            if (mapBounds.size.x <= 0 || mapBounds.size.y <= 0)
             {
-                throw new ArgumentException($"'{nameof(gridSize)}' must be greater than zero.", nameof(gridSize));
+                throw new ArgumentException($"'{nameof(mapBounds)}' size must be greater than zero.", nameof(mapBounds));
             }
             
-            Cells = new PathfindingCell[gridSize.x][];
-            for (var i = 0; i < gridSize.x; i++)
+            for (var x = mapBounds.xMin; x < mapBounds.xMax; x++)
             {
-                Cells[i] = new PathfindingCell[gridSize.y];
-            }
-            
-            for (var x = 0; x < gridSize.x; x++)
-            {
-                for (var y = 0; y < gridSize.y; y++)
+                for (var y = mapBounds.yMin; y < mapBounds.yMax; y++)
                 {
                     var position = new Vector2Int(x, y);
                     var isTargetCell = position == targetPosition;
@@ -69,12 +64,12 @@ namespace WorkingTitle.Lib.Pathfinding
                         Cost = (ushort)cost
 
                     };
-                    Cells[x][y] = cell;
+                    Cells.Add(position, cell);
                 }
             }
 
-            TargetCell = Cells[targetPosition.x][targetPosition.y];
-            GridSize = gridSize;
+            TargetCell = Cells[targetPosition];
+            MapBounds = mapBounds;
         }
 
         public void CalcCosts()
@@ -89,24 +84,33 @@ namespace WorkingTitle.Lib.Pathfinding
                 var cell = queue.Dequeue();
                 var neighborCells = GetNeighborCells(cell.Position, false);
 
-                for (int x = -1; x < 2; x++)
+                for (int neighborX = -1; neighborX < 2; neighborX++)
                 {
-                    for (int y = -1; y < 2; y++)
+                    for (int neighborY = -1; neighborY < 2; neighborY++)
                     {
-                        if (x == 0 && y == 0) continue;
+                        if (neighborX == 0 && neighborY == 0) continue;
 
-                        var shiftedX = x + 1;
-                        var shiftedY = y + 1;
-                        var neighborCell = neighborCells[shiftedX][shiftedY];
+                        var neighborPosition = cell.Position + new Vector2Int(neighborX, neighborY);
+                        
+                        if (!neighborCells.ContainsKey(neighborPosition)) continue;
+                        var neighborCell = neighborCells[neighborPosition];
 
-                        if (neighborCell is null || neighborCell.IsObstacle) continue;
+                        if (neighborCell.IsObstacle) continue;
 
-                        var isInterCardinal = x != 0 && y != 0;
+                        var isInterCardinal = neighborX != 0 && neighborY != 0;
 
-                        if (isInterCardinal &&
-                            ((neighborCells[shiftedX][1]?.IsObstacle ?? true) || (neighborCells[1][shiftedY]?.IsObstacle ?? true)))
+                        if (isInterCardinal)
                         {
-                            continue;
+                            var horizontalNeighborPosition = cell.Position + new Vector2Int(neighborX, 0);
+                            var verticalNeighborPosition = cell.Position + new Vector2Int(0, neighborY);
+                            
+                            if (!neighborCells.ContainsKey(horizontalNeighborPosition) ||
+                                !neighborCells.ContainsKey(verticalNeighborPosition)) 
+                                continue;
+                            
+                            if (neighborCells[horizontalNeighborPosition].IsObstacle || 
+                                neighborCells[verticalNeighborPosition].IsObstacle)
+                                continue;
                         }
 
                         var baseCost = (float)neighborCell.BaseCost;
@@ -127,11 +131,12 @@ namespace WorkingTitle.Lib.Pathfinding
 
         public void CalcDirections()
         {
-            for (var x = 0; x < GridSize.x; x++)
+            for (var x = MapBounds.xMin; x < MapBounds.xMax; x++)
             {
-                for (var y = 0; y < GridSize.y; y++)
+                for (var y = MapBounds.yMin; y < MapBounds.yMax; y++)
                 {
-                    var cell = Cells[x][y];
+                    var position = new Vector2Int(x, y);
+                    var cell = Cells[position];
 
                     if (cell.IsObstacle) continue;
 
@@ -143,20 +148,28 @@ namespace WorkingTitle.Lib.Pathfinding
                         for (int neighborY = -1; neighborY < 2; neighborY++)
                         {
                             if (neighborX == 0 && neighborY == 0) continue;
-
-                            var shiftedX = neighborX + 1;
-                            var shiftedY = neighborY + 1;
                             
-                            var neighborCell = neighborCells[shiftedX][shiftedY];
+                            var neighborPosition = cell.Position + new Vector2Int(neighborX, neighborY);
+                            
+                            if (!neighborCells.ContainsKey(neighborPosition)) continue;
+                            var neighborCell = neighborCells[neighborPosition];
 
-                            if (neighborCell is null || neighborCell.IsObstacle || neighborCell.Cost >= bestCost) continue;
+                            if (neighborCell.IsObstacle || neighborCell.Cost >= bestCost) continue;
 
                             var isInterCardinal = neighborX != 0 && neighborY != 0;
 
-                            if (isInterCardinal &&
-                                ((neighborCells[shiftedX][1]?.IsObstacle ?? true) || (neighborCells[1][shiftedY]?.IsObstacle ?? true)))
+                            if (isInterCardinal)
                             {
-                                continue;
+                                var horizontalNeighborPosition = cell.Position + new Vector2Int(neighborX, 0);
+                                var verticalNeighborPosition = cell.Position + new Vector2Int(0, neighborY);
+                            
+                                if (!neighborCells.ContainsKey(horizontalNeighborPosition) ||
+                                    !neighborCells.ContainsKey(verticalNeighborPosition)) 
+                                    continue;
+                            
+                                if (neighborCells[horizontalNeighborPosition].IsObstacle || 
+                                    neighborCells[verticalNeighborPosition].IsObstacle)
+                                    continue;
                             }
                             
                             bestCost = neighborCell.Cost;
@@ -169,13 +182,9 @@ namespace WorkingTitle.Lib.Pathfinding
             IsDirectionsCalculated = true;
         }
 
-        PathfindingCell[][] GetNeighborCells(Vector2Int position, bool skipInterCardinal)
+        Dictionary<Vector2Int, PathfindingCell> GetNeighborCells(Vector2Int position, bool skipInterCardinal)
         {
-            var neighborCells = new PathfindingCell[3][];
-            for (int i = 0; i < 3; i++)
-            {
-                neighborCells[i] = new PathfindingCell[3];
-            }
+            var neighborCells = new Dictionary<Vector2Int, PathfindingCell>();
 
             for (int x = -1; x < 2; x++)
             {
@@ -187,16 +196,16 @@ namespace WorkingTitle.Lib.Pathfinding
                     var neighborPositionX = position.x + x;
                     var neighborPositionY = position.y + y;
 
-                    if (neighborPositionX < 0 || neighborPositionX >= GridSize.x ||
-                        neighborPositionY < 0 || neighborPositionY >= GridSize.y)
+                    if (neighborPositionX < MapBounds.xMin || neighborPositionX >= MapBounds.xMax ||
+                        neighborPositionY < MapBounds.yMin || neighborPositionY >= MapBounds.yMax)
                     {
                         continue;
                     }
 
-                    var neighborCell = Cells[neighborPositionX][neighborPositionY];
+                    var neighborPosition = new Vector2Int(neighborPositionX, neighborPositionY);
+                    var neighborCell = Cells[neighborPosition];
 
-                    neighborCells[x + 1][y + 1] = neighborCell;
-
+                    neighborCells.Add(neighborPosition, neighborCell);
                 }
             }
 
