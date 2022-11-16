@@ -97,14 +97,14 @@ namespace WorkingTitle.Lib.Pathfinding
 
                         var shiftedX = x + 1;
                         var shiftedY = y + 1;
-                        var neighborCell = neighborCells[3 * shiftedX + shiftedY];
+                        var neighborCell = neighborCells[shiftedX][shiftedY];
 
                         if (neighborCell is null || neighborCell.IsObstacle) continue;
 
                         var isInterCardinal = x != 0 && y != 0;
 
                         if (isInterCardinal &&
-                            ((neighborCells[shiftedX + 1]?.IsObstacle ?? true) || (neighborCells[3 + shiftedY]?.IsObstacle ?? true)))
+                            ((neighborCells[shiftedX][1]?.IsObstacle ?? true) || (neighborCells[1][shiftedY]?.IsObstacle ?? true)))
                         {
                             continue;
                         }
@@ -147,14 +147,14 @@ namespace WorkingTitle.Lib.Pathfinding
                             var shiftedX = neighborX + 1;
                             var shiftedY = neighborY + 1;
                             
-                            var neighborCell = neighborCells[3 * shiftedX + shiftedY];
+                            var neighborCell = neighborCells[shiftedX][shiftedY];
 
                             if (neighborCell is null || neighborCell.IsObstacle || neighborCell.Cost >= bestCost) continue;
 
-                            var isInterCardinal = neighborX == 0 && neighborY == 0;
+                            var isInterCardinal = neighborX != 0 && neighborY != 0;
 
                             if (isInterCardinal &&
-                                ((neighborCells[shiftedX + 1]?.IsObstacle ?? true) || (neighborCells[3 + shiftedY]?.IsObstacle ?? true)))
+                                ((neighborCells[shiftedX][1]?.IsObstacle ?? true) || (neighborCells[1][shiftedY]?.IsObstacle ?? true)))
                             {
                                 continue;
                             }
@@ -169,9 +169,13 @@ namespace WorkingTitle.Lib.Pathfinding
             IsDirectionsCalculated = true;
         }
 
-        PathfindingCell[] GetNeighborCells(Vector2Int position, bool skipInterCardinal)
+        PathfindingCell[][] GetNeighborCells(Vector2Int position, bool skipInterCardinal)
         {
-            var neighborCells = new PathfindingCell[9];
+            var neighborCells = new PathfindingCell[3][];
+            for (int i = 0; i < 3; i++)
+            {
+                neighborCells[i] = new PathfindingCell[3];
+            }
 
             for (int x = -1; x < 2; x++)
             {
@@ -190,9 +194,8 @@ namespace WorkingTitle.Lib.Pathfinding
                     }
 
                     var neighborCell = Cells[neighborPositionX][neighborPositionY];
-                    if (neighborCell.IsObstacle) continue;
 
-                    neighborCells[3 * (x + 1) + (y + 1)] = neighborCell;
+                    neighborCells[x + 1][y + 1] = neighborCell;
 
                 }
             }

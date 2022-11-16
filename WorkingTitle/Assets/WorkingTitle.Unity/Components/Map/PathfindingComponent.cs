@@ -137,7 +137,10 @@ namespace WorkingTitle.Unity.Components.Map
             {
                 foreach (var cell in cells)
                 {
-                    Debug.DrawRay((Vector3)(Vector2)cell.Position + MapComponent.MapBounds.position, cell.Direction * 0.5f, Color.red);
+                    var x = cell.Position.x + MapComponent.MapBounds.position.x + 0.5f;
+                    var y = cell.Position.y + MapComponent.MapBounds.position.y + 0.5f;
+                    
+                    Debug.DrawRay(new Vector3(x, y), cell.Direction * 0.5f, Color.red);
                 }
             }
         }
