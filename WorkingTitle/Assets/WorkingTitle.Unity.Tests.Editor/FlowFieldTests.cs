@@ -124,11 +124,11 @@ namespace WorkingTitle.Unity.Tests.Editor
         {
             var targetPosition = new Vector2Int(0, 0);
             var obstaclePositions = new List<Vector2Int>();
-            var gridSize = new Vector2Int(gridX, gridY);
+            var bounds = new BoundsInt(Vector3Int.zero, new Vector3Int(gridX, gridY, 1));
         
             var sw = Stopwatch.StartNew();
             
-            var flowField = new FlowField(targetPosition, obstaclePositions, gridSize);
+            var flowField = new FlowField(targetPosition, obstaclePositions, bounds);
             
             sw.Stop();
             var initializationTime = sw.ElapsedMilliseconds;
@@ -147,7 +147,7 @@ namespace WorkingTitle.Unity.Tests.Editor
             sw.Stop();
             var calcDirectionsTime = sw.ElapsedMilliseconds;
 
-            TestContext.Out.WriteLine($"Grid Size: {gridSize}");
+            TestContext.Out.WriteLine($"Grid Size: {bounds}");
             TestContext.Out.WriteLine($"Initialization: {initializationTime} ms");
             TestContext.Out.WriteLine($"CalcCosts: {calcCostsTime} ms");
             TestContext.Out.WriteLine($"CalcDirections: {calcDirectionsTime} ms");
