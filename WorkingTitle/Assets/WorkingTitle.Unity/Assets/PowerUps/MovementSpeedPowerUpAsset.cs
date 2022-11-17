@@ -10,5 +10,9 @@ namespace WorkingTitle.Unity.Assets.PowerUps
         [OdinSerialize]
         [SuffixLabel("%")]
         public float MovementSpeedPercentageIncrease { get; set; }
+        
+        [OdinSerialize]
+        [SuffixLabel("%")]
+        public float RotationSpeedPercentageIncrease { get; set; }
     }
 }

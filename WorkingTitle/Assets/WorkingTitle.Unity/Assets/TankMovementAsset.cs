@@ -9,7 +9,7 @@ namespace WorkingTitle.Unity.Assets
     {
         [TitleGroup("Physics")]
         [OdinSerialize]
-        public float Speed { get; set; }
+        public float MovementSpeed { get; set; }
         
         [OdinSerialize] public float SpeedBoostModifier { get; set; }
         
