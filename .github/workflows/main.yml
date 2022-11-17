@@ -25,6 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.release-version }}
+      newVersion: ${{ steps.release.outputs.new-release-published }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,6 +43,7 @@ jobs:
     name: Test
     needs: version
     runs-on: ubuntu-latest
+    if: ${{ needs.version.outputs.newVersion == 'true' }}
     outputs:
       artifactsPath: ${{ steps.run-tests.outputs.artifactsPath }}
       coveragePath: ${{ steps.run-tests.outputs.coveragePath }}
@@ -101,8 +103,9 @@ jobs:
 
   sonar:
     name: SonarCloud
-    needs: test
+    needs: [version, test]
     runs-on: ubuntu-latest
+    if: ${{ needs.version.outputs.newVersion == 'true' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -136,6 +139,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: version
+    if: ${{ needs.version.outputs.newVersion == 'true' }}
     strategy:
       matrix:
         buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64", "WebGL"]
@@ -191,6 +195,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     needs: [version, build]
+    if: ${{ needs.version.outputs.newVersion == 'true' }}
     outputs:
       releaseCreated: ${{ steps.release.outputs.new-release-published }}
       uploadUrl: ${{ steps.getUploadUrl.outputs.uploadUrl }}
@@ -221,6 +226,7 @@ jobs:
     name: Upload
     runs-on: ubuntu-latest
     needs: [build, release]
+    if: ${{ needs.release.outputs.releaseCreated == 'true' }}
     strategy:
       matrix:
         buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64", "WebGL"]
@@ -232,14 +238,12 @@ jobs:
           fetch-depth: 0
 
       - name: Download build
-        if: ${{ needs.release.outputs.releaseCreated == 'true' }}
         uses: actions/download-artifact@v2
         with:
           name: Build
           path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}
 
       - name: Upload build
-        if: ${{ needs.release.outputs.releaseCreated == 'true' }}
         uses: actions/upload-release-asset@v2
         with:
           upload_url: ${{ needs.release.outputs.uploadUrl }}
