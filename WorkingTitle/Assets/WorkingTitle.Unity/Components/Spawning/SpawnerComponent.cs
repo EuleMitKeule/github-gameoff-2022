@@ -23,6 +23,8 @@ namespace WorkingTitle.Unity.Components.Spawning
         float LastSpawnTime { get; set; }
         
         float SpawnCooldown { get; set; }
+        
+        int EnemyCount { get; set; }
 
         PathfindingComponent PathfindingComponent { get; set; }
         EntityComponent PlayerEntityComponent { get; set; }
@@ -33,6 +35,8 @@ namespace WorkingTitle.Unity.Components.Spawning
         
         void Start()
         {
+            EnemyCount = 0;
+            
             PlayerEntityComponent = GetComponentInChildren<EntityComponent>();
             PathfindingComponent = GetComponentInChildren<PathfindingComponent>();
             DifficultyComponent = GetComponentInParent<DifficultyComponent>();
@@ -58,6 +62,13 @@ namespace WorkingTitle.Unity.Components.Spawning
             var enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
             enemy.transform.SetParent(transform);
 
+            var spriteRenderers = enemy.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.sortingOrder = EnemyCount;
+            }
+
+            EnemyCount += 1;
             EnemySpawned?.Invoke(this, new EnemySpawnedEventArgs(enemy));
         }
         
