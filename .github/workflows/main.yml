@@ -121,12 +121,6 @@ jobs:
           name: Code Coverage
           path: ${{ needs.test.outputs.coveragePath }}
 
-      - name: Unzip test results
-        run: unzip ${{ needs.test.outputs.artifactsPath }}/test-results.zip -d ${{ needs.test.outputs.artifactsPath }}
-
-      - name: Unzip code coverage
-        run: unzip ${{ needs.test.outputs.coveragePath }}/code-coverage.zip -d ${{ needs.test.outputs.coveragePath }}
-
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
