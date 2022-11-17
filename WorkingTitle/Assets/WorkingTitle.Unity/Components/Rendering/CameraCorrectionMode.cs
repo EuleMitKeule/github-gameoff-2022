@@ -1,4 +1,4 @@
-﻿namespace WorkingTitle.Unity.Components.Camera
+﻿namespace WorkingTitle.Unity.Components.Rendering
 {
     public enum CameraCorrectionMode
     {

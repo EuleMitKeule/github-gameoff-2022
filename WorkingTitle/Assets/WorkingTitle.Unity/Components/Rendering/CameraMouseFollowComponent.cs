@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using WorkingTitle.Unity.Assets;
 
-namespace WorkingTitle.Unity.Components.Camera
+namespace WorkingTitle.Unity.Components.Rendering
 {
     public class CameraMouseFollowComponent : SerializedMonoBehaviour
     {
