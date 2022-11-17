@@ -10,6 +10,7 @@ using WorkingTitle.Lib.Extensions;
 using WorkingTitle.Lib.Pathfinding;
 using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Physics;
+using WorkingTitle.Unity.Extensions;
 using Random = UnityEngine.Random;
 
 namespace WorkingTitle.Unity.Components.Map
@@ -48,6 +49,7 @@ namespace WorkingTitle.Unity.Components.Map
         
         Grid Grid { get; set; }
         EntityComponent PlayerEntityComponent { get; set; }
+        Camera Camera { get; set; }
 
         void Awake()
         {
@@ -62,14 +64,18 @@ namespace WorkingTitle.Unity.Components.Map
             PlayerEntityComponent = 
                 GetComponentInChildren<PlayerComponent>()
                 .GetComponent<EntityComponent>();
+            Camera = FindObjectOfType<Camera>();
             
             if (PlayerEntityComponent)
             {
                 PlayerEntityComponent.ChunkChanged += OnChunkChanged;
                 PlayerEntityComponent.CellPositionChanged += OnCellPositionChanged; 
             }
+
+            var centerPosition = new Vector2Int(MapAsset.ChunkSize / 2, MapAsset.ChunkSize / 2);
             
-            PlayerEntityComponent.SetPosition(new Vector2Int(MapAsset.ChunkSize / 2, MapAsset.ChunkSize / 2));
+            PlayerEntityComponent.SetPosition(centerPosition);
+            Camera.transform.position = centerPosition.ToWorld();
             
             UpdateMap(true);
             UpdateBounds();
