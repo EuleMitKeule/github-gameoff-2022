@@ -12,7 +12,7 @@ namespace WorkingTitle.Unity.Components
 
         GameObject MapObject { get; set; }
         public GameObject PlayerObject { get; set; }
-        
+
         void Awake()
         {
             var mapComponent = FindObjectOfType<MapComponent>();
