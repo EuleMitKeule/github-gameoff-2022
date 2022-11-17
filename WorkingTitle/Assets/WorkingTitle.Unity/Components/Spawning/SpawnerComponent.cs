@@ -20,23 +20,32 @@ namespace WorkingTitle.Unity.Components.Spawning
         [OdinSerialize]
         SpawnTableAsset SpawnTableAsset { get; set; }
         
+        [OdinSerialize]
+        int SpawnRadiusOffset { get; set; }
+        
         float LastSpawnTime { get; set; }
         
         float SpawnCooldown { get; set; }
+        
+        int EnemyCount { get; set; }
 
         PathfindingComponent PathfindingComponent { get; set; }
         EntityComponent PlayerEntityComponent { get; set; }
         DifficultyComponent DifficultyComponent { get; set; }
         GameComponent GameComponent { get; set; }
+        Camera Camera { get; set; }
         
         public event EventHandler<EnemySpawnedEventArgs> EnemySpawned;
         
         void Start()
         {
+            EnemyCount = 0;
+            
             PlayerEntityComponent = GetComponentInChildren<EntityComponent>();
             PathfindingComponent = GetComponentInChildren<PathfindingComponent>();
             DifficultyComponent = GetComponentInParent<DifficultyComponent>();
             GameComponent = GetComponentInParent<GameComponent>();
+            Camera = FindObjectOfType<Camera>();
         }
         
         void Update()
@@ -54,10 +63,26 @@ namespace WorkingTitle.Unity.Components.Spawning
         {
             var enemyPrefab = GetRandomEnemy();
             var position = GetRandomPosition();
+            var cellPosition = position.ToCell();
+            var cell = PathfindingComponent.GetCell(cellPosition);
+            var direction = cell.Direction;
+            var angle = Vector2.SignedAngle(Vector2.up, direction);
+            var rotation = Quaternion.Euler(0, 0, angle);;
             
             var enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
             enemy.transform.SetParent(transform);
 
+            var tankComponent = enemy.GetComponent<TankComponent>();
+            if (tankComponent)
+                tankComponent.TankBody.transform.rotation = rotation;
+            
+            var spriteRenderers = enemy.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.sortingOrder = EnemyCount;
+            }
+
+            EnemyCount += 1;
             EnemySpawned?.Invoke(this, new EnemySpawnedEventArgs(enemy));
         }
         
@@ -91,31 +116,45 @@ namespace WorkingTitle.Unity.Components.Spawning
             return null;
         }
         
-        Vector3 GetRandomPosition()
+        Vector2 GetRandomPosition()
         {
-            var positionsInRadius = new List<Vector2Int>();
+            var diagonal = (int)Camera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).magnitude;
+            var spawnRadius = diagonal / 2 + SpawnRadiusOffset;
 
-            for (var x = (int)-SpawnerAsset.SpawnRadius; x < SpawnerAsset.SpawnRadius; x++)
+            var cellPositions = new List<Vector2Int>();
+            
+            for (int x = -spawnRadius - 1; x <= spawnRadius + 1; x++)
             {
-                for (var y = (int)-SpawnerAsset.SpawnRadius; y < SpawnerAsset.SpawnRadius; y++)
+                for (int y = -spawnRadius - 1; y <= spawnRadius + 1; y++)
                 {
-                    var deltaPosition = new Vector2Int(x, y);
-                    if (deltaPosition.magnitude > SpawnerAsset.SpawnRadius) continue;
-
-                    var position = PlayerEntityComponent.CellPosition + deltaPosition;
-                    var cell = PathfindingComponent.GetCell(position);
-
-                    if (cell is null) continue;
-                    if (cell.IsObstacle) continue;
+                    var cellPosition = new Vector2Int(x, y);
+                    var distance = cellPosition.magnitude;
                     
-                    positionsInRadius.Add(position);
+                    if(distance < spawnRadius || distance > spawnRadius + 1)
+                        continue;
+                    
+                    cellPositions.Add(cellPosition);
                 }
             }
-            
-            var randomIndex = Random.Range(0, positionsInRadius.Count);
-            var randomPosition = positionsInRadius[randomIndex];
-            
-            return randomPosition.ToWorld();
+
+            var chosenCellPosition = Vector2Int.zero;
+
+            while (cellPositions.Count > 0)
+            {
+                var randomIndex = Random.Range(0, cellPositions.Count);
+                chosenCellPosition = cellPositions[randomIndex];
+                
+                var worldCellPosition =
+                    new Vector2Int((int)PlayerEntityComponent.Position.x, (int)PlayerEntityComponent.Position.y) +
+                    chosenCellPosition;
+                var cell = PathfindingComponent.GetCell(worldCellPosition);
+
+                if (!(cell?.IsObstacle ?? true)) break;
+                
+                cellPositions.Remove(chosenCellPosition);
+            }
+
+            return (PlayerEntityComponent.CellPosition + chosenCellPosition).ToWorld();
         }
 
         float CalculateSpawnCooldown() => 

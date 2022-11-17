@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
-using WorkingTitle.Unity.Components.Camera;
+using WorkingTitle.Unity.Components.Rendering;
 
 namespace WorkingTitle.Unity.Assets
 {
