@@ -40,6 +40,7 @@ namespace WorkingTitle.Unity.Components.Health
             
             if (CurrentHealth <= 0)
             {
+                Debug.Log("verbuhaibuhrvaebjhiofrvadbuhoarvbzhiorgaebzhiorabzhiargbzhirgbhiaeöp");
                 Death?.Invoke(this, EventArgs.Empty);
             }
         }

@@ -11,8 +11,10 @@ namespace WorkingTitle.Unity.Components
 
         Rigidbody2D Rigidbody { get; set; }
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             Rigidbody = GetComponent<Rigidbody2D>();
         }
         

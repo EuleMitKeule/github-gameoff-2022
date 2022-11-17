@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -12,7 +13,11 @@ namespace WorkingTitle.Unity.Components.Physics
     [RequireComponent(typeof(Animator))]
     public class TankMovementComponent : SerializedMonoBehaviour
     {
-        [OdinSerialize] public TankMovementAsset TankMovementAsset { get; set; }
+        [OdinSerialize]
+        public TankMovementAsset TankMovementAsset { get; set; }
+
+        public float MovementSpeed { get; set; }
+        public float RotationSpeed { get; set; }
         
         TankComponent TankComponent { get; set; }
         
@@ -32,6 +37,9 @@ namespace WorkingTitle.Unity.Components.Physics
             TankComponent = GetComponent<TankComponent>();
             InputComponent = GetComponent<InputComponent>();
             Animator = GetComponent<Animator>();
+            
+            MovementSpeed = TankMovementAsset.MovementSpeed;
+            RotationSpeed = TankMovementAsset.RotationSpeed;
         }
 
         void Update()
@@ -57,14 +65,14 @@ namespace WorkingTitle.Unity.Components.Physics
         {
             var speedBoostModifier = InputComponent.InputBoost ? TankMovementAsset.SpeedBoostModifier : 1;
             var direction = TankComponent.TankBody.transform.up;
-            var velocity = direction * (speedBoostModifier * TankMovementAsset.Speed * InputComponent.InputMovement * Time.fixedDeltaTime);
+            var velocity = direction * (speedBoostModifier * MovementSpeed * InputComponent.InputMovement * Time.fixedDeltaTime);
             
             Rigidbody.velocity = velocity;
         }
 
         void Rotate()
         {
-            var zRotation = TankComponent.TankBody.transform.rotation.eulerAngles.z - InputComponent.InputRotation * TankMovementAsset.RotationSpeed * Time.fixedDeltaTime;
+            var zRotation = TankComponent.TankBody.transform.rotation.eulerAngles.z - InputComponent.InputRotation * RotationSpeed * Time.fixedDeltaTime;
             var rotation = Quaternion.Euler(0, 0, zRotation);
             
             TankComponent.TankBody.transform.rotation = rotation;

@@ -41,7 +41,8 @@ namespace WorkingTitle.Unity.Components.PowerUps
                     AttackComponent.ProjectileSpeed *= 1 + projectileSpeedPowerUpAsset.ProjectileSpeedPercentageIncrease / 100;
                     break;
                 case MovementSpeedPowerUpAsset movementSpeedPowerUpAsset:
-                    TankMovementComponent.TankMovementAsset.Speed *= 1 + movementSpeedPowerUpAsset.MovementSpeedPercentageIncrease / 100;
+                    TankMovementComponent.MovementSpeed *= 1 + movementSpeedPowerUpAsset.MovementSpeedPercentageIncrease / 100;
+                    TankMovementComponent.RotationSpeed *= 1 + movementSpeedPowerUpAsset.RotationSpeedPercentageIncrease / 100;
                     break;
                 case AttackCooldownPowerUpAsset attackCooldownPowerUpAsset:
                     AttackComponent.AttackCooldown *= 1 - attackCooldownPowerUpAsset.AttackCooldownPercentageDecrease / 100;

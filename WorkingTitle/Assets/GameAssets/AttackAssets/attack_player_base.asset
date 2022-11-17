@@ -27,13 +27,13 @@ MonoBehaviour:
       Data: 0
     - Name: StartProjectileSpeed
       Entry: 4
-      Data: 5
+      Data: 10
     - Name: StartAttackCooldown
       Entry: 4
-      Data: 3
+      Data: 1
     - Name: StartDamage
       Entry: 4
-      Data: 2
+      Data: 100
     - Name: StartRicochets
       Entry: 3
       Data: 0

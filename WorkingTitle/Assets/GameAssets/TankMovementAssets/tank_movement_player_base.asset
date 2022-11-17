@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Speed
+    - Name: MovementSpeed
       Entry: 4
       Data: 150
     - Name: SpeedBoostModifier

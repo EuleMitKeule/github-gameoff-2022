@@ -24,3 +24,6 @@ MonoBehaviour:
     - Name: MovementSpeedPercentageIncrease
       Entry: 4
       Data: 5
+    - Name: RotationSpeedPercentageIncrease
+      Entry: 4
+      Data: 5

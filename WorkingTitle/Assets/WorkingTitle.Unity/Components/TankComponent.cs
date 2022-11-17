@@ -30,7 +30,7 @@ namespace WorkingTitle.Unity.Components
 
         HealthComponent HealthComponent { get; set; }
 
-        void Awake()
+        protected virtual void Awake()
         {
             HealthComponent = GetComponent<HealthComponent>();
             
