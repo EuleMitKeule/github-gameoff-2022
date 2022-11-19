@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4844500482265526463}
   - component: {fileID: 4844500482265526462}
   - component: {fileID: 4844500482265526456}
-  - component: {fileID: 1200638781230461787}
+  - component: {fileID: 4860869848794545961}
   m_Layer: 9
   m_Name: projectile_player
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4844500482265526459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.075, y: 0.1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,10 +74,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -371025649
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 54aeffb6ff6f7de42b389d698afd4dc8, type: 3}
-  m_Color: {r: 0.6698113, g: 0.4321848, b: 0.0979441, a: 1}
+  m_Sprite: {fileID: 1304190887, guid: b04d47612898ced478e44011997976a2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
     - Name: ProjectileAsset
       Entry: 10
       Data: 0
---- !u!61 &1200638781230461787
+--- !u!61 &4860869848794545961
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,12 +150,12 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.1875, y: 0.375}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.1875, y: 0.375}
   m_EdgeRadius: 0
