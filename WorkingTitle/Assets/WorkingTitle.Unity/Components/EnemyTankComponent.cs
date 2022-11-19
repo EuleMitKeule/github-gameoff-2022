@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using WorkingTitle.Unity.Assets;
+using WorkingTitle.Unity.Components.PowerUps;
 
 namespace WorkingTitle.Unity.Components
 {
@@ -11,11 +12,14 @@ namespace WorkingTitle.Unity.Components
 
         Rigidbody2D Rigidbody { get; set; }
 
+        PowerUpConsumerComponent PowerUpConsumerComponent { get; set; }
+        
         protected override void Awake()
         {
             base.Awake();
             
             Rigidbody = GetComponent<Rigidbody2D>();
+            PowerUpConsumerComponent = GetComponent<PowerUpConsumerComponent>();
         }
         
         void Start()
@@ -25,19 +29,17 @@ namespace WorkingTitle.Unity.Components
         
         protected override void OnDeath(object sender, EventArgs e)
         {
-            Rigidbody.simulated = false;
+            if (TankAsset is not EnemyTankAsset enemyTankAsset) return;
             
-            DropPowerUp();
+            Rigidbody.simulated = false;
+
+            var skillAsset = GameComponent.GameAsset.SkillAssets[enemyTankAsset.SkillType];
+            var skillPowerUpPrefab = skillAsset.PowerUpPrefab;
+            
+            PowerUpConsumerComponent.DropPowerUp(skillPowerUpPrefab, GameComponent.GameAsset.DropChancePerPowerUp);
+            PowerUpConsumerComponent.DropConsumedPowerUps(GameComponent.GameAsset.DropChancePerPowerUp);
             
             Destroy(gameObject);
-        }
-
-        void DropPowerUp()
-        {
-            if (TankAsset is not EnemyTankAsset enemyTankAsset) return;
-            var powerUpPrefab = GameComponent.GameAsset.SkillAssets[enemyTankAsset.SkillType].PowerUpPrefab;
-            
-            Instantiate(powerUpPrefab, transform.position, Quaternion.identity);
         }
     }
 }

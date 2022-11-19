@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using WorkingTitle.Unity.Assets.PowerUps;
 using WorkingTitle.Unity.Components.Physics;
+using Random = UnityEngine.Random;
 
 namespace WorkingTitle.Unity.Components.PowerUps
 {
     public class PowerUpConsumerComponent : SerializedMonoBehaviour
     {
+        [ShowInInspector]
+        Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; } = new();
+        
         AttackComponent AttackComponent { get; set; }
         TankMovementComponent TankMovementComponent { get; set; }
         MagnetComponent MagnetComponent { get; set; }
-
+        GameComponent GameComponent { get; set; }
         public event EventHandler<PowerUpConsumedEventArgs> PowerUpConsumed;
         
         void Awake()
@@ -19,6 +24,43 @@ namespace WorkingTitle.Unity.Components.PowerUps
             AttackComponent = GetComponentInChildren<AttackComponent>();
             TankMovementComponent = GetComponent<TankMovementComponent>();
             MagnetComponent = GetComponent<MagnetComponent>();
+
+            PowerUpConsumed += OnPowerUpConsumed;
+        }
+
+        void Start()
+        {
+            GameComponent = GetComponentInParent<GameComponent>();
+        }
+
+        void OnPowerUpConsumed(object sender, PowerUpConsumedEventArgs e)
+        {
+            if (!PowerUpsConsumed.ContainsKey(e.PowerUpAsset)) PowerUpsConsumed[e.PowerUpAsset] = 0;
+            PowerUpsConsumed[e.PowerUpAsset] += 1;
+        }
+
+        public void DropPowerUp(GameObject powerUpPrefab, float dropChance)
+        {
+            var random = Random.Range(0f, 1f);
+            
+            if (random > dropChance) return;
+
+            var radius = Random.Range(0f, GameComponent.GameAsset.PowerUpDropRadius);
+            var position = transform.position + (Vector3)Random.insideUnitCircle * radius;
+            
+            Instantiate(powerUpPrefab, position, Quaternion.identity);
+        }
+        
+        public void DropConsumedPowerUps(float dropChancePerPowerup)
+        {
+            foreach (var (powerUpAsset, count) in PowerUpsConsumed)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var powerUpPrefab = powerUpAsset.Prefab;
+                    DropPowerUp(powerUpPrefab, dropChancePerPowerup);
+                }
+            }
         }
         
         void OnTriggerEnter2D(Collider2D other)

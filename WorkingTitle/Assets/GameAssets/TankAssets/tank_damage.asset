@@ -33,3 +33,6 @@ MonoBehaviour:
     - Name: SkillType
       Entry: 3
       Data: 0
+    - Name: DropChancePerPowerUp
+      Entry: 4
+      Data: 0.2

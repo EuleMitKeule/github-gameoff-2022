@@ -15,12 +15,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 787429869459007135, guid: cece9c66597a0384b9fd690085d8f5b9, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: Prefab
+      Entry: 10
+      Data: 0
     - Name: LifeStealPercentage
       Entry: 4
       Data: 5
