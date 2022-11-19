@@ -118,18 +118,18 @@ namespace WorkingTitle.Unity.Components.Map
             return flowField;
         }
             
-#if UNITY_EDITOR
-    
-        void OnDrawGizmos()
-        {
-            foreach (var (position, cell) in FlowField.Cells)
-            {
-                var worldPosition = position.ToWorld();
-                    
-                Debug.DrawRay(worldPosition, cell.Direction * 0.5f, Color.red);
-            }
-        }
-    
-#endif
+// #if UNITY_EDITOR
+//     
+//         void OnDrawGizmos()
+//         {
+//             foreach (var (position, cell) in FlowField.Cells)
+//             {
+//                 var worldPosition = position.ToWorld();
+//                     
+//                 Debug.DrawRay(worldPosition, cell.Direction * 0.5f, Color.red);
+//             }
+//         }
+//     
+// #endif
     }
 }

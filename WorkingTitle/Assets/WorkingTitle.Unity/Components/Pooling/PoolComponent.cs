@@ -24,6 +24,7 @@ namespace WorkingTitle.Unity.Components.Pooling
             }
 
             var pooledComponent = GetOrCreateObject<T>(prefab);
+            pooledComponent.Reset();
 
             return pooledComponent;
         }
@@ -35,7 +36,6 @@ namespace WorkingTitle.Unity.Components.Pooling
             {
                 var dequeuedComponent = (T)availableObjects.Dequeue();
                 dequeuedComponent.gameObject.SetActive(true);
-                dequeuedComponent.Reset();
                 
                 return dequeuedComponent;
             }
