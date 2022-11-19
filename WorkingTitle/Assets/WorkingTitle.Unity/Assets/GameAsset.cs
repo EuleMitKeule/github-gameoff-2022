@@ -19,5 +19,11 @@ namespace WorkingTitle.Unity.Assets
 
         [OdinSerialize] 
         public Dictionary<SkillType, SkillAsset> SkillAssets { get; private set; } = new();
+        
+        [OdinSerialize]
+        public float DropChancePerPowerUp { get; private set; }
+        
+        [OdinSerialize]
+        public float PowerUpDropRadius { get; private set; }
     }
 }

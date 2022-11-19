@@ -15,12 +15,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 9183299297024129644, guid: d08209978e11b8248886641eb898c615, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: Prefab
+      Entry: 10
+      Data: 0
     - Name: Radius
       Entry: 4
       Data: 1

@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &1717229545
+--- !u!1001 &1897863734
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -178,26 +178,14 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"MapPrefab","value":$eref:0'
-      objectReference: {fileID: 0}
-    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 723799196888635257, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 152961888976396738, guid: cf3884a4d56ac984ba25ab2c8f2bdacc, type: 3}
     - target: {fileID: 723799196888635258, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: m_Name
       value: game
       objectReference: {fileID: 0}
+    - target: {fileID: 2057472595619769373, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 2057472595619769373, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
     - target: {fileID: 3024224066351827714, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -210,33 +198,5 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"CameraAsset","value":$eref:0'
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.ReferencedUnityObjects.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[0].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[0].Entry
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8640920481240166805, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 44aa77cc63e4dd344a382e84a2cb888e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}

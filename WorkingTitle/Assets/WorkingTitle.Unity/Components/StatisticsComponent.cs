@@ -19,9 +19,6 @@ namespace WorkingTitle.Unity.Components
         Dictionary<TankAsset, float> DamageDone { get; set; } = new();
         
         [ShowInInspector]
-        Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; } = new();
-        
-        [ShowInInspector]
         float DamageTaken { get; set; }
         
         [ShowInInspector]
@@ -38,14 +35,12 @@ namespace WorkingTitle.Unity.Components
             SpawnerComponent = GetComponentInChildren<SpawnerComponent>();
             GameComponent = GetComponent<GameComponent>();
             var playerHealthComponent = GameComponent.PlayerObject.GetComponent<HealthComponent>();
-            var playerPowerUpConsumerComponent = GameComponent.PlayerObject.GetComponent<PowerUpConsumerComponent>();
 
             StartTime = Time.time;
 
             SpawnerComponent.EnemySpawned += OnEnemySpawned;
             playerHealthComponent.HealthChanged += OnPlayerHealthChanged;
             playerHealthComponent.Death += OnPlayerDeath;
-            playerPowerUpConsumerComponent.PowerUpConsumed += OnPowerUpConsumed;
         }
 
         void OnEnemySpawned(object sender, EnemySpawnedEventArgs e)
@@ -99,12 +94,6 @@ namespace WorkingTitle.Unity.Components
         void OnPlayerDeath(object sender, EventArgs e)
         {
             TimeSurvived = Time.time - StartTime;
-        }
-
-        void OnPowerUpConsumed(object sender, PowerUpConsumedEventArgs e)
-        {
-            if (!PowerUpsConsumed.ContainsKey(e.PowerUpAsset)) PowerUpsConsumed[e.PowerUpAsset] = 0;
-            PowerUpsConsumed[e.PowerUpAsset] += 1;
         }
     }
 }
