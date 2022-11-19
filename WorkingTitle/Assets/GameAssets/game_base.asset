@@ -162,7 +162,7 @@ MonoBehaviour:
       Data: 
     - Name: DropChancePerPowerUp
       Entry: 4
-      Data: 1
+      Data: 0.5
     - Name: PowerUpDropRadius
       Entry: 4
-      Data: 2
+      Data: 1
