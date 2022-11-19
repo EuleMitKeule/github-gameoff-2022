@@ -68,7 +68,9 @@ namespace WorkingTitle.Unity.Components.Physics
         void HandleDamage(GameObject other)
         {
             var healthComponent = other.GetComponentInParent<HealthComponent>();
-            if (healthComponent) healthComponent.ChangeHealth(-Damage);
+            if (!healthComponent) return;
+            healthComponent.ChangeHealth(-Damage);
+            
             DamageInflicted?.Invoke(this, new DamageInflictedEventArgs(Damage));
         }
 

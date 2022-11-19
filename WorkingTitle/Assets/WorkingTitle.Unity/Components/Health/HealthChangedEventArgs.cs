@@ -7,12 +7,14 @@ namespace WorkingTitle.Unity.Components.Health
         public float PreviousHealth { get; }
         public float NewHealth { get; }
         public float HealthChange { get; }
+        public float MaxHealth { get; }
     
-        public HealthChangedEventArgs(float previousHealth, float newHealth, float healthChange)
+        public HealthChangedEventArgs(float previousHealth, float newHealth, float healthChange, float maxHealth)
         {
             PreviousHealth = previousHealth;
             NewHealth = newHealth;
             HealthChange = healthChange;
+            MaxHealth = maxHealth;
         }
     }
 }

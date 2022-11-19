@@ -21,8 +21,6 @@ namespace WorkingTitle.Unity.Components.Graphics
         void Awake()
         {
             SpriteRenderer = GetComponent<SpriteRenderer>();
-
-            StartTime = Time.time;
         }
 
         void Update()

@@ -24,6 +24,8 @@ namespace WorkingTitle.Unity.Components.Health
 
         DifficultyComponent DifficultyComponent { get; set; }
         
+        HealthBarComponent HealthBarComponent { get; set; }
+        
         void Awake()
         {
             MaxHealth = HealthAsset.MaxHealth;
@@ -33,6 +35,12 @@ namespace WorkingTitle.Unity.Components.Health
         void Start()
         {
             DifficultyComponent = GetComponentInParent<DifficultyComponent>();
+            HealthBarComponent = GetComponentInChildren<HealthBarComponent>();
+            
+            CurrentHealth = HealthAsset.StartHealth;
+
+            if (HealthBarComponent)
+                HealthChanged += HealthBarComponent.OnHealthChanged;
         }
         
         public void ChangeHealth(float amount)
@@ -41,7 +49,7 @@ namespace WorkingTitle.Unity.Components.Health
             CurrentHealth += amount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
             
-            HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount));
+            HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount, HealthAsset.MaxHealth));
             
             if (CurrentHealth <= 0)
             {

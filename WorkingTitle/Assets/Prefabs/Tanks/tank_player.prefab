@@ -62,6 +62,68 @@ Transform:
   m_Father: {fileID: 6064423492455411456}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3869664656054273553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 359024291720592723}
+  m_Layer: 6
+  m_Name: floating_text_spawn_point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &359024291720592723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3869664656054273553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6064423492359556235}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4934878280666222024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3028241768422799249}
+  m_Layer: 6
+  m_Name: graphics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3028241768422799249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934878280666222024}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6064423492359556235}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5729929404125578466
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +176,7 @@ GameObject:
   - component: {fileID: 1291185505458803179}
   - component: {fileID: 5299276843899523050}
   - component: {fileID: 5158792755674813122}
+  - component: {fileID: 8864006106094330618}
   m_Layer: 6
   m_Name: tank_player
   m_TagString: Untagged
@@ -134,6 +197,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6064423492455411456}
+  - {fileID: 3028241768422799249}
+  - {fileID: 359024291720592723}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -266,6 +331,9 @@ MonoBehaviour:
     - Name: TankCannon
       Entry: 10
       Data: 2
+    - Name: Graphics
+      Entry: 6
+      Data: 
 --- !u!114 &5396467893550582058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,6 +503,35 @@ MonoBehaviour:
     - Name: TrackPrefab
       Entry: 10
       Data: 2
+--- !u!114 &8864006106094330618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f5061c2d19b4bd3ba16bc8308f692d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 5736488315374214953, guid: 67a0ecf837e736941ada33169a5c28f1, type: 3}
+    - {fileID: 359024291720592723}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: FloatingTextPrefab
+      Entry: 10
+      Data: 0
+    - Name: SpawnPoint
+      Entry: 10
+      Data: 1
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,8 +637,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 353169175
-  m_SortingLayer: 6
+  m_SortingLayerID: 1060431367
+  m_SortingLayer: 8
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 1d88b54ec858cc844be668cf55826b2a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -689,7 +786,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 353169175
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a71ff90d60812694cbccba8be64ff1a1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
