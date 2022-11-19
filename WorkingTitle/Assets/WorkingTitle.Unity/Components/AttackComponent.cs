@@ -98,6 +98,8 @@ namespace WorkingTitle.Unity.Components
         void OnDamageInflicted(object sender, DamageInflictedEventArgs e)
         {
             var healAmount = e.Damage * LifeSteal;
+            if (healAmount <= 0) return;
+            
             HealthComponent.ChangeHealth(healAmount);
         }
 
