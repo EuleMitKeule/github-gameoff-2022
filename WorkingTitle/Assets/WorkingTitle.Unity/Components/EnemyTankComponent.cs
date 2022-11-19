@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using WorkingTitle.Unity.Assets;
+using WorkingTitle.Unity.Components.Health;
 
 namespace WorkingTitle.Unity.Components
 {

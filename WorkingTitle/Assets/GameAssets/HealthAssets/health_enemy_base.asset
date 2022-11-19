@@ -23,7 +23,7 @@ MonoBehaviour:
     SerializationNodes:
     - Name: StartHealth
       Entry: 4
-      Data: 5
+      Data: 100
     - Name: MaxHealth
       Entry: 4
-      Data: 20
+      Data: 100

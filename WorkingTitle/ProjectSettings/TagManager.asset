@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - HealthBar
   layers:
   - Default
   - TransparentFX
@@ -61,4 +62,7 @@ TagManager:
     locked: 0
   - name: Wall
     uniqueID: 2014852201
+    locked: 0
+  - name: UI
+    uniqueID: 1904067099
     locked: 0

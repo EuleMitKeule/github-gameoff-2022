@@ -25,6 +25,10 @@ namespace WorkingTitle.Unity.Components
         [ValueDropdown("ChildObjects")]
         public GameObject TankCannon { get; private set; }
         
+        [OdinSerialize]
+        [ValueDropdown("ChildObjects")]
+        public GameObject Graphics { get; private set; }
+        
         [UsedImplicitly]
         IEnumerable<GameObject> ChildObjects => gameObject.GetChildren(true);
 

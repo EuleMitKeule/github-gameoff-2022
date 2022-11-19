@@ -13,21 +13,27 @@ namespace WorkingTitle.Unity.Components.Health
         
         [ShowInInspector]
         [ReadOnly]
+        float MaxHealth { get; set; }
+        
+        [ShowInInspector]
+        [ReadOnly]
         float CurrentHealth { get; set; }
         
         public event EventHandler Death;
         public event EventHandler<HealthChangedEventArgs> HealthChanged;
 
         DifficultyComponent DifficultyComponent { get; set; }
-        
-        void Awake()
-        {
-            CurrentHealth = HealthAsset.StartHealth;
-        }
+        HealthBarComponent HealthBarComponent { get; set; }
 
         void Start()
         {
             DifficultyComponent = GetComponentInParent<DifficultyComponent>();
+            HealthBarComponent = GetComponentInChildren<HealthBarComponent>();
+            
+            CurrentHealth = HealthAsset.StartHealth;
+
+            if (HealthBarComponent)
+                HealthChanged += HealthBarComponent.OnHealthChanged;
         }
         
         public void ChangeHealth(float amount)
@@ -36,11 +42,10 @@ namespace WorkingTitle.Unity.Components.Health
             CurrentHealth += amount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, HealthAsset.MaxHealth);
             
-            HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount));
+            HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount, HealthAsset.MaxHealth));
             
             if (CurrentHealth <= 0)
             {
-                Debug.Log("verbuhaibuhrvaebjhiofrvadbuhoarvbzhiorgaebzhiorabzhiargbzhirgbhiaeöp");
                 Death?.Invoke(this, EventArgs.Empty);
             }
         }
