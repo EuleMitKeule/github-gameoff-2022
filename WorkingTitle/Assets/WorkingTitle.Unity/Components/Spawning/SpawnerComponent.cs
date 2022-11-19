@@ -118,43 +118,47 @@ namespace WorkingTitle.Unity.Components.Spawning
         
         Vector2 GetRandomPosition()
         {
-            var diagonal = (int)Camera.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height)).magnitude;
+            var height = Camera.orthographicSize * 2.0f;
+            var width = height * Screen.width / Screen.height;
+            var size = new Vector2(width, height);
+            
+            var diagonal = Mathf.FloorToInt(size.magnitude);
             var spawnRadius = diagonal / 2 + SpawnRadiusOffset;
-
-            var cellPositions = new List<Vector2Int>();
+            
+            var relativeCellPositions = new List<Vector2Int>();
             
             for (int x = -spawnRadius - 1; x <= spawnRadius + 1; x++)
             {
                 for (int y = -spawnRadius - 1; y <= spawnRadius + 1; y++)
                 {
-                    var cellPosition = new Vector2Int(x, y);
-                    var distance = cellPosition.magnitude;
-                    
-                    if(distance < spawnRadius || distance > spawnRadius + 1)
+                    var relativeCellPosition = new Vector2Int(x, y);
+                    var distance = relativeCellPosition.magnitude;
+
+                    if (distance < spawnRadius || distance > spawnRadius + 1)
+                    {
                         continue;
+                    }
                     
-                    cellPositions.Add(cellPosition);
+                    relativeCellPositions.Add(relativeCellPosition);
                 }
             }
 
-            var chosenCellPosition = Vector2Int.zero;
+            var chosenRelativeCellPosition = Vector2Int.zero;
 
-            while (cellPositions.Count > 0)
+            while (relativeCellPositions.Count > 0)
             {
-                var randomIndex = Random.Range(0, cellPositions.Count);
-                chosenCellPosition = cellPositions[randomIndex];
+                var randomIndex = Random.Range(0, relativeCellPositions.Count);
+                chosenRelativeCellPosition = relativeCellPositions[randomIndex];
                 
-                var worldCellPosition =
-                    new Vector2Int((int)PlayerEntityComponent.Position.x, (int)PlayerEntityComponent.Position.y) +
-                    chosenCellPosition;
-                var cell = PathfindingComponent.GetCell(worldCellPosition);
+                var cellPosition = PlayerEntityComponent.CellPosition + chosenRelativeCellPosition;
+                var cell = PathfindingComponent.GetCell(cellPosition);
 
                 if (!(cell?.IsObstacle ?? true)) break;
                 
-                cellPositions.Remove(chosenCellPosition);
+                relativeCellPositions.Remove(chosenRelativeCellPosition);
             }
 
-            return (PlayerEntityComponent.CellPosition + chosenCellPosition).ToWorld();
+            return (PlayerEntityComponent.CellPosition + chosenRelativeCellPosition).ToWorld();
         }
 
         float CalculateSpawnCooldown() => 
