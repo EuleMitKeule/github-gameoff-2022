@@ -13,6 +13,10 @@ namespace WorkingTitle.Unity.Components.Health
         
         [ShowInInspector]
         [ReadOnly]
+        public float MaxHealth { get; set; }
+        
+        [ShowInInspector]
+        [ReadOnly]
         float CurrentHealth { get; set; }
         
         public event EventHandler Death;
@@ -22,6 +26,7 @@ namespace WorkingTitle.Unity.Components.Health
         
         void Awake()
         {
+            MaxHealth = HealthAsset.MaxHealth;
             CurrentHealth = HealthAsset.StartHealth;
         }
 
@@ -34,7 +39,7 @@ namespace WorkingTitle.Unity.Components.Health
         {
             var previousHealth = CurrentHealth;
             CurrentHealth += amount;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, HealthAsset.MaxHealth);
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
             
             HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount));
             

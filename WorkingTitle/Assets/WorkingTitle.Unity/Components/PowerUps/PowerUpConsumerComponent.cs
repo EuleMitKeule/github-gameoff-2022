@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using WorkingTitle.Unity.Assets.PowerUps;
+using WorkingTitle.Unity.Components.Health;
 using WorkingTitle.Unity.Components.Physics;
 using Random = UnityEngine.Random;
 
@@ -17,6 +18,7 @@ namespace WorkingTitle.Unity.Components.PowerUps
         TankMovementComponent TankMovementComponent { get; set; }
         MagnetComponent MagnetComponent { get; set; }
         GameComponent GameComponent { get; set; }
+        HealthComponent HealthComponent { get; set; }
         public event EventHandler<PowerUpConsumedEventArgs> PowerUpConsumed;
         
         void Awake()
@@ -24,7 +26,8 @@ namespace WorkingTitle.Unity.Components.PowerUps
             AttackComponent = GetComponentInChildren<AttackComponent>();
             TankMovementComponent = GetComponent<TankMovementComponent>();
             MagnetComponent = GetComponent<MagnetComponent>();
-
+            HealthComponent = GetComponent<HealthComponent>();
+            
             PowerUpConsumed += OnPowerUpConsumed;
         }
 
@@ -108,6 +111,9 @@ namespace WorkingTitle.Unity.Components.PowerUps
                     {
                         MagnetComponent.Radius += magnetPowerUpAsset.Radius;
                     }
+                    break;
+                case MaxHealthPowerUpAsset maxHealthPowerUpAsset:
+                    HealthComponent.MaxHealth += maxHealthPowerUpAsset.MaxHealthIncrease;
                     break;
             }
 

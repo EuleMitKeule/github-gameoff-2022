@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: -790089455512438184, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 39032dfb215fc74419b7e6ce5f729588, type: 3}
+      objectReference: {fileID: 21300000, guid: d2c677d166ebadb46b4b34bb36ad6823, type: 3}
     - target: {fileID: 1797848102740532900, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: d3ed7aaaedc3c98478ad10d2db099e8f, type: 2}
     - target: {fileID: 2639209785973192634, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: m_Name
-      value: powerup_life_steal
+      value: powerup_max_health
       objectReference: {fileID: 0}
     - target: {fileID: 6252876239350468300, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: m_RootOrder

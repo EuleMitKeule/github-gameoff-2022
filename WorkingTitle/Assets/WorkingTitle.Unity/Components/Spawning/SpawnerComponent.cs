@@ -109,7 +109,7 @@ namespace WorkingTitle.Unity.Components.Spawning
                 
                 if (runningWeight >= random)
                 {
-                    return GameComponent.GameAsset.SkillAssets[skillType].TankPrefab;
+                    return GameComponent.GameAsset.TankAssets[skillType].Prefab;
                 }
             }
             
