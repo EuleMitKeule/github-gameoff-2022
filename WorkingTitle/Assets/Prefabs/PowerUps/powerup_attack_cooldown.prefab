@@ -7,21 +7,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -790089455512438184, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c4d8237f558865549afae3488ac13add, type: 3}
     - target: {fileID: 1797848102740532900, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 1797848102740532900, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
     - target: {fileID: 1797848102740532900, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797848102740532900, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
       value: '"path":"PowerUpAsset","value":$eref:0'
       objectReference: {fileID: 0}
     - target: {fileID: 1797848102740532900, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
+      propertyPath: serializationData.ReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 37162f2774c7d0b42b9059647ad9291c, type: 2}
+    - target: {fileID: 1797848102740532900, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797848102740532900, guid: b72762d7ea434154d8aab014f955da1d, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]

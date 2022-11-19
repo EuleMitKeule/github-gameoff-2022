@@ -9,32 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 343ace24d10749438e4802e4c56c2834, type: 3}
-  m_Name: tank_magnet
+  m_Script: {fileID: 11500000, guid: 179dbb0d48014901bb0ba8a6e3729501, type: 3}
+  m_Name: powerup_max_health
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 5135982904818416073, guid: 170963ac58467e94d869fdb6fc976169, type: 3}
-    - {fileID: 11400000, guid: c5a3cbfe8eb3fdd42b2b801ab6d6c899, type: 2}
+    - {fileID: 787429869459007135, guid: f4d3fc696e82696488ba9e09e57eb69f, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: WallMask
-      Entry: 7
-      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 256
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: Prefab
       Entry: 10
       Data: 0
-    - Name: PowerUpAsset
-      Entry: 10
+    - Name: MaxHealthIncrease
+      Entry: 3
       Data: 1

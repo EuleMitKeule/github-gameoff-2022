@@ -18,6 +18,12 @@ namespace WorkingTitle.Unity.Assets
         public GameObject PlayerPrefab { get; private set; }
 
         [OdinSerialize] 
-        public Dictionary<SkillType, SkillAsset> SkillAssets { get; private set; } = new();
+        public Dictionary<SkillType, EnemyTankAsset> TankAssets { get; private set; } = new();
+        
+        [OdinSerialize]
+        public float DropChancePerPowerUp { get; private set; }
+        
+        [OdinSerialize]
+        public float PowerUpDropRadius { get; private set; }
     }
 }

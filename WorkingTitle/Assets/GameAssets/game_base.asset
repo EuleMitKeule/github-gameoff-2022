@@ -18,13 +18,14 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 152961888976396738, guid: cf3884a4d56ac984ba25ab2c8f2bdacc, type: 3}
     - {fileID: 6064423492359556233, guid: b3f99870dfd63c04f8b1c6c693308bbb, type: 3}
-    - {fileID: 11400000, guid: 044b86e224a071d42877a870feb4734c, type: 2}
-    - {fileID: 11400000, guid: b57325b1d5b30f449a42a38c95ec3c4f, type: 2}
-    - {fileID: 11400000, guid: 14ccc0737b2603c44ace66eab6e7e4ad, type: 2}
-    - {fileID: 11400000, guid: 826db66ec7dd60246a33e639e4f17d17, type: 2}
-    - {fileID: 11400000, guid: 4e242b58a46d4344d9ef5b6f9ffc5880, type: 2}
-    - {fileID: 11400000, guid: a4e4adbe1d2c42f48b75d7042225130b, type: 2}
-    - {fileID: 11400000, guid: f731ba0cc23823647ab41459f90c5ba5, type: 2}
+    - {fileID: 11400000, guid: ee99238ed99f65d41a271e74b0c97d1c, type: 2}
+    - {fileID: 11400000, guid: 0da93fdeaffff944e9dee03edf4c03a9, type: 2}
+    - {fileID: 11400000, guid: 4bb5815739801154db963382014ae0a1, type: 2}
+    - {fileID: 11400000, guid: 7409a01eb583ab949a82ebcd30038a2d, type: 2}
+    - {fileID: 11400000, guid: c50d4aa3f2b584b46ae16f5341310698, type: 2}
+    - {fileID: 11400000, guid: eaf27ab35c79a1445a30cf7692cba6b5, type: 2}
+    - {fileID: 11400000, guid: 09d13aab27957ea4dbfaf0c2c1ac8792, type: 2}
+    - {fileID: 11400000, guid: 51350b26a7613794d8ebe2fa861f8f0c, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -36,10 +37,10 @@ MonoBehaviour:
     - Name: PlayerPrefab
       Entry: 10
       Data: 1
-    - Name: SkillAssets
+    - Name: TankAssets
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Components.SkillType,
-        WorkingTitle.Unity],[WorkingTitle.Unity.Assets.SkillAsset, WorkingTitle.Unity]],
+        WorkingTitle.Unity],[WorkingTitle.Unity.Assets.EnemyTankAsset, WorkingTitle.Unity]],
         mscorlib
     - Name: comparer
       Entry: 7
@@ -56,7 +57,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 8
     - Name: 
       Entry: 7
       Data: 
@@ -134,10 +135,22 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 11
+      Data: 10
     - Name: $v
       Entry: 10
       Data: 8
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 11
+    - Name: $v
+      Entry: 10
+      Data: 9
     - Name: 
       Entry: 8
       Data: 
@@ -147,3 +160,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: DropChancePerPowerUp
+      Entry: 4
+      Data: 0.5
+    - Name: PowerUpDropRadius
+      Entry: 4
+      Data: 1

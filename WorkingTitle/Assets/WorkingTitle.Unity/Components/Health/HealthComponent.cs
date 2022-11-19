@@ -13,7 +13,7 @@ namespace WorkingTitle.Unity.Components.Health
         
         [ShowInInspector]
         [ReadOnly]
-        float MaxHealth { get; set; }
+        public float MaxHealth { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
@@ -23,7 +23,14 @@ namespace WorkingTitle.Unity.Components.Health
         public event EventHandler<HealthChangedEventArgs> HealthChanged;
 
         DifficultyComponent DifficultyComponent { get; set; }
+        
         HealthBarComponent HealthBarComponent { get; set; }
+        
+        void Awake()
+        {
+            MaxHealth = HealthAsset.MaxHealth;
+            CurrentHealth = HealthAsset.StartHealth;
+        }
 
         void Start()
         {
@@ -40,7 +47,7 @@ namespace WorkingTitle.Unity.Components.Health
         {
             var previousHealth = CurrentHealth;
             CurrentHealth += amount;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, HealthAsset.MaxHealth);
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
             
             HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount, HealthAsset.MaxHealth));
             

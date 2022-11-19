@@ -15,7 +15,9 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 7005487724714998332, guid: 38825d59e19870c4d9c35b74eecdb038, type: 3}
+    - {fileID: 11400000, guid: d3ed7aaaedc3c98478ad10d2db099e8f, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -30,6 +32,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: SkillType
-      Entry: 3
-      Data: 11
+    - Name: Prefab
+      Entry: 10
+      Data: 0
+    - Name: PowerUpAsset
+      Entry: 10
+      Data: 1
