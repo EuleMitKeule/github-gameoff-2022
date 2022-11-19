@@ -57,8 +57,14 @@ TagManager:
   - name: Enemy
     uniqueID: 3664669073
     locked: 0
+  - name: EnemyCannon
+    uniqueID: 3592038825
+    locked: 0
   - name: Player
     uniqueID: 353169175
+    locked: 0
+  - name: PlayerCannon
+    uniqueID: 1060431367
     locked: 0
   - name: Wall
     uniqueID: 2014852201

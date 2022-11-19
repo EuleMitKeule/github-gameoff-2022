@@ -36,7 +36,7 @@ namespace WorkingTitle.Unity.Components.Graphics
         void OnHealthChanged(object sender, HealthChangedEventArgs e)
         {
             var healthChange = Mathf.RoundToInt(e.HealthChange);
-            var text = $"{healthChange}";
+            var text = (healthChange > 0 ? "+" : "") + healthChange;
             var textColor = e.HealthChange > 0 ? TextColor.Green : TextColor.Red;
             
             SpawnText(text, textColor);
