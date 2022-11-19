@@ -1,5 +1,6 @@
 ﻿using Sirenix.Serialization;
 using UnityEngine;
+using WorkingTitle.Unity.Assets.PowerUps;
 using WorkingTitle.Unity.Components;
 
 namespace WorkingTitle.Unity.Assets
@@ -8,6 +9,9 @@ namespace WorkingTitle.Unity.Assets
     public class EnemyTankAsset : TankAsset
     {
         [OdinSerialize]
-        public SkillType SkillType { get; private set; }
+        public GameObject Prefab { get; set; }
+        
+        [OdinSerialize]
+        public PowerUpAsset PowerUpAsset { get; set; }
     }
 }

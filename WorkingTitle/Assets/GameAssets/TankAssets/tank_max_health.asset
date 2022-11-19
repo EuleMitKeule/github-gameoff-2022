@@ -9,31 +9,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c97f1bbea3c24c9ca3ddd3fe918801b9, type: 3}
-  m_Name: skill_attack_cooldown
+  m_Script: {fileID: 11500000, guid: 343ace24d10749438e4802e4c56c2834, type: 3}
+  m_Name: tank_max_health
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 4472856794074153120, guid: 97753afdfd0e1954bb7a5ebf0d15c9e1, type: 3}
-    - {fileID: 11400000, guid: eaf27ab35c79a1445a30cf7692cba6b5, type: 2}
-    - {fileID: 4041634152683501491, guid: b758160d0de3c4b43a3ac8dfdfa222cf, type: 3}
-    - {fileID: 11400000, guid: 37162f2774c7d0b42b9059647ad9291c, type: 2}
+    - {fileID: 7005487724714998332, guid: 5609afde2dda8804784d3e2d9f7a9591, type: 3}
+    - {fileID: 11400000, guid: c158dc5e8149ab741b5bf4f89ce25271, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TankPrefab
+    - Name: WallMask
+      Entry: 7
+      Data: UnityEngine.LayerMask, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 256
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Prefab
       Entry: 10
       Data: 0
-    - Name: TankAsset
-      Entry: 10
-      Data: 1
-    - Name: PowerUpPrefab
-      Entry: 10
-      Data: 2
     - Name: PowerUpAsset
       Entry: 10
-      Data: 3
+      Data: 1

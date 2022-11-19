@@ -33,8 +33,7 @@ namespace WorkingTitle.Unity.Components
             
             Rigidbody.simulated = false;
 
-            var skillAsset = GameComponent.GameAsset.SkillAssets[enemyTankAsset.SkillType];
-            var skillPowerUpPrefab = skillAsset.PowerUpPrefab;
+            var skillPowerUpPrefab = enemyTankAsset.PowerUpAsset.Prefab;
             
             PowerUpConsumerComponent.DropPowerUp(skillPowerUpPrefab, GameComponent.GameAsset.DropChancePerPowerUp);
             PowerUpConsumerComponent.DropConsumedPowerUps(GameComponent.GameAsset.DropChancePerPowerUp);
