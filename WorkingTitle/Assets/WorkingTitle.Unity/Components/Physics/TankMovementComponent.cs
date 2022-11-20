@@ -12,7 +12,6 @@ namespace WorkingTitle.Unity.Components.Physics
     [RequireComponent(typeof(TankComponent))]
     [RequireComponent(typeof(InputComponent))]
     [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(Animator))]
     public class TankMovementComponent : SerializedMonoBehaviour, IResettable
     {
         [OdinSerialize]
@@ -26,32 +25,12 @@ namespace WorkingTitle.Unity.Components.Physics
         InputComponent InputComponent { get; set; }
         
         Rigidbody2D Rigidbody { get; set; }
-        
-        Animator Animator { get; set; }
-        
-        static readonly int IsMoving = Animator.StringToHash("isMoving");
-        static readonly int IsRotatingRight = Animator.StringToHash("isRotatingRight");
-        static readonly int IsRotatingLeft = Animator.StringToHash("isRotatingLeft");
 
         void Awake()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
             TankComponent = GetComponent<TankComponent>();
             InputComponent = GetComponent<InputComponent>();
-            Animator = GetComponent<Animator>();
-        }
-
-        void Update()
-        {
-            var isMoving = Mathf.Abs(InputComponent.InputMovement) != 0 ||
-                           Mathf.Abs(InputComponent.InputRotation) != 0;
-            Animator.SetBool(IsMoving, isMoving);
-            
-            var isRotatingLeft = InputComponent.InputRotation < 0;
-            var isRotatingRight = InputComponent.InputRotation > 0;
-            
-            Animator.SetBool(IsRotatingLeft, isRotatingLeft);
-            Animator.SetBool(IsRotatingRight, isRotatingRight);
         }
 
         void FixedUpdate()
