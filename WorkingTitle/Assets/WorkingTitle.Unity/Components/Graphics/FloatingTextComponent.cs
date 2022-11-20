@@ -9,32 +9,18 @@ using WorkingTitle.Unity.Components.Pooling;
 
 namespace WorkingTitle.Unity.Components.Graphics
 {
-    public class FloatingTextComponent : SerializedMonoBehaviour, IPoolable
+    public class FloatingTextComponent : SerializedMonoBehaviour, IResettable, IDestroyable
     {
-        [OdinSerialize]
-        Dictionary<TextColor, Color> TextColorToColor = new Dictionary<TextColor, Color>()
-        {
-            {TextColor.White, new Color(1f, 1f, 1f)},
-            {TextColor.Red, new Color(161f / 255f, 25f / 255f, 32f / 255f)},
-            {TextColor.Purple, new Color(99f / 255f, 22f / 255f, 73f / 255f)},
-            {TextColor.Blue, new Color(70f / 255f, 83f / 255f, 116f / 255f)},
-            {TextColor.Green, new Color(85f / 255f, 99f / 255f, 46f / 255f)},
-        };
-        
         [OdinSerialize]
         FloatingTextAsset FloatingTextAsset { get; set; }
         
-        public float Speed { get; set; }
-        
-        public float Duration { get; set; }
-
-        Color Color { get; set; }
-
+        float Speed { get; set; }
+        float Duration { get; set; }
         float StartTime { get; set; }
 
-        public event EventHandler Destroyed;
-        
         TextMeshProUGUI TextMesh { get; set; }
+
+        public event EventHandler Destroyed;
 
         void Awake()
         {
@@ -44,8 +30,7 @@ namespace WorkingTitle.Unity.Components.Graphics
         public void Initialize(string text, TextColor textColor, Vector3 position)
         {
             TextMesh.SetText(text);
-            TextMesh.color = TextColorToColor[textColor];
-            
+            TextMesh.color = FloatingTextAsset.TextColorToColor[textColor];
             transform.position = position;
         }
 

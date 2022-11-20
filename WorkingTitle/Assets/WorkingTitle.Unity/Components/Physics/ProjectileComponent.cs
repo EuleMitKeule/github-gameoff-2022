@@ -8,7 +8,7 @@ using WorkingTitle.Unity.Components.Pooling;
 
 namespace WorkingTitle.Unity.Components.Physics
 {
-    public class ProjectileComponent : SerializedMonoBehaviour, IPoolable
+    public class ProjectileComponent : SerializedMonoBehaviour, IResettable, IDestroyable
     {
         [OdinSerialize]
         ProjectileAsset ProjectileAsset { get; set; }
@@ -43,8 +43,8 @@ namespace WorkingTitle.Unity.Components.Physics
             Damage = 0;
             Ricochets = 0;
             
-            Rigidbody.transform.position = Vector3.zero;
-            Rigidbody.transform.rotation = Quaternion.identity;
+            Rigidbody.position = Vector2.zero;
+            Rigidbody.rotation = 0;
             Rigidbody.velocity = Vector2.zero;
         }
 

@@ -2,23 +2,21 @@
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using WorkingTitle.Unity.Assets.Graphics;
 using WorkingTitle.Unity.Components.Pooling;
 
 namespace WorkingTitle.Unity.Components.Graphics
 {
-    public class TrackSpawnerComponent : SerializedMonoBehaviour
+    public class TrackSpawnerComponent : SerializedMonoBehaviour, IResettable
     {
+        [OdinSerialize]
+        TrackSpawnerAsset TrackSpawnerAsset { get; set; }
+        
         [OdinSerialize]
         Transform TrackPointLeft { get; set; }
         
         [OdinSerialize]
         Transform TrackPointRight { get; set; }
-        
-        [OdinSerialize]
-        float TrackDistance { get; set; }
-        
-        [OdinSerialize]
-        GameObject TrackPrefab { get; set; }
         
         Vector2 LastTrackLeft { get; set; }
         Vector2 LastTrackRight { get; set; }
@@ -30,9 +28,6 @@ namespace WorkingTitle.Unity.Components.Graphics
         {
             TankComponent = GetComponent<TankComponent>();
             PoolComponent = FindObjectOfType<PoolComponent>();
-            
-            LastTrackLeft = TrackPointLeft.position;
-            LastTrackRight = TrackPointRight.position;
         }
         
         void Update()
@@ -40,26 +35,35 @@ namespace WorkingTitle.Unity.Components.Graphics
             var trackDistanceLeft = ((Vector2)TrackPointLeft.position - LastTrackLeft).magnitude;
             var trackDistanceRight = ((Vector2)TrackPointRight.position - LastTrackRight).magnitude;
 
-            if (trackDistanceLeft >= TrackDistance)
+            if (trackDistanceLeft >= TrackSpawnerAsset.TrackDistance)
             {
-                LastTrackLeft = TrackPointLeft.position;
+                var position = TrackPointLeft.position;
+                LastTrackLeft = position;
                 
-                SpawnTrack(TrackPointLeft.position);
+                SpawnTrack(position);
             }
 
-            if (trackDistanceRight >= TrackDistance)
+            if (trackDistanceRight >= TrackSpawnerAsset.TrackDistance)
             {
-                LastTrackRight = TrackPointRight.position;
+                var position = TrackPointRight.position;
+                LastTrackRight = position;
                 
-                SpawnTrack(TrackPointRight.position);
+                SpawnTrack(position);
             }
+        }
+        
+        public void Reset()
+        {
+            LastTrackLeft = TrackPointLeft.position;
+            LastTrackRight = TrackPointRight.position;
         }
 
         void SpawnTrack(Vector2 position)
         {
-            var trackComponent = PoolComponent.Allocate<TrackComponent>(TrackPrefab);
-            trackComponent.transform.position = position;
-            trackComponent.transform.rotation = TankComponent.TankBody.transform.rotation;
+            var trackObject = PoolComponent.Allocate(TrackSpawnerAsset.TrackPrefab);
+            var trackComponent = trackObject.GetComponent<TrackComponent>();
+            
+            trackComponent.Initialize(position, TankComponent.TankBody.transform.rotation);
         }
     }
 }

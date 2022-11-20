@@ -8,11 +8,10 @@ using WorkingTitle.Unity.Components.Health;
 using WorkingTitle.Unity.Components.Input;
 using WorkingTitle.Unity.Components.Physics;
 using WorkingTitle.Unity.Components.Pooling;
-using WorkingTitle.Unity.Components.Spawning;
 
 namespace WorkingTitle.Unity.Components
 {
-    public class AttackComponent : SerializedMonoBehaviour
+    public class AttackComponent : SerializedMonoBehaviour, IResettable
     {
         [OdinSerialize]
         AttackAsset AttackAsset { get; set; }
@@ -45,30 +44,25 @@ namespace WorkingTitle.Unity.Components
         float LastAttackTime { get; set; }
         
         List<ProjectileComponent> ProjectileComponents { get; set; }
-        
         InputComponent InputComponent { get; set; }
-        
         HealthComponent HealthComponent { get; set; }
-        
         PoolComponent PoolComponent { get; set; }
+        TankComponent TankComponent { get; set; }
+        DifficultyComponent DifficultyComponent { get; set; }
 
         void Awake()
         {
             ProjectileComponents = new List<ProjectileComponent>();
+            TankComponent = GetComponent<TankComponent>();
+            InputComponent = GetComponent<InputComponent>();
+            HealthComponent = GetComponent<HealthComponent>();
             
-            InputComponent = GetComponentInParent<InputComponent>();
-            HealthComponent = GetComponentInParent<HealthComponent>();
             PoolComponent = FindObjectOfType<PoolComponent>();
+            DifficultyComponent = FindObjectOfType<DifficultyComponent>();
             
             HealthComponent.Death += OnDeath;
-            
-            ProjectileSpeed = AttackAsset.StartProjectileSpeed;
-            AttackCooldown = AttackAsset.StartAttackCooldown;
-            Damage = AttackAsset.StartDamage;
-            Ricochets = AttackAsset.StartRicochets;
-            LifeSteal = AttackAsset.StartLifeSteal;
         }
-
+        
         void Update()
         {
             if (!InputComponent.InputPrimaryAttack) return;
@@ -78,17 +72,32 @@ namespace WorkingTitle.Unity.Components
             Attack();
         }
 
+        public void Reset()
+        {
+            ProjectileSpeed = AttackAsset.StartProjectileSpeed;
+            AttackCooldown = AttackAsset.StartAttackCooldown;
+            Damage = AttackAsset.StartDamage;
+            Ricochets = AttackAsset.StartRicochets;
+            LifeSteal = AttackAsset.StartLifeSteal;
+            
+            if (TankComponent.TankAsset is not EnemyTankAsset enemyTankAsset) return;
+            
+            //TODO: Skill scaling
+        }
+
         void Attack()
         {
-            var projectileComponent = PoolComponent.Allocate<ProjectileComponent>(AttackAsset.ProjectilePrefab);
-            var projectileRigidbody = projectileComponent.GetComponent<Rigidbody2D>();
+            var projectileObject = PoolComponent.Allocate(AttackAsset.ProjectilePrefab);
+            var projectileComponent = projectileObject.GetComponent<ProjectileComponent>();
+            var projectileRigidbody = projectileObject.GetComponent<Rigidbody2D>();
+            var projectileTransform = projectileObject.GetComponent<Transform>();
             
             projectileComponent.Damage = Damage;
             projectileComponent.Ricochets = Ricochets;
             
-            projectileRigidbody.transform.position = WeaponPoint.transform.position;
-            projectileRigidbody.transform.rotation = WeaponPoint.transform.rotation;
-            projectileRigidbody.velocity = transform.up * ProjectileSpeed;
+            projectileTransform.position = WeaponPoint.transform.position;
+            projectileTransform.rotation = WeaponPoint.transform.rotation;
+            projectileRigidbody.velocity = TankComponent.TankCannon.transform.up * ProjectileSpeed;
             
             ProjectileComponents.Add(projectileComponent);
             

@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 5299276843899523050}
   - component: {fileID: 4646192646062116849}
   - component: {fileID: 2583674907105535798}
+  - component: {fileID: 8604599323072064943}
   m_Layer: 7
   m_Name: tank_enemy_base
   m_TagString: Untagged
@@ -558,24 +559,21 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 93a607fcfde89094d91e5b8373f6444a, type: 2}
     - {fileID: 881404548852491429}
     - {fileID: 7263420782489859053}
-    - {fileID: 5065442747039264712, guid: 84526db77bcb3eb40bfe8ae4a2c42470, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TrackPointLeft
+    - Name: TrackSpawnerAsset
       Entry: 10
       Data: 0
-    - Name: TrackPointRight
+    - Name: TrackPointLeft
       Entry: 10
       Data: 1
-    - Name: TrackDistance
-      Entry: 4
-      Data: 0.25
-    - Name: TrackPrefab
+    - Name: TrackPointRight
       Entry: 10
       Data: 2
 --- !u!114 &2583674907105535798
@@ -594,17 +592,46 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 5736488315374214953, guid: 67a0ecf837e736941ada33169a5c28f1, type: 3}
+    - {fileID: 11400000, guid: 5ace5759e0dceac4298fd6e8dfad809a, type: 2}
     - {fileID: 120840485736418136}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: FloatingTextPrefab
+    - Name: FloatingTextSpawnerAsset
       Entry: 10
       Data: 0
     - Name: SpawnPoint
+      Entry: 10
+      Data: 1
+--- !u!114 &8604599323072064943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5893374fe7439b45aeeba86a5a286de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 4b294bd17e0ecde489be4683bcaf9ee9, type: 2}
+    - {fileID: 12451458499558325}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: AttackAsset
+      Entry: 10
+      Data: 0
+    - Name: WeaponPoint
       Entry: 10
       Data: 1
 --- !u!1 &6064423492455411463
@@ -735,7 +762,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6064423493732264458}
-  - component: {fileID: 1071046310477133252}
   m_Layer: 7
   m_Name: tank_cannon
   m_TagString: Untagged
@@ -760,35 +786,6 @@ Transform:
   m_Father: {fileID: 6064423492455411456}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1071046310477133252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6064423493732264457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5893374fe7439b45aeeba86a5a286de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 4b294bd17e0ecde489be4683bcaf9ee9, type: 2}
-    - {fileID: 12451458499558325}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: AttackAsset
-      Entry: 10
-      Data: 0
-    - Name: WeaponPoint
-      Entry: 10
-      Data: 1
 --- !u!1 &7985236468272663950
 GameObject:
   m_ObjectHideFlags: 0

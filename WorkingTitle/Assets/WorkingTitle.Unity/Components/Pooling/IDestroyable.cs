@@ -2,10 +2,8 @@
 
 namespace WorkingTitle.Unity.Components.Pooling
 {
-    public interface IPoolable
+    public interface IDestroyable
     {
         public event EventHandler Destroyed;
-
-        public void Reset();
     }
 }

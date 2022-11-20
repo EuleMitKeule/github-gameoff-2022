@@ -5,35 +5,40 @@ using UnityEngine;
 using WorkingTitle.Unity.Assets.PowerUps;
 using WorkingTitle.Unity.Components.Health;
 using WorkingTitle.Unity.Components.Physics;
+using WorkingTitle.Unity.Components.Pooling;
 using Random = UnityEngine.Random;
 
 namespace WorkingTitle.Unity.Components.PowerUps
 {
-    public class PowerUpConsumerComponent : SerializedMonoBehaviour
+    public class PowerUpConsumerComponent : SerializedMonoBehaviour, IResettable
     {
         [ShowInInspector]
-        Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; } = new();
+        Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; }
         
         AttackComponent AttackComponent { get; set; }
         TankMovementComponent TankMovementComponent { get; set; }
         MagnetComponent MagnetComponent { get; set; }
         GameComponent GameComponent { get; set; }
         HealthComponent HealthComponent { get; set; }
+        PoolComponent PoolComponent { get; set; }
+        
         public event EventHandler<PowerUpConsumedEventArgs> PowerUpConsumed;
         
         void Awake()
         {
-            AttackComponent = GetComponentInChildren<AttackComponent>();
+            AttackComponent = GetComponent<AttackComponent>();
             TankMovementComponent = GetComponent<TankMovementComponent>();
             MagnetComponent = GetComponent<MagnetComponent>();
             HealthComponent = GetComponent<HealthComponent>();
+            GameComponent = FindObjectOfType<GameComponent>();
+            PoolComponent = FindObjectOfType<PoolComponent>();
             
             PowerUpConsumed += OnPowerUpConsumed;
         }
 
-        void Start()
+        public void Reset()
         {
-            GameComponent = GetComponentInParent<GameComponent>();
+            PowerUpsConsumed = new Dictionary<PowerUpAsset, float>();
         }
 
         void OnPowerUpConsumed(object sender, PowerUpConsumedEventArgs e)
@@ -50,8 +55,8 @@ namespace WorkingTitle.Unity.Components.PowerUps
 
             var radius = Random.Range(0f, GameComponent.GameAsset.PowerUpDropRadius);
             var position = transform.position + (Vector3)Random.insideUnitCircle * radius;
-            
-            Instantiate(powerUpPrefab, position, Quaternion.identity);
+
+            PoolComponent.Allocate(powerUpPrefab, position);
         }
         
         public void DropConsumedPowerUps(float dropChancePerPowerup)
@@ -65,15 +70,9 @@ namespace WorkingTitle.Unity.Components.PowerUps
                 }
             }
         }
-        
-        void OnTriggerEnter2D(Collider2D other)
+
+        public void Consume(PowerUpAsset powerUpAsset)
         {
-            var powerUpComponent = other.GetComponent<PowerUpComponent>();
-
-            if (!powerUpComponent) return;
-
-            var powerUpAsset = powerUpComponent.PowerUpAsset;
-
             switch (powerUpAsset)
             {
                 case RicochetPowerUpAsset ricochetPowerUpAsset:
@@ -118,7 +117,6 @@ namespace WorkingTitle.Unity.Components.PowerUps
             }
 
             PowerUpConsumed?.Invoke(this, new PowerUpConsumedEventArgs(powerUpAsset));
-            Destroy(other.gameObject);
         }
     }
 }

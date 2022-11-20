@@ -54,6 +54,7 @@ namespace WorkingTitle.Unity.Components.Map
         void Awake()
         {
             Grid = GetComponent<Grid>();
+            Camera = FindObjectOfType<Camera>();
             MapSize = new Vector2Int(MapAsset.ViewDistance * 2, MapAsset.ViewDistance * 2);
 
             CacheChunks();
@@ -62,9 +63,8 @@ namespace WorkingTitle.Unity.Components.Map
         void Start()
         {
             PlayerEntityComponent = 
-                GetComponentInChildren<PlayerComponent>()
+                FindObjectOfType<PlayerTankComponent>()
                 .GetComponent<EntityComponent>();
-            Camera = FindObjectOfType<Camera>();
             
             if (PlayerEntityComponent)
             {

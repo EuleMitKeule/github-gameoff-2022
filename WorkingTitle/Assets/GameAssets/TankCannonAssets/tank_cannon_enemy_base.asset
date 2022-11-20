@@ -23,4 +23,4 @@ MonoBehaviour:
     SerializationNodes:
     - Name: RotationSpeed
       Entry: 4
-      Data: 4
+      Data: 50

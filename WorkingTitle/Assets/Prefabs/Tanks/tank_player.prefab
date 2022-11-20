@@ -169,7 +169,6 @@ GameObject:
   - component: {fileID: 6064423492359556244}
   - component: {fileID: 6064423492359556245}
   - component: {fileID: 779659689631481611}
-  - component: {fileID: 5396467893550582058}
   - component: {fileID: 7097692813728323970}
   - component: {fileID: 5308713483449493257}
   - component: {fileID: 4219437254338961742}
@@ -177,6 +176,7 @@ GameObject:
   - component: {fileID: 5299276843899523050}
   - component: {fileID: 5158792755674813122}
   - component: {fileID: 8864006106094330618}
+  - component: {fileID: 9035702809097086173}
   m_Layer: 6
   m_Name: tank_player
   m_TagString: Untagged
@@ -215,18 +215,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0b0111000000540061006e006b004d006f00760065006d0065006e0074004100730073006500740000000000
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 7c7d9fbcd3a9f9c489827488546856ef, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: TankMovementAsset
-      Entry: 10
-      Data: 0
+    SerializationNodes: []
 --- !u!114 &6064423492359556246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,18 +237,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0b010f000000540061006e006b00430061006e006e006f006e004100730073006500740000000000
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: fba28932425f17e4bb9151729e66d1fe, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: TankCannonAsset
-      Entry: 10
-      Data: 0
+    SerializationNodes: []
 --- !u!114 &6064423492359556244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,18 +259,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0b011000000050006c00610079006500720049006e007000750074004100730073006500740000000000
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 1b264220cf2df504d976ea9f8f2b454b, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: PlayerInputAsset
-      Entry: 10
-      Data: 0
+    SerializationNodes: []
 --- !u!50 &6064423492359556245
 Rigidbody2D:
   serializedVersion: 4
@@ -311,45 +302,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0b0109000000540061006e006b0041007300730065007400000000000b0108000000540061006e006b0042006f0064007900010000000b010a000000540061006e006b00430061006e006e006f006e00020000002d010800000047007200610070006800690063007300
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 1fdf335b79e44fc408c50b250f798637, type: 2}
     - {fileID: 6064423492455411463}
     - {fileID: 6064423493732264457}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: TankAsset
-      Entry: 10
-      Data: 0
-    - Name: TankBody
-      Entry: 10
-      Data: 1
-    - Name: TankCannon
-      Entry: 10
-      Data: 2
-    - Name: Graphics
-      Entry: 6
-      Data: 
---- !u!114 &5396467893550582058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6064423492359556233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2645ac87341a4f91bcf2a4aebddeceae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -368,7 +326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -389,18 +347,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0b010b0000004800650061006c00740068004100730073006500740000000000
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 9f3e0ff1a2b93c041aa467d91dc9e62a, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: HealthAsset
-      Entry: 10
-      Data: 0
+    SerializationNodes: []
 --- !u!114 &4219437254338961742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
+    SerializedFormat: 0
     SerializedBytes: 
     ReferencedUnityObjects: []
     SerializedBytesString: 
@@ -435,18 +390,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0b010b0000004d00610067006e00650074004100730073006500740000000000
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 6f7f13711e224264abf16bb09606cab4, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: MagnetAsset
-      Entry: 10
-      Data: 0
+    SerializationNodes: []
 --- !u!95 &5299276843899523050
 Animator:
   serializedVersion: 4
@@ -480,29 +432,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0b011100000054007200610063006b0053007000610077006e006500720041007300730065007400000000000b010e00000054007200610063006b0050006f0069006e0074004c00650066007400010000000b010f00000054007200610063006b0050006f0069006e0074005200690067006800740002000000
     ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 93a607fcfde89094d91e5b8373f6444a, type: 2}
     - {fileID: 5122353150816186866}
     - {fileID: 5477693061735626875}
-    - {fileID: 5065442747039264712, guid: 84526db77bcb3eb40bfe8ae4a2c42470, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: TrackPointLeft
-      Entry: 10
-      Data: 0
-    - Name: TrackPointRight
-      Entry: 10
-      Data: 1
-    - Name: TrackDistance
-      Entry: 4
-      Data: 0.25
-    - Name: TrackPrefab
-      Entry: 10
-      Data: 2
+    SerializationNodes: []
 --- !u!114 &8864006106094330618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,22 +456,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 0b011800000046006c006f006100740069006e006700540065007800740053007000610077006e006500720041007300730065007400000000000b010a00000053007000610077006e0050006f0069006e00740001000000
     ReferencedUnityObjects:
-    - {fileID: 5736488315374214953, guid: 67a0ecf837e736941ada33169a5c28f1, type: 3}
+    - {fileID: 11400000, guid: 5ace5759e0dceac4298fd6e8dfad809a, type: 2}
     - {fileID: 359024291720592723}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: FloatingTextPrefab
-      Entry: 10
-      Data: 0
-    - Name: SpawnPoint
-      Entry: 10
-      Data: 1
+    SerializationNodes: []
+--- !u!114 &9035702809097086173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5893374fe7439b45aeeba86a5a286de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 0
+    SerializedBytes: 0b010b000000410074007400610063006b0041007300730065007400000000000b010b00000057006500610070006f006e0050006f0069006e00740001000000
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: bd6a7e1fa1573c54aa2f77c14a8b0fb6, type: 2}
+    - {fileID: 58997272}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +617,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6064423493732264458}
-  - component: {fileID: 5163445319011664122}
   m_Layer: 6
   m_Name: tank_cannon
   m_TagString: Untagged
@@ -685,35 +641,6 @@ Transform:
   m_Father: {fileID: 6064423492455411456}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5163445319011664122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6064423493732264457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5893374fe7439b45aeeba86a5a286de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: bd6a7e1fa1573c54aa2f77c14a8b0fb6, type: 2}
-    - {fileID: 58997272}
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: AttackAsset
-      Entry: 10
-      Data: 0
-    - Name: WeaponPoint
-      Entry: 10
-      Data: 1
 --- !u!1 &6068097513344209145
 GameObject:
   m_ObjectHideFlags: 0

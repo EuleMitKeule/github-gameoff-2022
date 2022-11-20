@@ -9,24 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09f7ece3e00448cba2bd947c4e4c44fa, type: 3}
-  m_Name: ai_base
+  m_Script: {fileID: 11500000, guid: 5922cb9d5eab47c6831601fd54d62f2a, type: 3}
+  m_Name: floating_text_spawner
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 5736488315374214953, guid: 67a0ecf837e736941ada33169a5c28f1, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TargetDirectionThreshold
-      Entry: 4
-      Data: 5
-    - Name: TargetDistanceThreshold
-      Entry: 4
-      Data: 4
-    - Name: AimOnTargetThreshold
-      Entry: 4
-      Data: 3
+    - Name: FloatingTextPrefab
+      Entry: 10
+      Data: 0

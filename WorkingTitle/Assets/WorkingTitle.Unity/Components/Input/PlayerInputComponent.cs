@@ -23,7 +23,7 @@ namespace WorkingTitle.Unity.Components.Input
         void Start()
         {
             InitializeActions();
-            Camera = UnityEngine.Camera.main;
+            Camera = FindObjectOfType<Camera>();
             EnableInput();
         }
 

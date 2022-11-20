@@ -1,9 +1,11 @@
+using System;
 using System.ComponentModel;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Input;
+using WorkingTitle.Unity.Components.Pooling;
 
 namespace WorkingTitle.Unity.Components.Physics
 {
@@ -11,7 +13,7 @@ namespace WorkingTitle.Unity.Components.Physics
     [RequireComponent(typeof(InputComponent))]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Animator))]
-    public class TankMovementComponent : SerializedMonoBehaviour
+    public class TankMovementComponent : SerializedMonoBehaviour, IResettable
     {
         [OdinSerialize]
         public TankMovementAsset TankMovementAsset { get; set; }
@@ -37,9 +39,6 @@ namespace WorkingTitle.Unity.Components.Physics
             TankComponent = GetComponent<TankComponent>();
             InputComponent = GetComponent<InputComponent>();
             Animator = GetComponent<Animator>();
-            
-            MovementSpeed = TankMovementAsset.MovementSpeed;
-            RotationSpeed = TankMovementAsset.RotationSpeed;
         }
 
         void Update()
@@ -59,6 +58,12 @@ namespace WorkingTitle.Unity.Components.Physics
         {
             Move();
             Rotate();
+        }
+        
+        public void Reset()
+        {
+            MovementSpeed = TankMovementAsset.MovementSpeed;
+            RotationSpeed = TankMovementAsset.RotationSpeed;
         }
 
         void Move()

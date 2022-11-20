@@ -11,7 +11,7 @@ namespace WorkingTitle.Unity.Components.Graphics
     public class FloatingTextSpawnerComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
-        GameObject FloatingTextPrefab { get; set; }
+        FloatingTextSpawnerAsset FloatingTextSpawnerAsset { get; set; }
         
         [OdinSerialize]
         Transform SpawnPoint { get; set; }
@@ -29,8 +29,10 @@ namespace WorkingTitle.Unity.Components.Graphics
 
         void SpawnText(string text, TextColor textColor)
         {
-            var floatingText = PoolComponent.Allocate<FloatingTextComponent>(FloatingTextPrefab);
-            floatingText.Initialize(text, textColor, SpawnPoint.position);
+            var floatingTextObject = PoolComponent.Allocate(FloatingTextSpawnerAsset.FloatingTextPrefab);
+            var floatingTextComponent = floatingTextObject.GetComponent<FloatingTextComponent>();
+            
+            floatingTextComponent.Initialize(text, textColor, SpawnPoint.position);
         }
 
         void OnHealthChanged(object sender, HealthChangedEventArgs e)

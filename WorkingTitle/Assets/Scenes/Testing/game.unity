@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: game
       objectReference: {fileID: 0}
+    - target: {fileID: 1047685095358376211, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: m_Name
+      value: pool
+      objectReference: {fileID: 0}
     - target: {fileID: 2057472595619769373, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: serializationData.Prefab
       value: 

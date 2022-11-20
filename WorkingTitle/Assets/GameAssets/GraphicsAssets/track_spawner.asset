@@ -9,24 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09f7ece3e00448cba2bd947c4e4c44fa, type: 3}
-  m_Name: ai_base
+  m_Script: {fileID: 11500000, guid: f27dced4d66549028e618e47c9314806, type: 3}
+  m_Name: track_spawner
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 5065442747039264712, guid: 84526db77bcb3eb40bfe8ae4a2c42470, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: TargetDirectionThreshold
+    - Name: TrackPrefab
+      Entry: 10
+      Data: 0
+    - Name: TrackDistance
       Entry: 4
-      Data: 5
-    - Name: TargetDistanceThreshold
-      Entry: 4
-      Data: 4
-    - Name: AimOnTargetThreshold
-      Entry: 4
-      Data: 3
+      Data: 0.25

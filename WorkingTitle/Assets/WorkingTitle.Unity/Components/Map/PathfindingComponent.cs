@@ -33,8 +33,9 @@ namespace WorkingTitle.Unity.Components.Map
 
         void Start()
         {
-            PlayerEntityComponent = 
-                GetComponentInChildren<PlayerComponent>()
+            PlayerEntityComponent =
+                FindObjectOfType<GameComponent>()
+                    .PlayerObject
                     .GetComponent<EntityComponent>();
             
             PlayerEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;

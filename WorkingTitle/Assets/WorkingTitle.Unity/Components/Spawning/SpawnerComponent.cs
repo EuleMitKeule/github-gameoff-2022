@@ -7,6 +7,7 @@ using UnityEngine;
 using WorkingTitle.Unity.Assets.Spawning;
 using WorkingTitle.Unity.Components.Map;
 using WorkingTitle.Unity.Components.Physics;
+using WorkingTitle.Unity.Components.Pooling;
 using WorkingTitle.Unity.Extensions;
 using Random = UnityEngine.Random;
 
@@ -33,19 +34,25 @@ namespace WorkingTitle.Unity.Components.Spawning
         EntityComponent PlayerEntityComponent { get; set; }
         DifficultyComponent DifficultyComponent { get; set; }
         GameComponent GameComponent { get; set; }
+        PoolComponent PoolComponent { get; set; }
         Camera Camera { get; set; }
         
         public event EventHandler<EnemySpawnedEventArgs> EnemySpawned;
         
-        void Start()
+        void Awake()
         {
             EnemyCount = 0;
             
-            PlayerEntityComponent = GetComponentInChildren<EntityComponent>();
-            PathfindingComponent = GetComponentInChildren<PathfindingComponent>();
-            DifficultyComponent = GetComponentInParent<DifficultyComponent>();
-            GameComponent = GetComponentInParent<GameComponent>();
+            PathfindingComponent = FindObjectOfType<PathfindingComponent>();
+            DifficultyComponent = FindObjectOfType<DifficultyComponent>();
+            GameComponent = FindObjectOfType<GameComponent>();
+            PoolComponent = FindObjectOfType<PoolComponent>();
             Camera = FindObjectOfType<Camera>();
+        }
+
+        void Start()
+        {
+            PlayerEntityComponent = GameComponent.PlayerObject.GetComponent<EntityComponent>();
         }
         
         void Update()
@@ -69,21 +76,20 @@ namespace WorkingTitle.Unity.Components.Spawning
             var angle = Vector2.SignedAngle(Vector2.up, direction);
             var rotation = Quaternion.Euler(0, 0, angle);;
             
-            var enemy = Instantiate(enemyPrefab, position, Quaternion.identity);
-            enemy.transform.SetParent(transform);
+            var enemyObject = PoolComponent.Allocate(enemyPrefab, position);
 
-            var tankComponent = enemy.GetComponent<TankComponent>();
+            var tankComponent = enemyObject.GetComponent<TankComponent>();
             if (tankComponent)
                 tankComponent.TankBody.transform.rotation = rotation;
             
-            var spriteRenderers = enemy.GetComponentsInChildren<SpriteRenderer>();
+            var spriteRenderers = enemyObject.GetComponentsInChildren<SpriteRenderer>();
             foreach (var spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.sortingOrder = EnemyCount;
             }
 
             EnemyCount += 1;
-            EnemySpawned?.Invoke(this, new EnemySpawnedEventArgs(enemy));
+            EnemySpawned?.Invoke(this, new EnemySpawnedEventArgs(enemyObject));
         }
         
         GameObject GetRandomEnemy()

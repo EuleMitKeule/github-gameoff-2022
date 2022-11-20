@@ -1,12 +1,14 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Assets;
+using WorkingTitle.Unity.Components.Pooling;
 using WorkingTitle.Unity.Components.PowerUps;
 
 namespace WorkingTitle.Unity.Components
 {
-    public class MagnetComponent : SerializedMonoBehaviour
+    public class MagnetComponent : SerializedMonoBehaviour, IResettable
     {
         [OdinSerialize]
         MagnetAsset MagnetAsset { get; set; }
@@ -18,7 +20,6 @@ namespace WorkingTitle.Unity.Components
         void Awake()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
-            Radius = MagnetAsset.StartRadius;
         }
 
         void FixedUpdate()
@@ -42,6 +43,11 @@ namespace WorkingTitle.Unity.Components
                 var direction = (Rigidbody.position - hitRigidbody.position).normalized;
                 hitRigidbody.AddForce(direction * acceleration, ForceMode2D.Force);
             }
+        }
+
+        public void Reset()
+        {
+            Radius = MagnetAsset.StartRadius;
         }
     }
 }
