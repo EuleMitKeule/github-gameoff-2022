@@ -23,10 +23,10 @@ MonoBehaviour:
     SerializationNodes:
     - Name: TargetDirectionThreshold
       Entry: 4
-      Data: 0.2
+      Data: 5
     - Name: TargetDistanceThreshold
       Entry: 4
-      Data: 3
+      Data: 4
     - Name: AimOnTargetThreshold
       Entry: 4
-      Data: 0.2
+      Data: 3

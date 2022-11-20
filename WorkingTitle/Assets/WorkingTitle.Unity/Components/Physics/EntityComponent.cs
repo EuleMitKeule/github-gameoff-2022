@@ -4,11 +4,12 @@ using UnityEngine;
 using WorkingTitle.Lib.Extensions;
 using WorkingTitle.Lib.Pathfinding;
 using WorkingTitle.Unity.Components.Map;
+using WorkingTitle.Unity.Components.Pooling;
 using WorkingTitle.Unity.Extensions;
 
 namespace WorkingTitle.Unity.Components.Physics
 {
-    public class EntityComponent : SerializedMonoBehaviour
+    public class EntityComponent : SerializedMonoBehaviour, IResettable
     {
         [TitleGroup("Position")]
         [ShowInInspector]
@@ -28,16 +29,19 @@ namespace WorkingTitle.Unity.Components.Physics
 
         MapComponent MapComponent { get; set; }
 
-        void Start()
+        void Awake()
         {
-            MapComponent = GetComponentInParent<MapComponent>();
-            
-            ChunkDirection = Direction.None;
+            MapComponent = FindObjectOfType<MapComponent>();
         }
         
         void Update()
         {
             UpdateCellPosition();
+        }
+
+        public void Reset()
+        {
+            ChunkDirection = Direction.None;
         }
 
         public void SetPosition(Vector2 position)

@@ -14,7 +14,6 @@ namespace WorkingTitle.Unity.Components.Physics
         TankCannonAsset TankCannonAsset { get; set; }
         
         TankComponent TankComponent { get; set; }
-        
         InputComponent InputComponent { get; set; }
 
         void Awake()

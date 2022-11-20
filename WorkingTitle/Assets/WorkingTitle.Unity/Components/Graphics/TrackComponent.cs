@@ -7,22 +7,20 @@ using WorkingTitle.Unity.Components.Pooling;
 
 namespace WorkingTitle.Unity.Components.Graphics
 {
-    public class TrackComponent : SerializedMonoBehaviour, IPoolable
+    public class TrackComponent : SerializedMonoBehaviour, IResettable, IDestroyable
     {
         [OdinSerialize]
         TrackAsset TrackAsset { get; set; }
         
         float StartTime { get; set; }
-
-        public event EventHandler Destroyed;
         
         SpriteRenderer SpriteRenderer { get; set; }
+
+        public event EventHandler Destroyed;
 
         void Awake()
         {
             SpriteRenderer = GetComponent<SpriteRenderer>();
-
-            StartTime = Time.time;
         }
 
         void Update()
@@ -38,6 +36,12 @@ namespace WorkingTitle.Unity.Components.Graphics
             var newColor = new Color(color.r, color.g, color.b, alpha);
             
             SpriteRenderer.color = newColor;
+        }
+
+        public void Initialize(Vector3 position, Quaternion rotation)
+        {
+            transform.position = position;
+            transform.rotation = rotation;
         }
 
         public void Reset()

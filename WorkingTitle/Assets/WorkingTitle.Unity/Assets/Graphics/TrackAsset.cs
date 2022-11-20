@@ -12,5 +12,8 @@ namespace WorkingTitle.Unity.Assets.Graphics
         
         [OdinSerialize]
         public float StartAlpha { get; set; }
+        
+        [OdinSerialize]
+        public GameObject TrackPrefab { get; set; }
     }
 }

@@ -9,9 +9,12 @@ namespace WorkingTitle.Unity.Assets
     public class EnemyTankAsset : TankAsset
     {
         [OdinSerialize]
-        public GameObject Prefab { get; set; }
+        public GameObject Prefab { get; private set; }
         
         [OdinSerialize]
-        public PowerUpAsset PowerUpAsset { get; set; }
+        public PowerUpAsset PowerUpAsset { get; private set; }
+        
+        [OdinSerialize]
+        public SkillType SkillType { get; private set; }
     }
 }

@@ -3,6 +3,7 @@ using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Map;
+using WorkingTitle.Unity.Components.Pooling;
 
 namespace WorkingTitle.Unity.Components
 {
@@ -13,14 +14,14 @@ namespace WorkingTitle.Unity.Components
         GameObject MapObject { get; set; }
         public GameObject PlayerObject { get; set; }
 
+        PoolComponent PoolComponent { get; set; }
+        
         void Awake()
         {
-            var mapComponent = FindObjectOfType<MapComponent>();
-            var playerComponent = FindObjectOfType<PlayerComponent>();
+            PoolComponent = FindObjectOfType<PoolComponent>();
             
-            MapObject = mapComponent ? mapComponent.gameObject : Instantiate(GameAsset.MapPrefab, transform);
-
-            PlayerObject = playerComponent ? playerComponent.gameObject : Instantiate(GameAsset.PlayerPrefab, MapObject.transform);
+            MapObject = Instantiate(GameAsset.MapPrefab, transform);
+            PlayerObject = PoolComponent.Allocate(GameAsset.PlayerPrefab);
         }
     }
 }

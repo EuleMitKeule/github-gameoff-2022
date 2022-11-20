@@ -1,15 +1,17 @@
-﻿using Sirenix.OdinInspector;
+﻿using System;
+using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Lib.Pathfinding;
 using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Map;
 using WorkingTitle.Unity.Components.Physics;
+using WorkingTitle.Unity.Components.Pooling;
 using WorkingTitle.Unity.Extensions;
 
 namespace WorkingTitle.Unity.Components.Ai
 {
-    public class AiComponent : StateContextComponent<AiStateComponent>
+    public class AiComponent : StateContextComponent<AiStateComponent>, IDestroyable
     {
         [OdinSerialize]
         AiAsset AiAsset { get; set; }
@@ -60,22 +62,20 @@ namespace WorkingTitle.Unity.Components.Ai
         EntityComponent EntityComponent { get; set; }
         EntityComponent TargetEntityComponent { get; set; }
 
+        public event EventHandler Destroyed;
+
         protected override void Awake()
         {
             base.Awake();
             
             TankComponent = GetComponent<EnemyTankComponent>();
             EntityComponent = GetComponent<EntityComponent>();
-
-            EntityComponent.CellPositionChanged += OnCellPositionChanged;
-        }
-        
-        void Start()
-        {
-            PathfindingComponent = GetComponentInParent<PathfindingComponent>();
-            TargetEntityComponent = GetComponentInParent<GameComponent>()
+            PathfindingComponent = FindObjectOfType<PathfindingComponent>();
+            TargetEntityComponent = FindObjectOfType<GameComponent>()
                 .PlayerObject
                 .GetComponent<EntityComponent>();
+
+            EntityComponent.CellPositionChanged += OnCellPositionChanged;
         }
 
         protected override void Update()
@@ -115,7 +115,7 @@ namespace WorkingTitle.Unity.Components.Ai
 
             if (CurrentCell is null || CurrentCell.IsObstacle)
             {
-                Destroy(gameObject);
+                Destroyed?.Invoke(this, EventArgs.Empty);
                 return;
             }
 

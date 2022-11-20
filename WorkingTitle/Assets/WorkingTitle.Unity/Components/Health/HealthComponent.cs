@@ -3,10 +3,11 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Assets;
+using WorkingTitle.Unity.Components.Pooling;
 
 namespace WorkingTitle.Unity.Components.Health
 {
-    public class HealthComponent : SerializedMonoBehaviour
+    public class HealthComponent : SerializedMonoBehaviour, IResettable
     {
         [OdinSerialize]
         HealthAsset HealthAsset { get; set; }
@@ -23,16 +24,23 @@ namespace WorkingTitle.Unity.Components.Health
         public event EventHandler<HealthChangedEventArgs> HealthChanged;
 
         DifficultyComponent DifficultyComponent { get; set; }
+        HealthBarComponent HealthBarComponent { get; set; }
         
         void Awake()
         {
-            MaxHealth = HealthAsset.MaxHealth;
+            DifficultyComponent = FindObjectOfType<DifficultyComponent>();
+            HealthBarComponent = GetComponentInChildren<HealthBarComponent>();
+            
             CurrentHealth = HealthAsset.StartHealth;
+
+            if (HealthBarComponent)
+                HealthChanged += HealthBarComponent.OnHealthChanged;
         }
 
-        void Start()
+        public void Reset()
         {
-            DifficultyComponent = GetComponentInParent<DifficultyComponent>();
+            MaxHealth = HealthAsset.MaxHealth;
+            CurrentHealth = HealthAsset.StartHealth;
         }
         
         public void ChangeHealth(float amount)
@@ -41,7 +49,7 @@ namespace WorkingTitle.Unity.Components.Health
             CurrentHealth += amount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
             
-            HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount));
+            HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount, HealthAsset.MaxHealth));
             
             if (CurrentHealth <= 0)
             {
