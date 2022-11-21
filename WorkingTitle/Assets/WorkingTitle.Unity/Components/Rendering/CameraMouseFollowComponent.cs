@@ -22,7 +22,7 @@ namespace WorkingTitle.Unity.Components.Rendering
     
         void Awake()
         {
-            Camera = GetComponent<UnityEngine.Camera>();
+            Camera = GetComponent<Camera>();
             GameComponent = GetComponentInParent<GameComponent>();
 
             InitializeVirtualTarget();
@@ -45,7 +45,9 @@ namespace WorkingTitle.Unity.Components.Rendering
         
             if (CameraAsset.CameraCorrectionMode == CameraCorrectionMode.MinDimension)
             {
-                var screenSize = Camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
+                var height = Camera.orthographicSize * 2.0f;
+                var width = height * Screen.width / Screen.height;
+                var screenSize = new Vector2(width, height);
                 minScreenDim = Math.Min(screenSize.x, screenSize.y);
             }
         
