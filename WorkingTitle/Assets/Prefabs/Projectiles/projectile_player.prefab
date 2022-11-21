@@ -130,6 +130,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: IsPlayer
+      Entry: 5
+      Data: true
     - Name: ProjectileAsset
       Entry: 10
       Data: 0

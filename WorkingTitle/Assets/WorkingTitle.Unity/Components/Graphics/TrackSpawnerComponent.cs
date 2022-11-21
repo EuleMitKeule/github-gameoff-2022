@@ -97,12 +97,5 @@ namespace WorkingTitle.Unity.Components.Graphics
             
             trackComponent.Initialize(position, TankComponent.TankBody.transform.rotation);
         }
-
-        void OnDrawGizmos()
-        {
-            var leftPosition = (Vector2)TrackPointLeft.position;
-            var distance = (leftPosition - LastPositionLeft).magnitude;
-            Handles.Label(TrackPointLeft.position, $"{distance}", new GUIStyle() {fontSize = 60});
-        }
     }
 }

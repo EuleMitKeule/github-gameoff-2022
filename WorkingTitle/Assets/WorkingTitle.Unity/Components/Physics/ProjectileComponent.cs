@@ -4,7 +4,9 @@ using Sirenix.Serialization;
 using UnityEngine;
 using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Health;
+using WorkingTitle.Unity.Components.Map;
 using WorkingTitle.Unity.Components.Pooling;
+using WorkingTitle.Unity.Extensions;
 
 namespace WorkingTitle.Unity.Components.Physics
 {
@@ -23,6 +25,7 @@ namespace WorkingTitle.Unity.Components.Physics
 
         Rigidbody2D Rigidbody { get; set; }
         Collider2D Collider { get; set; }
+        MapComponent MapComponent { get; set; }
 
         public event EventHandler<DamageInflictedEventArgs> DamageInflicted;
         public event EventHandler Destroyed;
@@ -31,11 +34,14 @@ namespace WorkingTitle.Unity.Components.Physics
         {
             Rigidbody = GetComponent<Rigidbody2D>();
             Collider = GetComponent<Collider2D>();
+            MapComponent = FindObjectOfType<MapComponent>();
         }
 
         void FixedUpdate()
         {
             CheckCollision();
+
+            CheckInBounds();
         }
 
         public void Reset()
@@ -48,6 +54,22 @@ namespace WorkingTitle.Unity.Components.Physics
             Rigidbody.velocity = Vector2.zero;
         }
 
+        void CheckInBounds()
+        {
+            var position = transform.position.ToCell();
+            var bounds = MapComponent.MapBounds;
+            var isVisible = bounds.Contains(position);
+
+            if (isVisible) return;
+            
+            Destroyed?.Invoke(this, EventArgs.Empty);
+        }
+
+        void InvokeCollision()
+        {
+            Destroyed?.Invoke(this, EventArgs.Empty);
+        }
+        
         void CheckCollision()
         {
             var distance = Rigidbody.velocity.magnitude * Time.fixedDeltaTime;
@@ -63,6 +85,13 @@ namespace WorkingTitle.Unity.Components.Physics
         {
             HandleDamage(contactObject);
             HandleRicochet(contactNormal);
+            
+            var projectileComponent = contactObject.GetComponent<ProjectileComponent>();
+
+            if (projectileComponent)
+            {
+                projectileComponent.InvokeCollision();
+            }
         }
 
         void HandleDamage(GameObject other)
@@ -104,7 +133,7 @@ namespace WorkingTitle.Unity.Components.Physics
 
         void OnBecameInvisible()
         {
-            Destroyed?.Invoke(this, EventArgs.Empty);
+            // Destroyed?.Invoke(this, EventArgs.Empty);
         }
 
 #if UNITY_EDITOR
