@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.release-version }}
-      newVersion: ${{ steps.release.outputs.new-release-published }}
+      newVersion: ${{ steps.version.outputs.new-release-published }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
