@@ -6,6 +6,9 @@ env:
   USE_ODIN: true
   ODIN_REPO: EuleMitKeule/odin-inspector-3.1.6.1
   GH_PAT: ${{ secrets.GH_PAT }}
+  SONAR_PROJECT_KEY: EuleMitKeule_github-gameoff-2022
+  SONAR_PROJECT_NAME: github-gameoff-2022
+  SONAR_PROJECT_ORGANIZATION: eule
 
 on:
   push:
@@ -25,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.release-version }}
-      newVersion: ${{ steps.release.outputs.new-release-published }}
+      newVersion: ${{ steps.version.outputs.new-release-published }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -104,34 +107,90 @@ jobs:
     name: SonarCloud
     needs: test
     runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2021.3.12f1-base-1.0.1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          
+      - name: Checkout odin-inspector
+        uses: actions/checkout@v3
+        with:
+           repository: ${{ env.ODIN_REPO }}
+           path: odin/
+           ref: master
+           token: ${{ env.GH_PAT }}
+      
+      - name: Move odin-inspector
+        run: |
+          cp -r odin/* ${{ env.PROJECT_DIR }}
+          rm -r odin
+      
+      - name: Cache Library
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PROJECT_DIR }}/Library
+          key: Library-${{ env.PROJECT_DIR }}-Sonar
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Install SonarScanner .NET
+        run: dotnet tool install --tool-path . dotnet-sonarscanner
 
       - name: Download test results
+        id: test-results
         uses: actions/download-artifact@v2
         with:
           name: Test Results
           path: ${{ needs.test.outputs.artifactsPath }}
 
       - name: Download code coverage
+        id: coverage-results
         uses: actions/download-artifact@v2
         with:
           name: Code Coverage
           path: ${{ needs.test.outputs.coveragePath }}
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      - name: Activate unity and generate solution file
+        continue-on-error: true
         env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        run: |
+          unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod Packages.Rider.Editor.RiderScriptEditor.SyncSolution -quit
+
+      - name: SonarCloud Scan
+        env:
+          FRAMEWORK_PATH: /opt/unity/Editor/Data/MonoBleedingEdge/bin
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml
-            -Dsonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
-            -Dsonar.projectVersion=${{ needs.version.outputs.version }}
+        run: |
+          ./dotnet-sonarscanner begin \
+          /k:${{ env.SONAR_PROJECT_KEY }} \
+          /n:${{ env.SONAR_PROJECT_NAME }} \
+          /o:${{ env.SONAR_PROJECT_ORGANIZATION }} \
+          /d:sonar.projectBaseDir=${{ env.GITHUB_WORKSPACE }} \
+          /d:sonar.host.url=https://sonarcloud.io \
+          /d:sonar.login=${{ secrets.SONAR_TOKEN }} \
+          /d:sonar.scm.provider=git \
+          /d:sonar.sources=${{ env.PROJECT_DIR }}/Assets/${{ env.PROJECT_NAME }}.Unity/,Assets/${{ env.PROJECT_NAME }}.Lib/ \
+          /d:sonar.tests=${{ env.PROJECT_DIR }}/Assets/${{ env.PROJECT_NAME }}.Tests.PlayMode/,Assets/${{ env.PROJECT_NAME }}.Tests.PlayMode/ \
+          /d:sonar.exclusions=${{ env.PROJECT_DIR }}/Assets/Plugins/** \
+          /d:sonar.cs.nunit.reportsPaths=${{ steps.test-results.outputs.download-path }}/editmode-results.xml,${{ steps.test-results.outputs.download-path }}/playmode-results.xml \
+          /d:sonar.cs.opencover.reportsPaths=${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
+          dotnet build ${{ env.PROJECT_DIR }}/${{ env.PROJECT_NAME }}.sln
+          ./dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
   build:
     name: Build
@@ -241,9 +300,9 @@ jobs:
           path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}
 
       - name: Upload build
-        uses: actions/upload-release-asset@v2
+        uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ needs.release.outputs.uploadUrl }}
-          asset_path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}.zip
-          asset_name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}.zip
+          asset_path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}
+          asset_name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}
           asset_content_type: application/zip
