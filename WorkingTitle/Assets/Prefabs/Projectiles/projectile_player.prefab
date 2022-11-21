@@ -121,21 +121,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 2b01080000004900730050006c006100790065007200010b010f000000500072006f006a0065006300740069006c0065004100730073006500740000000000
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: 8d1d054b52b390544b6aa8f397084629, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: IsPlayer
-      Entry: 5
-      Data: true
-    - Name: ProjectileAsset
-      Entry: 10
-      Data: 0
+    SerializationNodes: []
 --- !u!61 &4860869848794545961
 BoxCollider2D:
   m_ObjectHideFlags: 0

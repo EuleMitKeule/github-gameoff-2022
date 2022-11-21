@@ -70,7 +70,7 @@ namespace WorkingTitle.Unity.Components.PowerUps
                 }
             }
         }
-
+        
         public void Consume(PowerUpAsset powerUpAsset)
         {
             switch (powerUpAsset)
@@ -118,5 +118,16 @@ namespace WorkingTitle.Unity.Components.PowerUps
 
             PowerUpConsumed?.Invoke(this, new PowerUpConsumedEventArgs(powerUpAsset));
         }
+
+#if UNITY_EDITOR
+        [ShowInInspector]
+        [InlineButton(nameof(DebugConsume), "Consume")]
+        PowerUpAsset AssetToConsume { get; set; }
+
+        void DebugConsume()
+        {
+            Consume(AssetToConsume);
+        }
+#endif
     }
 }

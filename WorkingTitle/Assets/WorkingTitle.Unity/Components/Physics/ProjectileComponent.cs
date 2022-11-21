@@ -40,8 +40,6 @@ namespace WorkingTitle.Unity.Components.Physics
         void FixedUpdate()
         {
             CheckCollision();
-
-            CheckInBounds();
         }
 
         public void Reset()
@@ -49,20 +47,7 @@ namespace WorkingTitle.Unity.Components.Physics
             Damage = 0;
             Ricochets = 0;
             
-            Rigidbody.position = Vector2.zero;
-            Rigidbody.rotation = 0;
             Rigidbody.velocity = Vector2.zero;
-        }
-
-        void CheckInBounds()
-        {
-            var position = transform.position.ToCell();
-            var bounds = MapComponent.MapBounds;
-            var isVisible = bounds.Contains(position);
-
-            if (isVisible) return;
-            
-            Destroyed?.Invoke(this, EventArgs.Empty);
         }
 
         void InvokeCollision()
@@ -133,7 +118,7 @@ namespace WorkingTitle.Unity.Components.Physics
 
         void OnBecameInvisible()
         {
-            // Destroyed?.Invoke(this, EventArgs.Empty);
+            Destroyed?.Invoke(this, EventArgs.Empty);
         }
 
 #if UNITY_EDITOR

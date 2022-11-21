@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using WorkingTitle.Unity.Assets;
 using WorkingTitle.Unity.Components.Health;
 using WorkingTitle.Unity.Components.Input;
@@ -20,23 +22,18 @@ namespace WorkingTitle.Unity.Components
         public GameObject WeaponPoint { get; private set; }
         
         [ShowInInspector]
-        [ReadOnly]
         public float ProjectileSpeed { get; set; }
         
         [ShowInInspector]
-        [ReadOnly]
         public float AttackCooldown { get; set; }
         
         [ShowInInspector]
-        [ReadOnly]
         public float Damage { get; set; }
         
         [ShowInInspector]
-        [ReadOnly]
         public int Ricochets { get; set; }
         
         [ShowInInspector]
-        [ReadOnly]
         public float LifeSteal { get; set; }
         
         [ShowInInspector]
@@ -87,16 +84,15 @@ namespace WorkingTitle.Unity.Components
 
         void Attack()
         {
-            var projectileObject = PoolComponent.Allocate(AttackAsset.ProjectilePrefab);
+            var projectileObject = PoolComponent.Allocate(
+                AttackAsset.ProjectilePrefab, 
+                WeaponPoint.transform.position, 
+                WeaponPoint.transform.rotation);
             var projectileComponent = projectileObject.GetComponent<ProjectileComponent>();
             var projectileRigidbody = projectileObject.GetComponent<Rigidbody2D>();
-            var projectileTransform = projectileObject.GetComponent<Transform>();
             
             projectileComponent.Damage = Damage;
             projectileComponent.Ricochets = Ricochets;
-            
-            projectileTransform.position = WeaponPoint.transform.position;
-            projectileTransform.rotation = WeaponPoint.transform.rotation;
             projectileRigidbody.velocity = TankComponent.TankCannon.transform.up * ProjectileSpeed;
             
             ProjectileComponents.Add(projectileComponent);
