@@ -176,11 +176,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
+          echo $GITHUB_WORKSPACE
           ./dotnet-sonarscanner begin \
           /k:${{ env.SONAR_PROJECT_KEY }} \
           /n:${{ env.SONAR_PROJECT_NAME }} \
           /o:${{ env.SONAR_PROJECT_ORGANIZATION }} \
-          /d:sonar.projectBaseDir=${{ env.GITHUB_WORKSPACE }} \
+          /d:sonar.projectBaseDir=$GITHUB_WORKSPACE \
           /d:sonar.host.url=https://sonarcloud.io \
           /d:sonar.login=${{ secrets.SONAR_TOKEN }} \
           /d:sonar.scm.provider=git \
