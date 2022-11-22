@@ -115,12 +115,14 @@ jobs:
           fetch-depth: 0
 
       - name: Download test results
+        id: test-results
         uses: actions/download-artifact@v2
         with:
           name: Test Results
           path: ${{ needs.test.outputs.artifactsPath }}
 
       - name: Download code coverage
+        id: coverage-results
         uses: actions/download-artifact@v2
         with:
           name: Code Coverage
@@ -167,8 +169,8 @@ jobs:
           /d:sonar.host.url=https://sonarcloud.io \
           /d:sonar.login=${{ secrets.SONAR_TOKEN }} \
           /d:sonar.exclusions=Assets/Plugins/*
-          /d:sonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml \
-          /d:sonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
+          /d:sonar.cs.nunit.reportsPaths=${{ steps.test-results.outputs.download-path }}/editmode-results.xml,${{ steps.test-results.outputs.download-path }}/playmode-results.xml \
+          /d:sonar.cs.opencover.reportsPaths=${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
           dotnet build ${{ env.PROJECT_DIR }}/${{ env.PROJECT_NAME }}.sln
           ../sonarscanner/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
