@@ -113,6 +113,19 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          
+      - name: Checkout odin-inspector
+        uses: actions/checkout@v3
+        with:
+           repository: ${{ env.ODIN_REPO }}
+           path: odin/
+           ref: master
+           token: ${{ env.GH_PAT }}
+      
+      - name: Move odin-inspector
+        run: |
+          cp -r odin/* ${{ env.PROJECT_DIR }}
+          rm -r odin
       
       - name: Cache Library
         uses: actions/cache@v2
