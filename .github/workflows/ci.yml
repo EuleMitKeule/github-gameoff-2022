@@ -106,8 +106,6 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     container: unityci/editor:ubuntu-2021.3.12f1-base-1.0.1
-    env:
-      DOTNET_ROOT: /opt/unity/Editor/Data/NetCoreRuntime
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -132,8 +130,13 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
+      - name: Setup dotnet SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '5.0.x'
+
       - name: Install SonarScanner .NET
-        run: $DOTNET_ROOT/dotnet tool install dotnet-sonarscanner --tool-path ../sonarscanner --version 5.8.0
+        run: dotnet tool install dotnet-sonarscanner --tool-path ../sonarscanner --version 5.8.0
       
       - name: Cache Library
         uses: actions/cache@v2
@@ -157,7 +160,7 @@ jobs:
           FRAMEWORK_PATH: /opt/unity/Editor/Data/MonoBleedingEdge/bin
         run: |
           ../sonarscanner/dotnet-sonarscanner begin /k:${{ env.SONAR_PROJECT_KEY }} /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml /d:sonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml /d:sonar.projectVersion=${{ needs.version.outputs.version }}
-          $DOTNET_ROOT/dotnet build ${{ env.PROJECT_NAME }}.sln
+          dotnet build ${{ env.PROJECT_NAME }}.sln
           ../sonarscanner/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
   build:
