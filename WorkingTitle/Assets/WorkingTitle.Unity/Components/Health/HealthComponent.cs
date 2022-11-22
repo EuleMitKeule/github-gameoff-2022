@@ -32,9 +32,15 @@ namespace WorkingTitle.Unity.Components.Health
             HealthBarComponent = GetComponentInChildren<HealthBarComponent>();
             
             CurrentHealth = HealthAsset.StartHealth;
+            MaxHealth = HealthAsset.MaxHealth;
 
             if (HealthBarComponent)
                 HealthChanged += HealthBarComponent.OnHealthChanged;
+        }
+
+        void Start()
+        {
+            InvokeHealthChanged();
         }
 
         public void Reset()
@@ -49,12 +55,15 @@ namespace WorkingTitle.Unity.Components.Health
             CurrentHealth += amount;
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
             
-            HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount, HealthAsset.MaxHealth));
+            HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount, MaxHealth));
             
             if (CurrentHealth <= 0)
             {
                 Death?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public void InvokeHealthChanged() =>
+            HealthChanged?.Invoke(this, new HealthChangedEventArgs(CurrentHealth, CurrentHealth, 0, MaxHealth));
     }
 }

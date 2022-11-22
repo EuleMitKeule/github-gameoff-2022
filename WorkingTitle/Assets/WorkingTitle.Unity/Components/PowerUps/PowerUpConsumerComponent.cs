@@ -113,6 +113,7 @@ namespace WorkingTitle.Unity.Components.PowerUps
                     break;
                 case MaxHealthPowerUpAsset maxHealthPowerUpAsset:
                     HealthComponent.MaxHealth += maxHealthPowerUpAsset.MaxHealthIncrease;
+                    HealthComponent.InvokeHealthChanged();
                     break;
             }
 

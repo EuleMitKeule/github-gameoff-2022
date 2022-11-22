@@ -38,3 +38,6 @@ MonoBehaviour:
     - Name: PowerUpAsset
       Entry: 10
       Data: 1
+    - Name: SkillType
+      Entry: 3
+      Data: 3
