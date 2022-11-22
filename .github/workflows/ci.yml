@@ -138,7 +138,7 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Install SonarScanner .NET
-        run: dotnet tool install dotnet-sonarscanner
+        run: dotnet tool install --global dotnet-sonarscanner
       
       - name: Cache Library
         uses: actions/cache@v2
