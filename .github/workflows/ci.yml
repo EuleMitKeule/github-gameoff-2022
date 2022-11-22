@@ -111,8 +111,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
@@ -145,7 +143,7 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Install SonarScanner .NET
-        run: dotnet tool install --tool-path . dotnet-sonarscanner
+        run: dotnet tool install --tool-path ../dotnet-sonarscanner dotnet-sonarscanner
 
       - name: Download test results
         id: test-results
@@ -177,7 +175,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           echo $GITHUB_WORKSPACE
-          ./dotnet-sonarscanner begin \
+          ../dotnet-sonarscanner/dotnet-sonarscanner begin \
           /k:${{ env.SONAR_PROJECT_KEY }} \
           /n:${{ env.SONAR_PROJECT_NAME }} \
           /o:${{ env.SONAR_PROJECT_ORGANIZATION }} \
@@ -191,7 +189,7 @@ jobs:
           /d:sonar.cs.nunit.reportsPaths=${{ steps.test-results.outputs.download-path }}/editmode-results.xml,${{ steps.test-results.outputs.download-path }}/playmode-results.xml \
           /d:sonar.cs.opencover.reportsPaths=${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
           dotnet build ${{ env.PROJECT_DIR }}/${{ env.PROJECT_NAME }}.sln
-          ./dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+          ../dotnet-sonarscanner/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
   build:
     name: Build
