@@ -23,12 +23,12 @@ MonoBehaviour:
     SerializationNodes:
     - Name: SpawnTable
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Gameplay.SkillType,
-        WorkingTitle.Unity],[WorkingTitle.Unity.Gameplay.Spawning.SpawnTableEntry,
+      Data: 0|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Components.SkillType,
+        WorkingTitle.Unity],[WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry,
         WorkingTitle.Unity]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[WorkingTitle.Unity.Gameplay.SkillType,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[WorkingTitle.Unity.Components.SkillType,
         WorkingTitle.Unity]], mscorlib
     - Name: 
       Entry: 12
@@ -50,7 +50,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 7
-      Data: 2|WorkingTitle.Unity.Gameplay.Spawning.SpawnTableEntry, WorkingTitle.Unity
+      Data: 2|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
     - Name: MinSpawnDifficulty
       Entry: 4
       Data: 0
@@ -83,13 +83,13 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 3|WorkingTitle.Unity.Gameplay.Spawning.SpawnTableEntry, WorkingTitle.Unity
+      Data: 3|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
     - Name: MinSpawnDifficulty
       Entry: 4
       Data: 0
     - Name: SpawnWeight
       Entry: 4
-      Data: 1
+      Data: 0
     - Name: MinWeight
       Entry: 4
       Data: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 7
-      Data: 4|WorkingTitle.Unity.Gameplay.Spawning.SpawnTableEntry, WorkingTitle.Unity
+      Data: 4|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
     - Name: MinSpawnDifficulty
       Entry: 4
       Data: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
       Data: 4
     - Name: $v
       Entry: 7
-      Data: 5|WorkingTitle.Unity.Gameplay.Spawning.SpawnTableEntry, WorkingTitle.Unity
+      Data: 5|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
     - Name: MinSpawnDifficulty
       Entry: 4
       Data: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
       Data: 5
     - Name: $v
       Entry: 7
-      Data: 6|WorkingTitle.Unity.Gameplay.Spawning.SpawnTableEntry, WorkingTitle.Unity
+      Data: 6|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
     - Name: MinSpawnDifficulty
       Entry: 4
       Data: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
       Data: 6
     - Name: $v
       Entry: 7
-      Data: 7|WorkingTitle.Unity.Gameplay.Spawning.SpawnTableEntry, WorkingTitle.Unity
+      Data: 7|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
     - Name: MinSpawnDifficulty
       Entry: 4
       Data: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
       Data: 11
     - Name: $v
       Entry: 7
-      Data: 8|WorkingTitle.Unity.Gameplay.Spawning.SpawnTableEntry, WorkingTitle.Unity
+      Data: 8|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
     - Name: MinSpawnDifficulty
       Entry: 4
       Data: 0

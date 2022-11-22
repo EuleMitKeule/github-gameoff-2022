@@ -6,6 +6,7 @@ env:
   USE_ODIN: true
   ODIN_REPO: EuleMitKeule/odin-inspector-3.1.6.1
   GH_PAT: ${{ secrets.GH_PAT }}
+  SONAR_PROJECT_KEY: EuleMitKeule_github-gameoff-2022
 
 on:
   push:
@@ -104,6 +105,9 @@ jobs:
     name: SonarCloud
     needs: test
     runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2021.3.12f1-base-1.0.1
+    env:
+      DOTNET_ROOT: /opt/unity/Editor/Data/NetCoreRuntime
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -122,16 +126,39 @@ jobs:
           name: Code Coverage
           path: ${{ needs.test.outputs.coveragePath }}
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Setup JDK 11
+        uses: actions/setup-java@v2
         with:
-          args: >
-            -Dsonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml
-            -Dsonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
-            -Dsonar.projectVersion=${{ needs.version.outputs.version }}
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Install SonarScanner .NET
+        run: $DOTNET_ROOT/dotnet tool install dotnet-sonarscanner --tool-path ../sonarscanner --version 5.8.0
+      
+      - name: Cache Library
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.PROJECT_DIR }}/Library
+          key: Library-${{ env.PROJECT_DIR }}-Sonar
+
+      - name: Activate unity and generate solution file
+        continue-on-error: true
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        run: |
+          # first line is needed because doesn't do everything the first time...
+          unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod UnityEditor.SyncVS.SyncSolution -quit
+          unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod UnityEditor.SyncVS.SyncSolution -quit
+
+      - name: SonarCloud Scan
+        env:
+          FRAMEWORK_PATH: /opt/unity/Editor/Data/MonoBleedingEdge/bin
+        run: |
+          ../sonarscanner/dotnet-sonarscanner begin /k:${{ env.SONAR_PROJECT_KEY }} /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml /d:sonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml /d:sonar.projectVersion=${{ needs.version.outputs.version }}
+          $DOTNET_ROOT/dotnet build ${{ env.PROJECT_NAME }}.sln
+          ../sonarscanner/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
   build:
     name: Build
