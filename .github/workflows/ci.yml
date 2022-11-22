@@ -142,7 +142,7 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '2.1.x'
+          dotnet-version: '2.1.202'
 
       - name: Install SonarScanner .NET
         run: dotnet tool install --tool-path ../sonarscanner dotnet-sonarscanner
