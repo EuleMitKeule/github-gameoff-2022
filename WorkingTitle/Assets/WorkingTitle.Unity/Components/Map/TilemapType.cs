@@ -3,6 +3,8 @@
     public enum TilemapType
     {
         Ground,
-        Wall
+        Wall,
+        Street,
+        Decoration
     }
 }
