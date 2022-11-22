@@ -161,19 +161,14 @@ jobs:
           name: Code Coverage
           path: ${{ needs.test.outputs.coveragePath }}
 
-      - name: Build StandaloneWindows64
-        uses: game-ci/unity-builder@v2
+      - name: Activate unity and generate solution file
+        continue-on-error: true
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-        with:
-          targetPlatform: StandaloneWindows64
-          projectPath: ${{ env.PROJECT_DIR }}
-          buildName: ${{ env.PROJECT_NAME }}-Sonar-${{ needs.version.outputs.version }}
-          buildsPath: ${{ env.PROJECT_NAME }}-StandaloneWindows64-${{ needs.version.outputs.version }}
-          versioning: Custom
-          version: ${{ needs.version.outputs.version }}
+        run: |
+          unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod Packages.Rider.Editor.RiderScriptEditor.SyncSolution -quit
 
       - name: List files
         run: |
