@@ -7,6 +7,8 @@ env:
   ODIN_REPO: EuleMitKeule/odin-inspector-3.1.6.1
   GH_PAT: ${{ secrets.GH_PAT }}
   SONAR_PROJECT_KEY: EuleMitKeule_github-gameoff-2022
+  SONAR_PROJECT_NAME: github-gameoff-2022
+  SONAR_PROJECT_ORGANIZATION: eule
 
 on:
   push:
@@ -159,7 +161,7 @@ jobs:
         env:
           FRAMEWORK_PATH: /opt/unity/Editor/Data/MonoBleedingEdge/bin
         run: |
-          ../sonarscanner/dotnet-sonarscanner begin /k:${{ env.SONAR_PROJECT_KEY }} /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml /d:sonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
+          ../sonarscanner/dotnet-sonarscanner begin /k:${{ env.SONAR_PROJECT_KEY }} /n:${{ env.SONAR_PROJECT_NAME }} /o:${{ env.SONAR_PROJECT_ORGANIZATION }} /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml /d:sonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
           dotnet build ${{ env.PROJECT_NAME }}.sln
           ../sonarscanner/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
