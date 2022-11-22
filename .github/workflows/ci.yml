@@ -175,6 +175,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           echo $GITHUB_WORKSPACE
+          ls -la
+          ls -la $GITHUB_WORKSPACE
+          ls -la $GITHUB_WORKSPACE/${{ env.PROJECT_DIR }}
           ../dotnet-sonarscanner/dotnet-sonarscanner begin \
           /k:${{ env.SONAR_PROJECT_KEY }} \
           /n:${{ env.SONAR_PROJECT_NAME }} \
