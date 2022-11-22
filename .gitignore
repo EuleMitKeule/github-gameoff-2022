@@ -87,9 +87,3 @@ WorkingTitle/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.
 
 # Sonar
 .sonarqube
-
-# MSBuildForUnity
-!WorkingTitle/Assets/*.msb4u.csproj
-WorkingTitle/MSBuild
-WorkingTitle/Assets/Dependencies
-WorkingTitle/Assets/Dependencies.meta

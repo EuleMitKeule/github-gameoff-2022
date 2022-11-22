@@ -142,10 +142,10 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '6.0.403'
+          dotnet-version: '6.0.x'
 
       - name: Install SonarScanner .NET
-        run: dotnet tool install --tool-path ../sonarscanner dotnet-sonarscanner
+        run: dotnet tool install --tool-path . dotnet-sonarscanner
 
       - name: Download test results
         id: test-results
@@ -169,8 +169,7 @@ jobs:
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         run: |
           unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod UnityEditor.SyncVS.SyncSolution -quit
-          unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod UnityEditor.SyncVS.SyncSolution -quit
-
+          
       - name: List files
         run: |
           cd ${{ env.PROJECT_DIR }}
@@ -180,7 +179,7 @@ jobs:
         env:
           FRAMEWORK_PATH: /opt/unity/Editor/Data/MonoBleedingEdge/bin
         run: |
-          ../sonarscanner/dotnet-sonarscanner begin \
+          ./dotnet-sonarscanner begin \
           /k:${{ env.SONAR_PROJECT_KEY }} \
           /n:${{ env.SONAR_PROJECT_NAME }} \
           /o:${{ env.SONAR_PROJECT_ORGANIZATION }} \
@@ -190,7 +189,7 @@ jobs:
           /d:sonar.cs.nunit.reportsPaths=${{ steps.test-results.outputs.download-path }}/editmode-results.xml,${{ steps.test-results.outputs.download-path }}/playmode-results.xml \
           /d:sonar.cs.opencover.reportsPaths=${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
           dotnet build ${{ env.GITHUB_WORKSPACE }}/${{ env.PROJECT_DIR }}/${{ env.PROJECT_NAME }}.sln
-          ../sonarscanner/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+          ./dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
   build:
     name: Build
