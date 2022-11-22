@@ -132,13 +132,13 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Setup dotnet SDK
+      - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.x'
 
       - name: Install SonarScanner .NET
-        run: dotnet tool install dotnet-sonarscanner --tool-path ../sonarscanner --version 5.8.0
+        run: dotnet tool install dotnet-sonarscanner
       
       - name: Cache Library
         uses: actions/cache@v2
@@ -153,7 +153,6 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         run: |
-          # first line is needed because doesn't do everything the first time...
           unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod UnityEditor.SyncVS.SyncSolution -quit
           unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod UnityEditor.SyncVS.SyncSolution -quit
 
@@ -161,9 +160,17 @@ jobs:
         env:
           FRAMEWORK_PATH: /opt/unity/Editor/Data/MonoBleedingEdge/bin
         run: |
-          ../sonarscanner/dotnet-sonarscanner begin /k:${{ env.SONAR_PROJECT_KEY }} /n:${{ env.SONAR_PROJECT_NAME }} /o:${{ env.SONAR_PROJECT_ORGANIZATION }} /d:sonar.host.url=https://sonarcloud.io /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml /d:sonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
+          dotnet-sonarscanner begin \
+          /k:${{ env.SONAR_PROJECT_KEY }} \
+          /n:${{ env.SONAR_PROJECT_NAME }} \
+          /o:${{ env.SONAR_PROJECT_ORGANIZATION }} \
+          /d:sonar.host.url=https://sonarcloud.io \
+          /d:sonar.login=${{ secrets.SONAR_TOKEN }} \
+          /d:sonar.exclusions=Assets/Plugins/*
+          /d:sonar.cs.nunit.reportsPaths=${{ needs.test.outputs.artifactsPath }}/editmode-results.xml,${{ needs.test.outputs.artifactsPath }}/playmode-results.xml \
+          /d:sonar.cs.opencover.reportsPaths=${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ needs.test.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
           dotnet build ${{ env.PROJECT_DIR }}/${{ env.PROJECT_NAME }}.sln
-          ../sonarscanner/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+          dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
   build:
     name: Build

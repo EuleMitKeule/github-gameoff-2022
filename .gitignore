@@ -84,3 +84,12 @@ BRAINSTORMING.md
 .idea
 WorkingTitle/ProjectSettings/ShaderGraphSettings.asset
 WorkingTitle/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+
+# Sonar
+.sonarqube
+
+# MSBuildForUnity
+!WorkingTitle/Assets/*.msb4u.csproj
+WorkingTitle/MSBuild
+WorkingTitle/Assets/Dependencies
+WorkingTitle/Assets/Dependencies.meta
