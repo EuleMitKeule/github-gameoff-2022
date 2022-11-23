@@ -46,9 +46,7 @@ jobs:
     name: Test
     needs: version
     runs-on: ubuntu-latest
-    outputs:
-      artifactsPath: ${{ steps.run-tests.outputs.artifactsPath }}
-      coveragePath: ${{ steps.run-tests.outputs.coveragePath }}
+    container: unityci/editor:ubuntu-2021.3.12f1-base-1.0.1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -77,39 +75,35 @@ jobs:
             Library-${{ env.PROJECT_DIR }}-
             Library-
 
-      - name: Run tests
-        id: run-tests
-        uses: game-ci/unity-test-runner@v2
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-        with:
-          projectPath: ${{ env.PROJECT_DIR }}
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          customParameters: -debugCodeOptimization -enableCodeCoverage -coverageOptions generateBadgeReport;assemblyFilters:+WorkingTitle.Unity,+WorkingTitle.Lib
+      - name: Run editor Tests
+        run: unity-editor -nographics -logFile /dev/stdout -runTests -testPlatform editmode -testResults Tests/editmode-results.xml -enableCodeCoverage -coverageResultsPath Tests -debugCodeOptimization 
+        timeout-minutes: 20
+        
+      - name: Run play Tests
+        run: unity-editor -nographics -logFile /dev/stdout -runTests -testPlatform playmode -testResults Tests/playmode-results.xml -enableCodeCoverage -coverageResultsPath Tests -debugCodeOptimization 
+        timeout-minutes: 20
 
       - name: Store results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: Test Results
-          path: ${{ steps.run-tests.outputs.artifactsPath }}
+          path: Tests
 
-      - name: Store coverage
-        uses: actions/upload-artifact@v2
+      - uses: MirageNet/nunit-reporter@v1.1.0
         if: always()
         with:
-          name: Code Coverage
-          path: ${{ steps.run-tests.outputs.coveragePath }}
+          path: Tests/*.xml
+          access-token: ${{ secrets.GITHUB_TOKEN }}
 
   sonar:
     name: SonarCloud
     needs: test
     runs-on: ubuntu-latest
+    container: unityci/editor:ubuntu-2021.3.12f1-base-1.0.1
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v1
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
@@ -130,17 +124,8 @@ jobs:
           path: ${{ env.PROJECT_DIR }}/Library
           key: Library-${{ env.PROJECT_DIR }}-Sonar
 
-      - name: Generate solution
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-        with:
-          targetPlatform: StandaloneWindows64
-          projectPath: ${{ env.PROJECT_DIR }}
-          versioning: None
-          buildMethod: Packages.Rider.Editor.RiderScriptEditor.SyncSolution
+      - name: Generate Solution
+        run: unity-editor -nographics -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod Packages.Rider.Editor.RiderScriptEditor.SyncSolution -quit
 
       - name: Setup JDK 11
         uses: actions/setup-java@v2
@@ -158,22 +143,16 @@ jobs:
 
       - name: Download test results
         id: test-results
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: Test Results
-          path: ${{ needs.test.outputs.artifactsPath }}
-
-      - name: Download code coverage
-        id: coverage-results
-        uses: actions/download-artifact@v2
-        with:
-          name: Code Coverage
-          path: ${{ needs.test.outputs.coveragePath }}
+          path: Tests
 
       - name: Print files
         run: |
           ls -la
           ls -la ${{ env.PROJECT_DIR }}
+          ls -la Tests
 
       - name: SonarCloud Scan
         env:
@@ -187,10 +166,9 @@ jobs:
           /o:${{ env.SONAR_PROJECT_ORGANIZATION }} \
           /d:sonar.host.url=https://sonarcloud.io \
           /d:sonar.login=${{ secrets.SONAR_TOKEN }} \
-          /d:sonar.projectBaseDir=$GITHUB_WORKSPACE/${{ env.PROJECT_DIR }} \
-          /d:sonar.exclusions=Assets/Plugins/** \
-          /d:sonar.cs.nunit.reportsPaths=${{ steps.test-results.outputs.download-path }}/editmode-results.xml,${{ steps.test-results.outputs.download-path }}/playmode-results.xml \
-          /d:sonar.cs.opencover.reportsPaths=${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
+          /d:sonar.exclusions=**/Assets/Plugins/** \
+          /d:sonar.cs.nunit.reportsPaths=Tests/editmode-results.xml,Tests/playmode-results.xml \
+          /d:sonar.cs.opencover.reportsPaths=Tests/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,Tests/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
           dotnet build ${{ env.PROJECT_DIR }}/${{ env.PROJECT_NAME }}.sln
           ./dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
