@@ -173,6 +173,21 @@ jobs:
         run: |
           unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod Packages.Rider.Editor.RiderScriptEditor.SyncSolution -quit
 
+      - name: Fix paths
+        run: |
+          if [ -f ${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml ]; then
+            sed -i 's/\/github\/workspace/\/__w/g' ${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml
+          fi
+          if [ -f ${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml ]; then
+            sed -i 's/\/github\/workspace/\/__w/g' ${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
+          fi
+          if [ -f ${{ steps.test-results.outputs.download-path }}/editmode-results.xml ]; then
+            sed -i 's/\/github\/workspace/\/__w/g' ${{ steps.test-results.outputs.download-path }}/editmode-results.xml
+          fi
+          if [ -f ${{ steps.test-results.outputs.download-path }}/playmode-results.xml ]; then
+            sed -i 's/\/github\/workspace/\/__w/g' ${{ steps.test-results.outputs.download-path }}/playmode-results.xml
+          fi
+
       - name: SonarCloud Scan
         env:
           FRAMEWORK_PATH: /opt/unity/Editor/Data/MonoBleedingEdge/bin
