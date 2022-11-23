@@ -5,6 +5,8 @@ using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using WorkingTitle.Unity.Assets;
+using WorkingTitle.Unity.Components.Map;
+using WorkingTitle.Unity.Extensions;
 
 namespace WorkingTitle.Unity.Components.Rendering
 {
@@ -15,17 +17,22 @@ namespace WorkingTitle.Unity.Components.Rendering
         
         GameObject VirtualTargetObject { get; set; }
         
-        UnityEngine.Camera Camera { get; set; }
+        Camera Camera { get; set; }
         CinemachineVirtualCamera VirtualCamera { get; set; }
         GameComponent GameComponent { get; set; }
-
+        MapComponent MapComponent { get; set; }
     
         void Awake()
         {
             Camera = GetComponent<Camera>();
-            GameComponent = GetComponentInParent<GameComponent>();
-
+            GameComponent = FindObjectOfType<GameComponent>();
+            MapComponent = FindObjectOfType<MapComponent>();
+            
+            var centerPosition = new Vector2Int(MapComponent.MapAsset.ChunkSize / 2, MapComponent.MapAsset.ChunkSize / 2);
+            transform.position = centerPosition.ToWorld();
+            
             InitializeVirtualTarget();
+            VirtualTargetObject.transform.position = centerPosition.ToWorld();
         }
 
         void InitializeVirtualTarget()
