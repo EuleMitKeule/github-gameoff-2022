@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c056ad1063ed47bda169e7850645257d, type: 3}
-  m_Name: tile_boom_barrier
+  m_Name: pavement_3
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 7482667652216324306, guid: 54aeffb6ff6f7de42b389d698afd4dc8, type: 3}
-  m_DefaultGameObject: {fileID: 6715128431644725204, guid: d35551e1abaf20e4498199beda1d7b51, type: 3}
-  m_DefaultColliderType: 1
+  m_DefaultSprite: {fileID: 877422231, guid: a156ac06bffe1884eb205ea7ba3e8e93, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 0
   m_TilingRules: []

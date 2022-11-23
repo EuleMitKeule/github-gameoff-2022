@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: palm_1
   m_EditorClassIdentifier: 
   m_AnimatedSprites:
-  - {fileID: 1930437933, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
-  - {fileID: 1136195023, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
-  - {fileID: -403486207, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
-  - {fileID: -1727676853, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
-  - {fileID: 778450361, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
-  - {fileID: 1376397711, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
-  - {fileID: -1076483212, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  - {fileID: 1271537773, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
+  - {fileID: -375510513, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
+  - {fileID: 118727929, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
+  - {fileID: 1173154249, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
+  - {fileID: 1884513241, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
+  - {fileID: 1989727319, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
+  - {fileID: 1704469471, guid: f7be109b0c6a76545a851a384e07dfb4, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 5
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
-  m_TileColliderType: 0
+  m_TileColliderType: 1
