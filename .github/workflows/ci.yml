@@ -75,6 +75,9 @@ jobs:
             Library-${{ env.PROJECT_DIR }}-
             Library-
 
+      - name: Activate license
+        run: unity-editor -nographics -logFile /dev/stdout -batchmode -serial ${{ secrets.UNITY_SERIAL }} -username ${{ secrets.UNITY_EMAIL }} -password ${{ secrets.UNITY_PASSWORD }} -quit
+
       - name: Run editor Tests
         run: unity-editor -nographics -logFile /dev/stdout -runTests -testPlatform editmode -testResults Tests/editmode-results.xml -enableCodeCoverage -coverageResultsPath Tests -debugCodeOptimization 
         timeout-minutes: 20
@@ -123,6 +126,9 @@ jobs:
         with:
           path: ${{ env.PROJECT_DIR }}/Library
           key: Library-${{ env.PROJECT_DIR }}-Sonar
+
+      - name: Activate license
+        run: unity-editor -nographics -logFile /dev/stdout -batchmode -serial ${{ secrets.UNITY_SERIAL }} -username ${{ secrets.UNITY_EMAIL }} -password ${{ secrets.UNITY_PASSWORD }} -quit
 
       - name: Generate Solution
         run: unity-editor -nographics -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod Packages.Rider.Editor.RiderScriptEditor.SyncSolution -quit
