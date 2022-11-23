@@ -310,10 +310,16 @@ jobs:
           name: Build
           path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}
 
+      - name: Zip build
+        run: |
+          cd ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}
+          zip -r ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}.zip ./*
+          mv ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}.zip ../
+
       - name: Upload build
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ needs.release.outputs.uploadUrl }}
-          asset_path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}
+          asset_path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}.zip
           asset_name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}-${{ needs.version.outputs.version }}
           asset_content_type: application/zip
