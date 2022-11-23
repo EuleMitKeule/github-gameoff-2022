@@ -13,16 +13,16 @@ namespace WorkingTitle.Unity.Components
     public class StatisticsComponent : SerializedMonoBehaviour
     {
         [ShowInInspector]
-        Dictionary<TankAsset, int> KillCounts { get; set; } = new();
+        public Dictionary<TankAsset, int> KillCounts { get; set; } = new();
         
         [ShowInInspector]
-        Dictionary<TankAsset, float> DamageDone { get; set; } = new();
+        public Dictionary<TankAsset, float> DamageDone { get; set; } = new();
         
         [ShowInInspector]
-        float DamageTaken { get; set; }
+        public float DamageTaken { get; set; }
         
         [ShowInInspector]
-        float HealthRecovered { get; set; }
+        public float HealthRecovered { get; set; }
         
         float StartTime { get; set; }
         float TimeSurvived { get; set; }
@@ -34,6 +34,7 @@ namespace WorkingTitle.Unity.Components
         {
             SpawnerComponent = GetComponentInChildren<SpawnerComponent>();
             GameComponent = GetComponent<GameComponent>();
+            
             var playerHealthComponent = GameComponent.PlayerObject.GetComponent<HealthComponent>();
 
             StartTime = Time.time;

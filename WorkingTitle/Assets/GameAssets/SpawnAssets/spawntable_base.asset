@@ -245,7 +245,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 11
+      Data: 7
     - Name: $v
       Entry: 7
       Data: 8|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
@@ -278,7 +278,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 10
+      Data: 2
     - Name: $v
       Entry: 7
       Data: 9|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity

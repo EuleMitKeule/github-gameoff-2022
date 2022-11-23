@@ -73,9 +73,7 @@ namespace WorkingTitle.Unity.Components.Map
             }
 
             var centerPosition = new Vector2Int(MapAsset.ChunkSize / 2, MapAsset.ChunkSize / 2);
-            
             PlayerEntityComponent.SetPosition(centerPosition);
-            Camera.transform.position = centerPosition.ToWorld();
             
             UpdateMap(true);
             UpdateBounds();
