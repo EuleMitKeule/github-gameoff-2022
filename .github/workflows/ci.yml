@@ -109,14 +109,8 @@ jobs:
     runs-on: ubuntu-latest
     container: unityci/editor:ubuntu-2021.3.12f1-base-1.0.1
     steps:
-
-      - name: Setup git
-        run: |
-          apt-get install -y software-properties-common \
-          && apt-get update \
-          && add-apt-repository -y ppa:git-core/ppa \
-          && apt-get update \
-          && apt-get install -y git
+      - name: Install git
+        run: apt-get update && apt-get install -y git
 
       - name: Checkout
         uses: actions/checkout@v3
