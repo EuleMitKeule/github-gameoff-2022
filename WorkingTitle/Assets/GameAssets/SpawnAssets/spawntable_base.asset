@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 7
+      Data: 8
     - Name: 
       Entry: 7
       Data: 
@@ -89,7 +89,7 @@ MonoBehaviour:
       Data: 0
     - Name: SpawnWeight
       Entry: 4
-      Data: 0
+      Data: 1
     - Name: MinWeight
       Entry: 4
       Data: 0
@@ -249,6 +249,39 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 8|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
+    - Name: MinSpawnDifficulty
+      Entry: 4
+      Data: 0
+    - Name: SpawnWeight
+      Entry: 4
+      Data: 1
+    - Name: MinWeight
+      Entry: 4
+      Data: 0
+    - Name: MaxWeight
+      Entry: 4
+      Data: 0
+    - Name: WeightModifier
+      Entry: 4
+      Data: 0
+    - Name: SelectedWeightMode
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 10
+    - Name: $v
+      Entry: 7
+      Data: 9|WorkingTitle.Unity.Assets.Spawning.SpawnTableEntry, WorkingTitle.Unity
     - Name: MinSpawnDifficulty
       Entry: 4
       Data: 0

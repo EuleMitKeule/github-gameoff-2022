@@ -38,7 +38,7 @@ PrefabInstance:
     - target: {fileID: 779659689631481611, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: ee99238ed99f65d41a271e74b0c97d1c, type: 2}
+      objectReference: {fileID: 11400000, guid: eaf27ab35c79a1445a30cf7692cba6b5, type: 2}
     - target: {fileID: 779659689631481611, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[1]
       value: 

@@ -27,4 +27,4 @@ MonoBehaviour:
       Data: 0
     - Name: MaxHealthIncrease
       Entry: 3
-      Data: 1
+      Data: 10
