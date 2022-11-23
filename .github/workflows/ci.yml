@@ -85,7 +85,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
-          projectPath: WorkingTitle/
+          projectPath: ${{ env.PROJECT_DIR }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           customParameters: -debugCodeOptimization -enableCodeCoverage -coverageOptions generateBadgeReport;assemblyFilters:+WorkingTitle.Unity,+WorkingTitle.Lib
 
@@ -107,10 +107,9 @@ jobs:
     name: SonarCloud
     needs: test
     runs-on: ubuntu-latest
-    container: unityci/editor:ubuntu-2021.3.12f1-base-1.0.1
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
@@ -124,11 +123,6 @@ jobs:
         run: |
           cp -r odin/* ${{ env.PROJECT_DIR }}
           rm -r odin
-      
-      - name: Create symlink
-        run: |
-          mkdir -p /github/workspace
-          ln -s /__w/${{ env.PROJECT_DIR }} /github/workspace/${{ env.PROJECT_DIR }}
 
       - name: Cache Library
         uses: actions/cache@v2
@@ -148,64 +142,37 @@ jobs:
           dotnet-version: '6.0.x'
 
       - name: Install SonarScanner .NET
-        run: dotnet tool install --tool-path ../dotnet-sonarscanner dotnet-sonarscanner
+        run: dotnet tool install --tool-path . dotnet-sonarscanner
 
-      - name: Download test results
-        id: test-results
-        uses: actions/download-artifact@v2
-        with:
-          name: Test Results
-          path: ${{ needs.test.outputs.artifactsPath }}
-
-      - name: Download code coverage
-        id: coverage-results
-        uses: actions/download-artifact@v2
-        with:
-          name: Code Coverage
-          path: ${{ needs.test.outputs.coveragePath }}
-
-      - name: Activate unity and generate solution file
-        continue-on-error: true
+      - name: Run tests
+        id: run-tests
+        uses: game-ci/unity-test-runner@v2
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-        run: |
-          unity-editor -username $UNITY_EMAIL -password $UNITY_PASSWORD -serial $UNITY_SERIAL -nographics -batchmode -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -executeMethod Packages.Rider.Editor.RiderScriptEditor.SyncSolution -quit
-
-      - name: Fix paths
-        run: |
-          if [ -f ${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml ]; then
-            sed -i 's/\/github\/workspace/\/__w/g' ${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml
-          fi
-          if [ -f ${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml ]; then
-            sed -i 's/\/github\/workspace/\/__w/g' ${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
-          fi
-          if [ -f ${{ steps.test-results.outputs.download-path }}/editmode-results.xml ]; then
-            sed -i 's/\/github\/workspace/\/__w/g' ${{ steps.test-results.outputs.download-path }}/editmode-results.xml
-          fi
-          if [ -f ${{ steps.test-results.outputs.download-path }}/playmode-results.xml ]; then
-            sed -i 's/\/github\/workspace/\/__w/g' ${{ steps.test-results.outputs.download-path }}/playmode-results.xml
-          fi
+        with:
+          projectPath: ${{ env.PROJECT_DIR }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          customParameters: -debugCodeOptimization -enableCodeCoverage -coverageOptions generateBadgeReport;assemblyFilters:+WorkingTitle.Unity,+WorkingTitle.Lib
 
       - name: SonarCloud Scan
         env:
-          FRAMEWORK_PATH: /opt/unity/Editor/Data/MonoBleedingEdge/bin
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          ../dotnet-sonarscanner/dotnet-sonarscanner begin \
+          ./dotnet-sonarscanner begin \
           /k:${{ env.SONAR_PROJECT_KEY }} \
           /n:${{ env.SONAR_PROJECT_NAME }} \
           /o:${{ env.SONAR_PROJECT_ORGANIZATION }} \
           /d:sonar.host.url=https://sonarcloud.io \
           /d:sonar.login=${{ secrets.SONAR_TOKEN }} \
-          /d:sonar.projectBaseDir=$GITHUB_WORKSPACE/${{ env.PROJECT_DIR }} \
+          /d:sonar.projectBaseDir=${{ env.PROJECT_DIR }} \
           /d:sonar.exclusions=Assets/Plugins/** \
-          /d:sonar.cs.nunit.reportsPaths=${{ steps.test-results.outputs.download-path }}/editmode-results.xml,${{ steps.test-results.outputs.download-path }}/playmode-results.xml \
-          /d:sonar.cs.opencover.reportsPaths=${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ steps.coverage-results.outputs.download-path }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
+          /d:sonar.cs.nunit.reportsPaths=${{ steps.run-tests.outputs.artifactsPath }}/editmode-results.xml,${{ steps.run-tests.outputs.artifactsPath }}/playmode-results.xml \
+          /d:sonar.cs.opencover.reportsPaths=${{ steps.run-tests.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/EditMode/TestCoverageResults_0000.xml,${{ steps.run-tests.outputs.coveragePath }}/${{ env.PROJECT_NAME }}-opencov/PlayMode/TestCoverageResults_0000.xml
           dotnet build ${{ env.PROJECT_DIR }}/${{ env.PROJECT_NAME }}.sln
-          ../dotnet-sonarscanner/dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
+          ./dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
   build:
     name: Build
