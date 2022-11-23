@@ -125,6 +125,11 @@ jobs:
           cp -r odin/* ${{ env.PROJECT_DIR }}
           rm -r odin
       
+      - name: Create symlink
+        run: |
+          mkdir -p /github/workspace
+          ln -s /__w/${{ env.PROJECT_DIR }} /github/workspace/${{ env.PROJECT_DIR }}
+
       - name: Cache Library
         uses: actions/cache@v2
         with:
