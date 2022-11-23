@@ -79,11 +79,11 @@ jobs:
         run: unity-editor -nographics -logFile /dev/stdout -batchmode -serial ${{ secrets.UNITY_SERIAL }} -username ${{ secrets.UNITY_EMAIL }} -password ${{ secrets.UNITY_PASSWORD }} -quit
 
       - name: Run editor Tests
-        run: unity-editor -nographics -logFile /dev/stdout -runTests -testPlatform editmode -testResults Tests/editmode-results.xml -enableCodeCoverage -coverageResultsPath Tests -debugCodeOptimization 
+        run: unity-editor -nographics -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -runTests -testPlatform editmode -testResults Tests/editmode-results.xml -enableCodeCoverage -coverageResultsPath Tests -debugCodeOptimization 
         timeout-minutes: 20
         
       - name: Run play Tests
-        run: unity-editor -nographics -logFile /dev/stdout -runTests -testPlatform playmode -testResults Tests/playmode-results.xml -enableCodeCoverage -coverageResultsPath Tests -debugCodeOptimization 
+        run: unity-editor -nographics -logFile /dev/stdout -projectPath ${{ env.PROJECT_DIR }} -runTests -testPlatform playmode -testResults Tests/playmode-results.xml -enableCodeCoverage -coverageResultsPath Tests -debugCodeOptimization 
         timeout-minutes: 20
 
       - name: Store results
