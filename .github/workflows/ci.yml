@@ -112,8 +112,9 @@ jobs:
       - name: Install git
         run: apt-get update && apt-get install -y git
 
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Clone repository
+        run: |
+          git clone --depth 1 --branch ${{ github.ref }} ${{ github.server_url }}/${{ github.repository }} $GITHUB_WORKSPACE
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
