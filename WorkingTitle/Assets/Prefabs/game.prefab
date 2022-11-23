@@ -797,15 +797,6 @@ MonoBehaviour:
     - Name: GameAsset
       Entry: 10
       Data: 0
-    - Name: GameScene
-      Entry: 7
-      Data: UnityEngine.SceneManagement.Scene, UnityEngine.CoreModule
-    - Name: m_Handle
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!114 &7644001349263171074
 MonoBehaviour:
   m_ObjectHideFlags: 0

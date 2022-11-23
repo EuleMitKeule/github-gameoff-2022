@@ -109,12 +109,8 @@ jobs:
     runs-on: ubuntu-latest
     container: unityci/editor:ubuntu-2021.3.12f1-base-1.0.1
     steps:
-      - name: Install git
-        run: apt-get update && apt-get install -y git
-
-      - name: Clone repository
-        run: |
-          git clone --depth 1 --branch ${{ github.ref }} ${{ github.server_url }}/${{ github.repository }} $GITHUB_WORKSPACE
+      - name: Checkout repository
+        uses: actions/checkout@v1
           
       - name: Checkout odin-inspector
         uses: actions/checkout@v3
