@@ -91,12 +91,12 @@ jobs:
         if: always()
         with:
           name: Test Results
-          path: ${PROJECT_DIR}/Tests
+          path: ${{ env.PROJECT_DIR }}/Tests
 
       - uses: MirageNet/nunit-reporter@v1.1.0
         if: always()
         with:
-          path: ${PROJECT_DIR}/Tests/*.xml
+          path: ${{ env.PROJECT_DIR }}/Tests/*.xml
           access-token: ${{ secrets.GITHUB_TOKEN }}
 
   sonar:
