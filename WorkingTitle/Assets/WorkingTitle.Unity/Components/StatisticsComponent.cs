@@ -24,9 +24,6 @@ namespace WorkingTitle.Unity.Components
         [ShowInInspector]
         public float HealthRecovered { get; set; }
         
-        [ShowInInspector]
-        public Dictionary<PowerUpAsset, int> PowerUpCounts { get; set; } = new();
-        
         float StartTime { get; set; }
         float TimeSurvived { get; set; }
         
@@ -39,14 +36,12 @@ namespace WorkingTitle.Unity.Components
             GameComponent = GetComponent<GameComponent>();
             
             var playerHealthComponent = GameComponent.PlayerObject.GetComponent<HealthComponent>();
-            var playerPowerUpConsumerComponent = GameComponent.PlayerObject.GetComponent<PowerUpConsumerComponent>(); 
 
             StartTime = Time.time;
 
             SpawnerComponent.EnemySpawned += OnEnemySpawned;
             playerHealthComponent.HealthChanged += OnPlayerHealthChanged;
             playerHealthComponent.Death += OnPlayerDeath;
-            playerPowerUpConsumerComponent.PowerUpConsumed += OnPowerUpConsumed;
         }
 
         void OnEnemySpawned(object sender, EnemySpawnedEventArgs e)
@@ -56,16 +51,6 @@ namespace WorkingTitle.Unity.Components
             
             healthComponent.Death += OnEnemyDeath;
             healthComponent.HealthChanged += OnEnemyHealthChanged;
-        }
-
-        void OnPowerUpConsumed(object sender, PowerUpConsumedEventArgs e)
-        {
-            if (!PowerUpCounts.ContainsKey(e.PowerUpAsset))
-            {
-                PowerUpCounts[e.PowerUpAsset] = 0;
-            }
-            
-            PowerUpCounts[e.PowerUpAsset] += 1;
         }
 
         void OnEnemyDeath(object sender, EventArgs e)

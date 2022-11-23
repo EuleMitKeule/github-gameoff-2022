@@ -4,14 +4,10 @@
     {
         Damage,
         Ricochet,
-        Armor,
         MovementSpeed,
         Magnet,
         ProjectileSpeed,
         AttackCooldown,
-        Endurance,
-        Knockback,
-        Explosion,
         MaxHealth,
         LifeSteal
     }

@@ -12,8 +12,7 @@ namespace WorkingTitle.Unity.Components.PowerUps
 {
     public class PowerUpConsumerComponent : SerializedMonoBehaviour, IResettable
     {
-        [ShowInInspector]
-        Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; }
+        [ShowInInspector] public Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; }
         
         AttackComponent AttackComponent { get; set; }
         TankMovementComponent TankMovementComponent { get; set; }
@@ -113,7 +112,6 @@ namespace WorkingTitle.Unity.Components.PowerUps
                     break;
                 case MaxHealthPowerUpAsset maxHealthPowerUpAsset:
                     HealthComponent.MaxHealth += maxHealthPowerUpAsset.MaxHealthIncrease;
-                    HealthComponent.InvokeHealthChanged();
                     break;
             }
 
