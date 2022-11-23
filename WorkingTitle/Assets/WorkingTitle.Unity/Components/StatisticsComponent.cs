@@ -13,16 +13,19 @@ namespace WorkingTitle.Unity.Components
     public class StatisticsComponent : SerializedMonoBehaviour
     {
         [ShowInInspector]
-        Dictionary<TankAsset, int> KillCounts { get; set; } = new();
+        public Dictionary<TankAsset, int> KillCounts { get; set; } = new();
         
         [ShowInInspector]
-        Dictionary<TankAsset, float> DamageDone { get; set; } = new();
+        public Dictionary<TankAsset, float> DamageDone { get; set; } = new();
         
         [ShowInInspector]
-        float DamageTaken { get; set; }
+        public float DamageTaken { get; set; }
         
         [ShowInInspector]
-        float HealthRecovered { get; set; }
+        public float HealthRecovered { get; set; }
+        
+        [ShowInInspector]
+        public Dictionary<PowerUpAsset, int> PowerUpCounts { get; set; } = new();
         
         float StartTime { get; set; }
         float TimeSurvived { get; set; }
@@ -34,13 +37,16 @@ namespace WorkingTitle.Unity.Components
         {
             SpawnerComponent = GetComponentInChildren<SpawnerComponent>();
             GameComponent = GetComponent<GameComponent>();
+            
             var playerHealthComponent = GameComponent.PlayerObject.GetComponent<HealthComponent>();
+            var playerPowerUpConsumerComponent = GameComponent.PlayerObject.GetComponent<PowerUpConsumerComponent>(); 
 
             StartTime = Time.time;
 
             SpawnerComponent.EnemySpawned += OnEnemySpawned;
             playerHealthComponent.HealthChanged += OnPlayerHealthChanged;
             playerHealthComponent.Death += OnPlayerDeath;
+            playerPowerUpConsumerComponent.PowerUpConsumed += OnPowerUpConsumed;
         }
 
         void OnEnemySpawned(object sender, EnemySpawnedEventArgs e)
@@ -50,6 +56,16 @@ namespace WorkingTitle.Unity.Components
             
             healthComponent.Death += OnEnemyDeath;
             healthComponent.HealthChanged += OnEnemyHealthChanged;
+        }
+
+        void OnPowerUpConsumed(object sender, PowerUpConsumedEventArgs e)
+        {
+            if (!PowerUpCounts.ContainsKey(e.PowerUpAsset))
+            {
+                PowerUpCounts[e.PowerUpAsset] = 0;
+            }
+            
+            PowerUpCounts[e.PowerUpAsset] += 1;
         }
 
         void OnEnemyDeath(object sender, EventArgs e)
