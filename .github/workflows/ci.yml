@@ -139,7 +139,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           projectPath: ${{ env.PROJECT_DIR }}
-          versioning: none
+          versioning: None
           buildMethod: Packages.Rider.Editor.RiderScriptEditor.SyncSolution
 
       - name: Setup JDK 11
