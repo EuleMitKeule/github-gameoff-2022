@@ -85,7 +85,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         with:
-          projectPath: WorkingTitle/
+          projectPath: ${{ env.PROJECT_DIR }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           customParameters: -debugCodeOptimization -enableCodeCoverage -coverageOptions generateBadgeReport;assemblyFilters:+WorkingTitle.Unity,+WorkingTitle.Lib
 
@@ -130,6 +130,18 @@ jobs:
           path: ${{ env.PROJECT_DIR }}/Library
           key: Library-${{ env.PROJECT_DIR }}-Sonar
 
+      - name: Generate solution
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
+        with:
+          targetPlatform: StandaloneWindows64
+          projectPath: ${{ env.PROJECT_DIR }}
+          versioning: none
+          buildMethod: Packages.Rider.Editor.RiderScriptEditor.SyncSolution
+
       - name: Setup JDK 11
         uses: actions/setup-java@v2
         with:
@@ -157,17 +169,6 @@ jobs:
         with:
           name: Code Coverage
           path: ${{ needs.test.outputs.coveragePath }}
-
-      - name: Generate solution
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
-        with:
-          targetPlatform: StandaloneWindows64
-          projectPath: ${{ env.PROJECT_DIR }}
-          buildMethod: Packages.Rider.Editor.RiderScriptEditor.SyncSolution
 
       - name: Print files
         run: |
