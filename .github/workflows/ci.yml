@@ -238,7 +238,7 @@ jobs:
           ls -la
           ls -la Builds
           ls -la Builds/${{ matrix.buildTarget }}
-          mv Builds/${{ matrix.buildTarget }} ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+          sudo mv Builds/${{ matrix.buildTarget }} ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
 
       - name: Upload build
         uses: actions/upload-artifact@v2
