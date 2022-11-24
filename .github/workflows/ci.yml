@@ -230,14 +230,29 @@ jobs:
           targetPlatform: ${{ matrix.buildTarget }}
           projectPath: ${{ env.PROJECT_DIR }}
           buildName: ${{ env.PROJECT_NAME }}
-          buildsPath: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+          buildsPath: Builds
           versioning: None
+
+      - name: Move build
+        run: |
+          ls -la
+          mv Builds/Build/${{ matrix.buildTarget }} ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
 
       - name: Upload build
         uses: actions/upload-artifact@v2
         with:
-          name: Build-${{ matrix.buildTarget }}
+          name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
           path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+          path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+
+      - name: Zip build
+        run: |
+          zip -r ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}.zip ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}/*
 
   upload:
     name: Upload
@@ -258,12 +273,15 @@ jobs:
           name: Build-${{ matrix.buildTarget }}
           path: Build
 
+      - name: Download build
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+          path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+
       - name: Zip build
         run: |
-          zip -r ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}.zip Build/*
-
-      - name: Upload URL
-        run: echo ${{ needs.release.outputs.uploadUrl }}
+          zip -r ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}.zip ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}/*
 
       - name: Upload build
         uses: actions/upload-release-asset@v1
@@ -272,7 +290,7 @@ jobs:
         with:
           upload_url: ${{ needs.release.outputs.uploadUrl }}
           asset_path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}.zip
-          asset_name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+          asset_name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}.zip
           asset_content_type: application/zip
 
       - name: Upload to itch.io
