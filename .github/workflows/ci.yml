@@ -242,7 +242,7 @@ jobs:
   upload:
     name: Upload
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, release]
     if: ${{ needs.release.outputs.releaseCreated == 'true' }}
     strategy:
       matrix:
@@ -261,6 +261,9 @@ jobs:
       - name: Zip build
         run: |
           zip -r ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}.zip Build/*
+
+      - name: Upload URL
+        run: echo ${{ needs.release.outputs.uploadUrl }}
 
       - name: Upload build
         uses: actions/upload-release-asset@v1
