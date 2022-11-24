@@ -236,6 +236,9 @@ jobs:
       - name: Move build
         run: |
           ls -la
+          ls -la Builds
+          ls -la Builds/Build
+          ls -la Builds/Build/${{ matrix.buildTarget }}
           mv Builds/Build/${{ matrix.buildTarget }} ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
 
       - name: Upload build
