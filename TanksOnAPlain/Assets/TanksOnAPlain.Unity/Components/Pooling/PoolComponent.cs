@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using TanksOnAPlain.Unity.Components.Physics;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Components.Pooling
 {
     public class PoolComponent : SerializedMonoBehaviour
     {
+        [ShowInInspector]
         Dictionary<GameObject, Queue<GameObject>> AvailableObjectsPerPrefab { get; } = new();
         Dictionary<GameObject, GameObject> PrefabToPool { get; } = new();
 
@@ -25,9 +27,10 @@ namespace TanksOnAPlain.Unity.Components.Pooling
 
             foreach (var resettableComponent in resettableComponents)
             {
-                resettableComponent.Reset();   
+                resettableComponent.Reset();
             }
-
+            
+            pooledObject.SetActive(true);
             return pooledObject;
         }
 
@@ -40,7 +43,6 @@ namespace TanksOnAPlain.Unity.Components.Pooling
                 var dequeuedObject = availableObjects.Dequeue();
                 dequeuedObject.transform.position = position;
                 dequeuedObject.transform.rotation = rotation;
-                dequeuedObject.SetActive(true);
                 
                 return dequeuedObject;
             }
