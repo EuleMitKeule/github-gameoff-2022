@@ -1,0 +1,18 @@
+﻿using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using UnityEngine;
+
+namespace TanksOnAPlain.Unity.Assets
+{
+    [CreateAssetMenu(menuName = nameof(TankMovementAsset), fileName = nameof(TankMovementAsset))]
+    public class TankMovementAsset : SerializedScriptableObject
+    {
+        [TitleGroup("Physics")]
+        [OdinSerialize]
+        public float MovementSpeed { get; set; }
+        
+        [OdinSerialize] public float SpeedBoostModifier { get; set; }
+        
+        [OdinSerialize] public float RotationSpeed { get; set; }
+    }
+}
