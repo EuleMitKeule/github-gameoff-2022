@@ -159,7 +159,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.release-version }}
-      releaseCreated: ${{ steps.version.outputs.releaseCreated }}
+      releaseCreated: ${{ steps.version.outputs.new-release-published }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -180,7 +180,7 @@ jobs:
       - name: Log outputs
         run: |
           echo "version: ${{ steps.version.outputs.release-version }}"
-          echo "releaseCreated: ${{ steps.version.outputs.releaseCreated }}"
+          echo "releaseCreated: ${{ steps.version.outputs.new-release-published }}"
 
   build:
     name: Build
