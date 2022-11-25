@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Reflection;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TanksOnAPlain.Unity.Assets;
 using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Map;
 using TanksOnAPlain.Unity.Components.Pooling;
+using TanksOnAPlain.Unity.Extensions;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace TanksOnAPlain.Unity.Components.Physics
 {
@@ -38,6 +42,7 @@ namespace TanksOnAPlain.Unity.Components.Physics
 
         void FixedUpdate()
         {
+            CheckInBounds();
             CheckCollision();
         }
 
@@ -49,9 +54,12 @@ namespace TanksOnAPlain.Unity.Components.Physics
             Rigidbody.velocity = Vector2.zero;
         }
 
-        void InvokeCollision()
+        void CheckInBounds()
         {
-            Destroyed?.Invoke(this, EventArgs.Empty);
+            if (!MapComponent.MapBounds.Contains(transform.position.ToCell()))
+            {
+                Destroyed?.Invoke(this, EventArgs.Empty);
+            }
         }
         
         void CheckCollision()
@@ -65,16 +73,16 @@ namespace TanksOnAPlain.Unity.Components.Physics
             HandleCollision(hit.collider.gameObject, hit.normal);
         }
 
-        void HandleCollision(GameObject contactObject, Vector2 contactNormal)
+        void HandleCollision(GameObject contactObject, Vector2 contactNormal, bool propagate = true)
         {
             HandleDamage(contactObject);
             HandleRicochet(contactNormal);
             
             var projectileComponent = contactObject.GetComponent<ProjectileComponent>();
 
-            if (projectileComponent)
+            if (projectileComponent && propagate)
             {
-                projectileComponent.InvokeCollision();
+                projectileComponent.HandleCollision(gameObject, -contactNormal, false);
             }
         }
 
@@ -113,11 +121,6 @@ namespace TanksOnAPlain.Unity.Components.Physics
                 distance);
             Array.Resize(ref hits, hitCount);
             return hits;
-        }
-
-        void OnBecameInvisible()
-        {
-            Destroyed?.Invoke(this, EventArgs.Empty);
         }
 
 #if UNITY_EDITOR

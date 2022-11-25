@@ -9,22 +9,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a82c30a29944308b17ba76bc4f9b483, type: 3}
-  m_Name: powerup_attack_cooldown
+  m_Script: {fileID: 11500000, guid: de1650cf57f447638488075d6c6bdbd7, type: 3}
+  m_Name: attack_enemy_damage
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 4041634152683501491, guid: b758160d0de3c4b43a3ac8dfdfa222cf, type: 3}
+    - {fileID: 4844500482265526459, guid: 0ddf024f6aad5924692bf34054a518ae, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Prefab
+    - Name: ProjectilePrefab
       Entry: 10
       Data: 0
-    - Name: AttackCooldownPercentageDecrease
+    - Name: StartProjectileSpeed
+      Entry: 4
+      Data: 5
+    - Name: StartAttackCooldown
+      Entry: 4
+      Data: 3
+    - Name: StartDamage
       Entry: 4
       Data: 10
+    - Name: StartRicochets
+      Entry: 3
+      Data: 0
+    - Name: StartLifeSteal
+      Entry: 4
+      Data: 0

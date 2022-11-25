@@ -27,7 +27,7 @@ MonoBehaviour:
       Data: 0
     - Name: LifeStealPercentage
       Entry: 4
-      Data: 5
+      Data: 10
     - Name: LifeSteal
       Entry: 4
-      Data: 5
+      Data: 10

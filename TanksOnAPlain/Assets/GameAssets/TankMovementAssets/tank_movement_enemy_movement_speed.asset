@@ -9,22 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a82c30a29944308b17ba76bc4f9b483, type: 3}
-  m_Name: powerup_attack_cooldown
+  m_Script: {fileID: 11500000, guid: a240a78333424d5591b54efc848efa4e, type: 3}
+  m_Name: tank_movement_enemy_movement_speed
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 4041634152683501491, guid: b758160d0de3c4b43a3ac8dfdfa222cf, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Prefab
-      Entry: 10
-      Data: 0
-    - Name: AttackCooldownPercentageDecrease
+    - Name: MovementSpeed
       Entry: 4
-      Data: 10
+      Data: 175
+    - Name: SpeedBoostModifier
+      Entry: 4
+      Data: 1
+    - Name: RotationSpeed
+      Entry: 4
+      Data: 100

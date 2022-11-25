@@ -144,12 +144,12 @@ MonoBehaviour:
     SerializationNodes:
     - Name: SkillToPanel
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[WorkingTitle.Unity.Components.SkillType,
-        WorkingTitle.Unity],[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[TanksOnAPlain.Unity.Components.SkillType,
+        TanksOnAPlain.Unity],[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[WorkingTitle.Unity.Components.SkillType,
-        WorkingTitle.Unity]], mscorlib
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[TanksOnAPlain.Unity.Components.SkillType,
+        TanksOnAPlain.Unity]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -1025,12 +1025,16 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 6fdc40c01f95d174da90c346f1638f87, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: PoolAsset
+      Entry: 10
+      Data: 0
 --- !u!1 &1050167120074286016
 GameObject:
   m_ObjectHideFlags: 0

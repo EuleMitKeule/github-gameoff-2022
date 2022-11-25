@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205faff142af44719d17309d30458554, type: 3}
+  m_Name: pool_base
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 4472856794074153120, guid: 97753afdfd0e1954bb7a5ebf0d15c9e1, type: 3}
+    - {fileID: 4136862187117868514, guid: 186c16aee48d2934591f2da0206b70f7, type: 3}
+    - {fileID: 7005487724714998332, guid: 38825d59e19870c4d9c35b74eecdb038, type: 3}
+    - {fileID: 5135982904818416073, guid: 170963ac58467e94d869fdb6fc976169, type: 3}
+    - {fileID: 7005487724714998332, guid: 5609afde2dda8804784d3e2d9f7a9591, type: 3}
+    - {fileID: 6062020859922841093, guid: 116e5a31640d14e49b277652a1dc19b4, type: 3}
+    - {fileID: 429489426995876441, guid: 057356ae0c28aac4e8a15b8254fa0157, type: 3}
+    - {fileID: 5328066834422354929, guid: a3f1f51768881f44898dcb9c8acc9293, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: Pools
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[TanksOnAPlain.Unity.Components.Pooling.Pool,
+        TanksOnAPlain.Unity]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 8
+    - Name: 
+      Entry: 7
+      Data: 1|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 0
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 10
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 1
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 15
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 2
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 5
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 3
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 5
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 4
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 10
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 5
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 10
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 7|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 6
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 10
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 7
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 3
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 

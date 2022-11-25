@@ -1,81 +1,129 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Transactions;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using TanksOnAPlain.Unity.Assets.Pooling;
+using TanksOnAPlain.Unity.Components.Physics;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Components.Pooling
 {
     public class PoolComponent : SerializedMonoBehaviour
     {
-        Dictionary<GameObject, Queue<GameObject>> AvailableObjectsPerPrefab { get; } = new();
-        Dictionary<GameObject, GameObject> PrefabToPool { get; } = new();
+        [OdinSerialize]
+        PoolAsset PoolAsset { get; set; }
+
+        [ShowInInspector]
+        [ReadOnly]
+        List<Pool> Pools { get; set; } = new();
+
+        void Awake()
+        {
+            foreach (var assetPool in PoolAsset.Pools)
+            {
+                var pool = new Pool
+                {
+                    Prefab = assetPool.Prefab,
+                    ActiveObjectLimit = assetPool.ActiveObjectLimit,
+                    HasLimit = assetPool.HasLimit,
+                    PoolObject = assetPool.PoolObject,
+                };
+                
+                Pools.Add(pool);
+                
+                if (pool.PoolObject) continue;
+
+                CreatePoolObject(pool);
+            }
+        }
 
         public GameObject Allocate(GameObject prefab, Vector3? position = null, Quaternion? rotation = null)
         {
+            var pool = Pools.FirstOrDefault(p => p.Prefab == prefab);
+            pool ??= CreatePool(prefab);
+            
             position ??= Vector3.zero;
             rotation ??= Quaternion.identity;
             
-            if (!AvailableObjectsPerPrefab.ContainsKey(prefab))
-            {
-                CreatePool(prefab);
-            }
-
-            var pooledObject = GetOrCreateObject(prefab, position.Value, rotation.Value);
+            if (pool.HasLimit && pool.ActiveObjectCount >= pool.ActiveObjectLimit) return null;
+            
+            var pooledObject = GetOrCreateObject(pool, position.Value, rotation.Value);
             var resettableComponents = pooledObject.GetComponentsInChildren<IResettable>();
 
             foreach (var resettableComponent in resettableComponents)
             {
-                resettableComponent.Reset();   
+                resettableComponent.Reset();
             }
-
+            
+            pool.ActiveObjectCount += 1;
+            pooledObject.SetActive(true);
+            
             return pooledObject;
         }
 
-        GameObject GetOrCreateObject(GameObject prefab, Vector3 position, Quaternion rotation)
+        GameObject GetOrCreateObject(Pool pool, Vector3 position, Quaternion rotation)
         {
-            var availableObjects = AvailableObjectsPerPrefab[prefab];
+            var availableObjects = pool.Objects;
             
             if (availableObjects.Count > 0)
             {
                 var dequeuedObject = availableObjects.Dequeue();
                 dequeuedObject.transform.position = position;
                 dequeuedObject.transform.rotation = rotation;
-                dequeuedObject.SetActive(true);
-                
+
                 return dequeuedObject;
             }
             
-            var poolObject = PrefabToPool[prefab];
-            var pooledObject = Instantiate(prefab, position, rotation, transform);
+            var poolObject = pool.PoolObject;
+            var pooledObject = Instantiate(pool.Prefab, position, rotation, transform);
             var destroyableComponents = pooledObject.GetComponents<IDestroyable>();
             
             pooledObject.transform.SetParent(poolObject.transform);
 
             foreach (var destroyableComponent in destroyableComponents)
             {
-                destroyableComponent.Destroyed += (sender, e) => OnObjectDestroyed(sender, e, prefab); 
+                destroyableComponent.Destroyed += (sender, e) => OnObjectDestroyed(sender, e, pool.Prefab); 
             }
             
             return pooledObject;
         }
         
-        void CreatePool(GameObject prefab)
+        Pool CreatePool(GameObject prefab)
         {
-            AvailableObjectsPerPrefab[prefab] = new Queue<GameObject>();
+            var pool = new Pool
+            {
+                Prefab = prefab
+            };
             
-            var poolObject = new GameObject($"pool_{prefab.name}");
-            poolObject.transform.SetParent(transform);
+            CreatePoolObject(pool);
             
-            PrefabToPool[prefab] = poolObject;
+            Pools.Add(pool);
+
+            return pool;
         }
 
         void OnObjectDestroyed(object sender, EventArgs e, GameObject prefab)
         {
+            var pool = Pools.First(e => e.Prefab == prefab);
             var component = (Component)sender;
             var poolableObject = component.gameObject;
             
             poolableObject.SetActive(false);
-            AvailableObjectsPerPrefab[prefab].Enqueue(poolableObject);
+            pool.Objects.Enqueue(poolableObject);
+            pool.ActiveObjectCount -= 1;
         }
+
+        void CreatePoolObject(Pool pool)
+        {
+            var poolObject = new GameObject($"pool_{pool.Prefab.name}");
+            poolObject.transform.SetParent(transform);
+
+            pool.PoolObject = poolObject;
+        }
+
+        bool HasPool(GameObject prefab) => 
+            Pools.FirstOrDefault(e => e.Prefab == prefab) != null;
     }
 }

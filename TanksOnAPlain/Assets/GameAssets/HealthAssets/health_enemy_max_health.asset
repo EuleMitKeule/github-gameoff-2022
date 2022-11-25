@@ -9,22 +9,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a82c30a29944308b17ba76bc4f9b483, type: 3}
-  m_Name: powerup_attack_cooldown
+  m_Script: {fileID: 11500000, guid: 69e08e2775f5448cbf6408789422d745, type: 3}
+  m_Name: health_enemy_max_health
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 4041634152683501491, guid: b758160d0de3c4b43a3ac8dfdfa222cf, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Prefab
-      Entry: 10
-      Data: 0
-    - Name: AttackCooldownPercentageDecrease
+    - Name: StartHealth
       Entry: 4
-      Data: 10
+      Data: 200
+    - Name: MaxHealth
+      Entry: 4
+      Data: 200
