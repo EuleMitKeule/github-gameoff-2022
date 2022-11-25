@@ -176,6 +176,11 @@ jobs:
               'master'
             ]
           dry_run: true
+        
+      - name: Log outputs
+        run: |
+          echo "version: ${{ steps.version.outputs.release-version }}"
+          echo "releaseCreated: ${{ steps.version.outputs.releaseCreated }}"
 
   build:
     name: Build
