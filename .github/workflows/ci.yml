@@ -154,44 +154,34 @@ jobs:
           dotnet build ${{ env.PROJECT_DIR }}/${{ env.PROJECT_NAME }}.sln
           ./dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
-  release:
-    name: Release
+  version:
+    name: Version
     runs-on: ubuntu-latest
     outputs:
-      releaseCreated: ${{ steps.release.outputs.new-release-published }}
-      uploadUrl: ${{ steps.getUploadUrl.outputs.uploadUrl }}
-      version: ${{ steps.release.outputs.release-version }}
+      version: ${{ steps.version.outputs.release-version }}
+      releaseCreated: ${{ steps.version.outputs.releaseCreated }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create release
+      - name: Calculate version
         uses: docker://ghcr.io/codfish/semantic-release-action:latest
-        id: release
+        id: version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_format: 'v${version}'
           branches: |
             [
               'master'
             ]
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Get upload URL
-        if: ${{ steps.release.outputs.new-release-published == 'true' }}
-        id: getUploadUrl
-        env:
-          VERSION: ${{ steps.release.outputs.release-version }}
-        run: |
-          echo "getting upload url for release $VERSION with tag v$VERSION"
-          uploadUrl=$(curl -sL https://api.github.com/repos/${{ github.repository }}/releases/tags/v$VERSION | jq -r '.upload_url')
-          echo uploadUrl=$uploadUrl >> $GITHUB_OUTPUT
+          dry_run: true
 
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: release
-    if: ${{ needs.release.outputs.releaseCreated == 'true' }}
+    needs: version
+    if: ${{ needs.version.outputs.releaseCreated == 'true' }}
     strategy:
       matrix:
         buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64", "WebGL"]
@@ -231,7 +221,8 @@ jobs:
           projectPath: ${{ env.PROJECT_DIR }}
           buildName: ${{ env.PROJECT_NAME }}
           buildsPath: Builds
-          versioning: None
+          versioning: Custom
+          version: ${{ needs.version.outputs.version }}
 
       - name: Move build
         run: |
@@ -245,6 +236,40 @@ jobs:
         with:
           name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
           path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: build
+    outputs:
+      releaseCreated: ${{ steps.release.outputs.new-release-published }}
+      uploadUrl: ${{ steps.getUploadUrl.outputs.uploadUrl }}
+      version: ${{ steps.release.outputs.release-version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create release
+        uses: docker://ghcr.io/codfish/semantic-release-action:latest
+        id: release
+        with:
+          tag_format: 'v${version}'
+          branches: |
+            [
+              'master'
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get upload URL
+        if: ${{ steps.release.outputs.new-release-published == 'true' }}
+        id: getUploadUrl
+        env:
+          VERSION: ${{ steps.release.outputs.release-version }}
+        run: |
+          echo "getting upload url for release $VERSION with tag v$VERSION"
+          uploadUrl=$(curl -sL https://api.github.com/repos/${{ github.repository }}/releases/tags/v$VERSION | jq -r '.upload_url')
+          echo uploadUrl=$uploadUrl >> $GITHUB_OUTPUT
 
   upload:
     name: Upload
