@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Sirenix.OdinInspector;
 using TanksOnAPlain.Unity.Components.Physics;
 using TanksOnAPlain.Unity.Extensions;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
+using UnityEngine.Jobs;
 
 namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
 {
@@ -13,18 +15,17 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
     public class PathfindingComponent : SerializedMonoBehaviour
     {
         [ShowInInspector]
-        [ReadOnly]
-        public FlowField FlowField { get; private set; }
+        [Sirenix.OdinInspector.ReadOnly]
+        public Dictionary<Vector2Int, PathfindingCell> Cells { get; private set; } = new();
         
         public Vector2Int TargetCellPosition { get; private set; }
         
         MapComponent MapComponent { get; set; }
         public EntityComponent PlayerEntityComponent { get; private set; }
-        
-        bool HasTargetPositionChanged { get; set; }
-        
-        Coroutine UpdateFlowFieldCoroutine { get; set; }
-        
+
+        // NativeArray<Vector2Int> nativeObstaclePositions;
+        // NativeHashMap<Vector2Int, PathfindingCell> nativeCells;
+
         void Awake()
         {
             MapComponent = GetComponent<MapComponent>();
@@ -38,63 +39,26 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
                     .GetComponent<EntityComponent>();
             
             PlayerEntityComponent.CellPositionChanged += OnPlayerCellPositionChanged;
-
-            var obstaclePositions = MapComponent
-                .GetObstacleTilemaps()
-                .GetTilePositions(MapComponent.MapBounds)
-                .ToList();
             
             UpdateTarget();
-            FlowField = CalcFlowField(obstaclePositions);
-            
-            UpdateFlowFieldCoroutine = StartCoroutine(UpdateFlowField());
+            StartCoroutine(UpdateCells());
         }
 
-        IEnumerator UpdateFlowField()
+        public PathfindingCell? GetCell(Vector2Int position)
         {
-            while (true)
-            {
-                if (HasTargetPositionChanged)
-                {
-                    var obstaclePositions = MapComponent
-                        .GetObstacleTilemaps()
-                        .GetTilePositions(MapComponent.MapBounds)
-                        .ToList();
-            
-                    var thread = new Thread(() =>
-                    {
-                        UpdateTarget();
-                        var flowField = CalcFlowField(obstaclePositions);
-                        FlowField = flowField;
-                    });
-
-                    thread.Start();
-                    
-                    HasTargetPositionChanged = false;
-                }
-                
-                yield return new WaitForSeconds(0.1f);
-            }
-        }
-        
-        public PathfindingCell GetCell(Vector2Int position)
-        {
-            if (FlowField is null)
-            {
-                Debug.LogWarning("Cannot get cell because FlowField doesn't exist.");
+            if (position.x < MapComponent.MapBounds.xMin || position.x > MapComponent.MapBounds.xMax ||
+                position.y < MapComponent.MapBounds.yMin || position.y > MapComponent.MapBounds.yMax)
                 return null;
-            }
 
-            if (position.x < FlowField.MapBounds.xMin || position.x >= FlowField.MapBounds.xMax ||
-                position.y < FlowField.MapBounds.yMin || position.y >= FlowField.MapBounds.yMax)
-                return null;
+            if (!Cells.ContainsKey(position)) return null;
             
-            return FlowField.Cells[position];
+            return Cells[position];
         }
 
         void OnPlayerCellPositionChanged(object sender, CellPositionChangedEventArgs e)
         {
-            HasTargetPositionChanged = true;
+            UpdateTarget();
+            StartCoroutine(UpdateCells());
         }
 
         void UpdateTarget()
@@ -104,32 +68,58 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
             TargetCellPosition = PlayerEntityComponent.CellPosition;
         }
 
-        FlowField CalcFlowField(List<Vector2Int> obstaclePositions)
+        IEnumerator UpdateCells()
         {
-            if (!PlayerEntityComponent) return null;
-            
-            var flowField = new FlowField(
-                TargetCellPosition, 
-                obstaclePositions, 
-                MapComponent.MapBounds);
-            flowField.CalcCosts();
-            flowField.CalcDirections();
+            if (!PlayerEntityComponent) yield break;
 
-            return flowField;
-        }
+            var nativeCells = new NativeHashMap<Vector2Int, PathfindingCell>(
+                (MapComponent.MapBounds.size.x + 1) * (MapComponent.MapBounds.size.y + 1), 
+                Allocator.Persistent);
             
-// #if UNITY_EDITOR
-//     
-//         void OnDrawGizmos()
-//         {
-//             foreach (var (position, cell) in FlowField.Cells)
-//             {
-//                 var worldPosition = position.ToWorld();
-//                     
-//                 Debug.DrawRay(worldPosition, cell.Direction * 0.5f, Color.red);
-//             }
-//         }
-//     
-// #endif
+            var obstaclePositions = MapComponent
+                .GetObstacleTilemaps()
+                .GetTilePositions(MapComponent.MapBounds)
+                .ToArray();
+
+            var nativeObstaclePositions = new NativeArray<Vector2Int>(obstaclePositions, Allocator.Persistent);
+            
+            var job = new FlowFieldJob(
+                MapComponent.MapBounds,
+                TargetCellPosition,
+                nativeObstaclePositions,
+                nativeCells);
+
+            var jobHandle = job.Schedule();
+            
+            while (!jobHandle.IsCompleted)
+            {
+                yield return null;
+            }
+            
+            jobHandle.Complete();
+
+            var cells = new Dictionary<Vector2Int, PathfindingCell>();
+            foreach (var pair in job.Cells)
+            {
+                cells[pair.Key] = pair.Value;
+            }
+
+            Cells = cells;
+            
+            nativeObstaclePositions.Dispose();
+            nativeCells.Dispose();
+        }
+        
+#if UNITY_EDITOR
+        void OnDrawGizmos()
+        {
+            foreach (var (position, cell) in Cells)
+            {
+                var worldPosition = position.ToWorld();
+                Debug.DrawRay(worldPosition, cell.Direction * 0.5f, Color.red);
+            }
+        }
+    
+#endif
     }
 }

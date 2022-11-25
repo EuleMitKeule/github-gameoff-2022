@@ -109,14 +109,14 @@ namespace TanksOnAPlain.Unity.Components.Ai
         {
             if (!PathfindingComponent) return;
             
-            CurrentCell = PathfindingComponent.GetCell(e.NewCellPosition);
-
-            if (CurrentCell is null || CurrentCell.IsObstacle)
+            var currentCell = PathfindingComponent.GetCell(e.NewCellPosition);
+            if (currentCell is null || currentCell.Value.IsObstacle)
             {
                 Destroyed?.Invoke(this, EventArgs.Empty);
                 return;
             }
 
+            CurrentCell = currentCell.Value;
             PathDirection = CurrentCell.Direction;
         }
     }

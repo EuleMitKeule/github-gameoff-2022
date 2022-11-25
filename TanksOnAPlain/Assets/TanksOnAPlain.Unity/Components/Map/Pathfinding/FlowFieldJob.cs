@@ -1,52 +1,34 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Unity.Collections;
+using Unity.Jobs;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
 {
-    public readonly struct FlowField
+    public struct FlowFieldJob : IJob
     {
-        PathfindingCell TargetCell { get; }
-        public Dictionary<Vector2Int, PathfindingCell> Cells { get; }
+        BoundsInt bounds;
+        Vector2Int targetPosition;
+        NativeArray<Vector2Int> obstaclePositions;
+        public NativeHashMap<Vector2Int, PathfindingCell> Cells;
+        PathfindingCell targetCell;
 
-        public BoundsInt MapBounds { get; }
-
-        public FlowField(
-            Vector2Int targetPosition,
-            List<Vector2Int> obstaclePositions,
-            BoundsInt mapBounds)
+        public FlowFieldJob(BoundsInt bounds, Vector2Int targetPosition, NativeArray<Vector2Int> obstaclePositions, NativeHashMap<Vector2Int, PathfindingCell> cells)
         {
-            if (obstaclePositions == null)
+            this.bounds = bounds;
+            this.targetPosition = targetPosition;
+            this.obstaclePositions = obstaclePositions;
+            targetCell = new PathfindingCell();
+            Cells = cells;
+        }
+        
+        public void Execute()
+        {
+            for (var x = bounds.xMin; x < bounds.xMax + 1; x++)
             {
-                throw new ArgumentNullException(nameof(obstaclePositions));
-            }
-
-            if (obstaclePositions.Any(e =>
-                e.x < mapBounds.xMin || e.x >= mapBounds.xMax ||
-                e.y < mapBounds.yMin || e.y >= mapBounds.yMax))
-            {
-                throw new ArgumentException(
-                    $"Items in '{nameof(obstaclePositions)}' must be between {mapBounds.min} and {mapBounds.max}",
-                    nameof(obstaclePositions));
-            }
-
-            if (targetPosition.x < mapBounds.xMin || targetPosition.x >= mapBounds.xMax ||
-                targetPosition.y < mapBounds.yMin || targetPosition.y >= mapBounds.yMax)
-            {
-                throw new ArgumentException($"'{nameof(targetPosition)}' is out of map bounds.", nameof(targetPosition));
-            }
-
-            if (mapBounds.size.x <= 0 || mapBounds.size.y <= 0)
-            {
-                throw new ArgumentException($"'{nameof(mapBounds)}' size must be greater than zero.", nameof(mapBounds));
-            }
-            
-            Cells = new Dictionary<Vector2Int, PathfindingCell>();            
-            
-            for (var x = mapBounds.xMin; x < mapBounds.xMax; x++)
-            {
-                for (var y = mapBounds.yMin; y < mapBounds.yMax; y++)
+                for (var y = bounds.yMin; y < bounds.yMax + 1; y++)
                 {
                     var position = new Vector2Int(x, y);
                     var isTargetCell = position == targetPosition;
@@ -64,16 +46,15 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
                 }
             }
 
-            TargetCell = Cells[targetPosition];
-            MapBounds = mapBounds;
+            targetCell = Cells[targetPosition];
             CalcCosts();
             CalcDirections();
         }
-
-        public void CalcCosts()
+        
+        void CalcCosts()
         {
             var queue = new Queue<PathfindingCell>();
-            queue.Enqueue(TargetCell);
+            queue.Enqueue(targetCell);
 
             var sqrtTwo = (float)Math.Sqrt(2);
 
@@ -89,7 +70,10 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
                         if (neighborX == 0 && neighborY == 0) continue;
 
                         var neighborPosition = cell.Position + new Vector2Int(neighborX, neighborY);
-                        
+                        if (queue.Count > 1_000_000)
+                        {
+                            continue;
+                        }
                         if (!neighborCells.ContainsKey(neighborPosition)) continue;
                         var neighborCell = neighborCells[neighborPosition];
 
@@ -119,17 +103,18 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
                         if (neighborCost >= neighborCell.Cost) continue;
 
                         neighborCell.Cost = neighborCost;
+                        Cells[neighborPosition] = neighborCell;
                         queue.Enqueue(neighborCell);
                     }
                 }
             }
         }
 
-        public void CalcDirections()
+        void CalcDirections()
         {
-            for (var x = MapBounds.xMin; x < MapBounds.xMax; x++)
+            for (var x = bounds.xMin; x < bounds.xMax + 1; x++)
             {
-                for (var y = MapBounds.yMin; y < MapBounds.yMax; y++)
+                for (var y = bounds.yMin; y < bounds.yMax + 1; y++)
                 {
                     var position = new Vector2Int(x, y);
                     var cell = Cells[position];
@@ -170,6 +155,7 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
                             
                             bestCost = neighborCell.Cost;
                             cell.Direction = new Vector2(neighborX, neighborY).normalized;
+                            Cells[position] = cell;
                         }
                     }
                 }
@@ -190,8 +176,8 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
                     var neighborPositionX = position.x + x;
                     var neighborPositionY = position.y + y;
 
-                    if (neighborPositionX < MapBounds.xMin || neighborPositionX >= MapBounds.xMax ||
-                        neighborPositionY < MapBounds.yMin || neighborPositionY >= MapBounds.yMax)
+                    if (neighborPositionX < bounds.xMin || neighborPositionX > bounds.xMax ||
+                        neighborPositionY < bounds.yMin || neighborPositionY > bounds.yMax)
                     {
                         continue;
                     }

@@ -8,6 +8,9 @@ using TanksOnAPlain.Unity.Components.Map.Pathfinding;
 using TanksOnAPlain.Unity.Components.Physics;
 using TanksOnAPlain.Unity.Components.Pooling;
 using TanksOnAPlain.Unity.Extensions;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -72,7 +75,10 @@ namespace TanksOnAPlain.Unity.Components.Spawning
             var position = GetRandomPosition();
             var cellPosition = position.ToCell();
             var cell = PathfindingComponent.GetCell(cellPosition);
-            var direction = cell.Direction;
+
+            if (cell is null) return;
+            
+            var direction = cell.Value.Direction;
             var angle = Vector2.SignedAngle(Vector2.up, direction);
             var rotation = Quaternion.Euler(0, 0, angle);;
             
