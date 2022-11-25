@@ -246,16 +246,6 @@ jobs:
           name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
           path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
 
-      - name: Download build
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
-          path: ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}
-
-      - name: Zip build
-        run: |
-          zip -r ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}.zip ${{ env.PROJECT_NAME }}-${{ matrix.buildTarget }}/*
-
   upload:
     name: Upload
     runs-on: ubuntu-latest
