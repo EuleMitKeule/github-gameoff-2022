@@ -8,7 +8,7 @@ namespace TanksOnAPlain.Unity.Components.Health
         public void OnHealthChanged(object sender, HealthChangedEventArgs e)
         {
             var healthPercentage = e.NewHealth / e.MaxHealth;
-            var scale = Mathf.Lerp(1f, 0f, healthPercentage);
+            var scale = Mathf.Lerp(0f, 1f, healthPercentage);
 
             transform.localScale = new Vector3(scale, 1f, 1f);
         }

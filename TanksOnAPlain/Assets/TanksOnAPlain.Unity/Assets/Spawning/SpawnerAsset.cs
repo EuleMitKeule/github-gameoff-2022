@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using TanksOnAPlain.Unity.Components.Difficulty;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Assets.Spawning
@@ -11,15 +12,6 @@ namespace TanksOnAPlain.Unity.Assets.Spawning
         public float SpawnRadius { get; private set; }
         
         [OdinSerialize]
-        [MinValue(0)]
-        public float MaxSpawnCooldown { get; private set; }
-        
-        [OdinSerialize]
-        [MinValue(0)]
-        public float MinSpawnCooldown { get; private set; }
-        
-        [OdinSerialize]
-        [MinValue(0)]
-        public float SpawnCooldownDifficultyModifier { get; private set; }
+        public ScaledFloat Cooldown { get; private set; }
     }
 }
