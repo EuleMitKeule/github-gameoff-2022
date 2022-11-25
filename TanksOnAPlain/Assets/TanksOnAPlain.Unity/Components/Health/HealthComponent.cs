@@ -26,6 +26,9 @@ namespace TanksOnAPlain.Unity.Components.Health
         DifficultyComponent DifficultyComponent { get; set; }
         HealthBarComponent HealthBarComponent { get; set; }
         
+        [OdinSerialize]
+        bool IsInvincible { get; set; }
+        
         void Awake()
         {
             DifficultyComponent = FindObjectOfType<DifficultyComponent>();
@@ -57,7 +60,7 @@ namespace TanksOnAPlain.Unity.Components.Health
             
             HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount, MaxHealth));
             
-            if (CurrentHealth <= 0)
+            if (!IsInvincible && CurrentHealth <= 0)
             {
                 Death?.Invoke(this, EventArgs.Empty);
             }

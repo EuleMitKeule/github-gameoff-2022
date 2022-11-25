@@ -4,6 +4,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TanksOnAPlain.Unity.Assets.Spawning;
+using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Map.Pathfinding;
 using TanksOnAPlain.Unity.Components.Physics;
 using TanksOnAPlain.Unity.Components.Pooling;
@@ -77,10 +78,13 @@ namespace TanksOnAPlain.Unity.Components.Spawning
             var rotation = Quaternion.Euler(0, 0, angle);;
             
             var enemyObject = PoolComponent.Allocate(enemyPrefab, position);
+            if (!enemyObject) return;
 
             var tankComponent = enemyObject.GetComponent<TankComponent>();
             if (tankComponent)
+            {
                 tankComponent.TankBody.transform.rotation = rotation;
+            }
             
             var spriteRenderers = enemyObject.GetComponentsInChildren<SpriteRenderer>();
             foreach (var spriteRenderer in spriteRenderers)
