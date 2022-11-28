@@ -12,9 +12,6 @@ namespace TanksOnAPlain.Unity.Components.Pooling
 {
     public class PoolComponent : SerializedMonoBehaviour
     {
-        // [OdinSerialize]
-        // PoolAsset PoolAsset { get; set; }
-
         [OdinSerialize]
         List<Pool> Pools { get; set; } = new();
 
