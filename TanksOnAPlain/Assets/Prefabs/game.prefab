@@ -63,8 +63,22 @@ MonoBehaviour:
     - {fileID: 105230008}
     - {fileID: 105230007}
     - {fileID: 8300000, guid: 99a45b17be8c885459617f8ea10257db, type: 3}
-    - {fileID: 8300000, guid: 500d203f04037974394e2482b9df35c7, type: 3}
-    - {fileID: 8300000, guid: e4f841cf7fe3d5a428a88fdf8ba77664, type: 3}
+    - {fileID: 8300000, guid: 803d4794a12f234469532db9ddd56201, type: 3}
+    - {fileID: 8300000, guid: e768603d7e0863943a11e3f6d7cd49ab, type: 3}
+    - {fileID: 8300000, guid: b05cc0e779ac54c4c8b7158a8392cf96, type: 3}
+    - {fileID: 8300000, guid: 68e8a31146642954f952f52c33123fb5, type: 3}
+    - {fileID: 8300000, guid: 71757c8d214730540b38a41b16ac406b, type: 3}
+    - {fileID: 8300000, guid: 53b1c0ecf89fb344a83d4bdb4656b520, type: 3}
+    - {fileID: 8300000, guid: 16940954cf6ca654c9ba76c581f8e826, type: 3}
+    - {fileID: 8300000, guid: 0e6c2f4149433354ea8c4b64d8c3083f, type: 3}
+    - {fileID: 8300000, guid: a090daac4a1d8a9489f4996acf44b603, type: 3}
+    - {fileID: 8300000, guid: 8330a100e61780346a1f2a66d86aa06b, type: 3}
+    - {fileID: 8300000, guid: 17a872fb94e7e0e409945becdcc61c1a, type: 3}
+    - {fileID: 8300000, guid: bef8d40224e7bd2468a33ef3df8dd8dd, type: 3}
+    - {fileID: 8300000, guid: ccdc54d916ff00f408610d5fd5879724, type: 3}
+    - {fileID: 8300000, guid: f8344c3679537a34e84230ffb6bb1433, type: 3}
+    - {fileID: 8300000, guid: 4be527e7c3dbb41479d8f5ddf47f7df5, type: 3}
+    - {fileID: 8300000, guid: 0af4917e060f6ba40b967b7a219e1010, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -201,7 +215,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -235,6 +249,78 @@ MonoBehaviour:
     - Name: $v
       Entry: 3
       Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 3
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 3
+      Data: 4
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 3
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -247,13 +333,24 @@ MonoBehaviour:
     - Name: AudioClips
       Entry: 7
       Data: 4|System.Collections.Generic.Dictionary`2[[TanksOnAPlain.Unity.Components.Sound.SoundId,
-        TanksOnAPlain.Unity],[UnityEngine.AudioClip, UnityEngine.AudioModule]], mscorlib
+        TanksOnAPlain.Unity],[System.Collections.Generic.List`1[[UnityEngine.AudioClip,
+        UnityEngine.AudioModule]], mscorlib]], mscorlib
     - Name: comparer
-      Entry: 9
-      Data: 3
+      Entry: 7
+      Data: 5|System.Collections.Generic.EnumEqualityComparer`1[[TanksOnAPlain.Unity.Components.Sound.SoundId,
+        TanksOnAPlain.Unity]], mscorlib
     - Name: 
       Entry: 12
-      Data: 3
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 9
     - Name: 
       Entry: 7
       Data: 
@@ -261,8 +358,27 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: $v
+      Entry: 7
+      Data: 6|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
       Entry: 10
       Data: 7
+    - Name: 
+      Entry: 10
+      Data: 8
+    - Name: 
+      Entry: 10
+      Data: 9
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -273,8 +389,27 @@ MonoBehaviour:
       Entry: 3
       Data: 1
     - Name: $v
+      Entry: 7
+      Data: 7|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
       Entry: 10
-      Data: 8
+      Data: 10
+    - Name: 
+      Entry: 10
+      Data: 11
+    - Name: 
+      Entry: 10
+      Data: 12
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -285,8 +420,183 @@ MonoBehaviour:
       Entry: 3
       Data: 2
     - Name: $v
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
       Entry: 10
-      Data: 9
+      Data: 13
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 7
+      Data: 9|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 14
+    - Name: 
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 10
+      Data: 16
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 7
+      Data: 10|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 10
+      Data: 17
+    - Name: 
+      Entry: 10
+      Data: 18
+    - Name: 
+      Entry: 10
+      Data: 19
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 7
+      Data: 11|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 20
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 7
+      Data: 12|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 21
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 7
+    - Name: $v
+      Entry: 7
+      Data: 13|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 22
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 8
+    - Name: $v
+      Entry: 7
+      Data: 14|System.Collections.Generic.List`1[[UnityEngine.AudioClip, UnityEngine.AudioModule]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 23
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 

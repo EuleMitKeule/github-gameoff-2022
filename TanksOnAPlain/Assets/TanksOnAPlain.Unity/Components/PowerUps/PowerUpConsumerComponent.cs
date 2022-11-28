@@ -5,6 +5,7 @@ using TanksOnAPlain.Unity.Assets.PowerUps;
 using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Physics;
 using TanksOnAPlain.Unity.Components.Pooling;
+using TanksOnAPlain.Unity.Components.Sound;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,6 +21,7 @@ namespace TanksOnAPlain.Unity.Components.PowerUps
         GameComponent GameComponent { get; set; }
         HealthComponent HealthComponent { get; set; }
         PoolComponent PoolComponent { get; set; }
+        SoundComponent SoundComponent { get; set; }
         
         public event EventHandler<PowerUpConsumedEventArgs> PowerUpConsumed;
         
@@ -31,6 +33,7 @@ namespace TanksOnAPlain.Unity.Components.PowerUps
             HealthComponent = GetComponent<HealthComponent>();
             GameComponent = FindObjectOfType<GameComponent>();
             PoolComponent = FindObjectOfType<PoolComponent>();
+            SoundComponent = FindObjectOfType<SoundComponent>();
             
             PowerUpConsumed += OnPowerUpConsumed;
         }
@@ -116,6 +119,7 @@ namespace TanksOnAPlain.Unity.Components.PowerUps
                     break;
             }
 
+            SoundComponent.PlayClip(SoundId.PowerUpPickup);
             PowerUpConsumed?.Invoke(this, new PowerUpConsumedEventArgs(powerUpAsset));
         }
 

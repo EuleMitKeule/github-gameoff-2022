@@ -4,6 +4,12 @@
     {
         EnemyDeathScream,
         EnemyDeathExplosion,
-        PlayerProjectileShot
+        ProjectileShot,
+        ProjectileRicochet,
+        ProjectileImpact,
+        PowerUpPickup,
+        Startup,
+        Start,
+        Death,
     }
 }

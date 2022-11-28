@@ -96,7 +96,7 @@ namespace TanksOnAPlain.Unity.Components
             
             projectileComponent.DamageInflicted += OnDamageInflicted;
             
-            SoundComponent.PlayClip(SoundId.PlayerProjectileShot);
+            SoundComponent.PlayClip(SoundId.ProjectileShot);
         }
 
         void OnDamageInflicted(object sender, DamageInflictedEventArgs e)

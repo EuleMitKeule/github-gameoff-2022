@@ -14,7 +14,7 @@ namespace TanksOnAPlain.Unity.Components.Sound
         Dictionary<SoundId, SoundType> SoundIdToSoundType { get; set; } = new();
 
         [OdinSerialize] 
-        Dictionary<SoundId, AudioClip> AudioClips { get; set; } = new();
+        Dictionary<SoundId, List<AudioClip>> AudioClips { get; set; } = new();
 
         public void PlayClip(SoundId soundId)
         {
@@ -26,7 +26,10 @@ namespace TanksOnAPlain.Unity.Components.Sound
             if (!AudioSources.ContainsKey(soundType)) return;
             
             var audioSource = AudioSources[soundType];
-            var audioClip = AudioClips[soundId];
+            var audioClips = AudioClips[soundId];
+            
+            var randomIndex = Random.Range(0, audioClips.Count);
+            var audioClip = audioClips[randomIndex];
 
             audioSource.PlayOneShot(audioClip);
         }
