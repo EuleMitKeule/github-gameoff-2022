@@ -33,7 +33,7 @@ MonoBehaviour:
       Data: 3
     - Name: StartDamage
       Entry: 4
-      Data: 2
+      Data: 5
     - Name: StartRicochets
       Entry: 3
       Data: 0

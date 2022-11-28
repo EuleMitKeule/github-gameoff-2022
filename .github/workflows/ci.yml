@@ -194,7 +194,7 @@ jobs:
     if: ${{ needs.release.outputs.releaseCreated == 'true' }}
     strategy:
       matrix:
-        buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64", "WebGL"]
+        buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64"]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -246,7 +246,7 @@ jobs:
     if: ${{ needs.release.outputs.releaseCreated == 'true' }}
     strategy:
       matrix:
-        buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64", "WebGL"]
+        buildTarget: ["StandaloneWindows64", "StandaloneOSX", "StandaloneLinux64"]
 
     steps:
       - name: Checkout repository

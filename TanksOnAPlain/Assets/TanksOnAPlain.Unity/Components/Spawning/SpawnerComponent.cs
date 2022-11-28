@@ -4,6 +4,7 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TanksOnAPlain.Unity.Assets.Spawning;
+using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Map.Pathfinding;
 using TanksOnAPlain.Unity.Components.Physics;
 using TanksOnAPlain.Unity.Components.Pooling;
@@ -24,9 +25,7 @@ namespace TanksOnAPlain.Unity.Components.Spawning
         [OdinSerialize]
         int SpawnRadiusOffset { get; set; }
         
-        float LastSpawnTime { get; set; }
-        
-        float SpawnCooldown { get; set; }
+        float NextSpawnTime { get; set; }
         
         int EnemyCount { get; set; }
 
@@ -57,12 +56,13 @@ namespace TanksOnAPlain.Unity.Components.Spawning
         
         void Update()
         {
-            if (Time.time - LastSpawnTime > SpawnCooldown)
+            if (Time.time >= NextSpawnTime)
             {
                 SpawnEnemy();
 
-                SpawnCooldown = CalculateSpawnCooldown();
-                LastSpawnTime = Time.time;
+                var cooldown = DifficultyComponent.GetScaledValueExp(
+                    SpawnerAsset.Cooldown.StartValue, SpawnerAsset.Cooldown.EndValue, SpawnerAsset.Cooldown.Time);
+                NextSpawnTime = Time.time + cooldown;
             }
         }
         
@@ -77,10 +77,13 @@ namespace TanksOnAPlain.Unity.Components.Spawning
             var rotation = Quaternion.Euler(0, 0, angle);;
             
             var enemyObject = PoolComponent.Allocate(enemyPrefab, position);
+            if (!enemyObject) return;
 
             var tankComponent = enemyObject.GetComponent<TankComponent>();
             if (tankComponent)
+            {
                 tankComponent.TankBody.transform.rotation = rotation;
+            }
             
             var spriteRenderers = enemyObject.GetComponentsInChildren<SpriteRenderer>();
             foreach (var spriteRenderer in spriteRenderers)
@@ -166,9 +169,5 @@ namespace TanksOnAPlain.Unity.Components.Spawning
 
             return (PlayerEntityComponent.CellPosition + chosenRelativeCellPosition).ToWorld();
         }
-
-        float CalculateSpawnCooldown() => 
-            SpawnerAsset.MaxSpawnCooldown - 2 * (SpawnerAsset.MaxSpawnCooldown - SpawnerAsset.MinSpawnCooldown) / Mathf.PI *
-            Mathf.Atan(SpawnerAsset.SpawnCooldownDifficultyModifier * DifficultyComponent.Difficulty);
     }
 }

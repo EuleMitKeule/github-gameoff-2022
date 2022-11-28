@@ -26,27 +26,27 @@ namespace TanksOnAPlain.Unity.Components.Health
         DifficultyComponent DifficultyComponent { get; set; }
         HealthBarComponent HealthBarComponent { get; set; }
         
+        [OdinSerialize]
+        bool IsInvincible { get; set; }
+        
         void Awake()
         {
             DifficultyComponent = FindObjectOfType<DifficultyComponent>();
             HealthBarComponent = GetComponentInChildren<HealthBarComponent>();
             
-            CurrentHealth = HealthAsset.StartHealth;
-            MaxHealth = HealthAsset.MaxHealth;
-
             if (HealthBarComponent)
                 HealthChanged += HealthBarComponent.OnHealthChanged;
         }
 
-        void Start()
-        {
-            InvokeHealthChanged();
-        }
-
         public void Reset()
         {
-            MaxHealth = HealthAsset.MaxHealth;
-            CurrentHealth = HealthAsset.StartHealth;
+            var health = DifficultyComponent.GetScaledValueExp(
+                HealthAsset.Health.MinValue, HealthAsset.Health.MaxValue, HealthAsset.Health.Time);
+
+            MaxHealth = health;
+            CurrentHealth = health;
+
+            InvokeHealthChanged();
         }
         
         public void ChangeHealth(float amount)
@@ -57,13 +57,15 @@ namespace TanksOnAPlain.Unity.Components.Health
             
             HealthChanged?.Invoke(this, new HealthChangedEventArgs(previousHealth, CurrentHealth, amount, MaxHealth));
             
-            if (CurrentHealth <= 0)
+            if (!IsInvincible && CurrentHealth <= 0)
             {
                 Death?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        public void InvokeHealthChanged() =>
+        public void InvokeHealthChanged()
+        {
             HealthChanged?.Invoke(this, new HealthChangedEventArgs(CurrentHealth, CurrentHealth, 0, MaxHealth));
+        }
     }
 }

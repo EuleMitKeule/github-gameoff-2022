@@ -27,4 +27,4 @@ MonoBehaviour:
       Data: 0
     - Name: AttackCooldownPercentageDecrease
       Entry: 4
-      Data: 5
+      Data: 10
