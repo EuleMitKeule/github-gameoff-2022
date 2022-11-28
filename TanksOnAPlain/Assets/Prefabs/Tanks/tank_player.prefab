@@ -379,6 +379,9 @@ MonoBehaviour:
     - Name: HealthAsset
       Entry: 10
       Data: 0
+    - Name: IsInvincible
+      Entry: 5
+      Data: false
 --- !u!114 &4219437254338961742
 MonoBehaviour:
   m_ObjectHideFlags: 0
