@@ -24,6 +24,7 @@ namespace TanksOnAPlain.Unity.Components.Health
             
             PlayerHealthComponent = GameComponent.PlayerObject.GetComponent<HealthComponent>();
             PlayerHealthComponent.HealthChanged += OnPlayerHealthChanged;
+            PlayerHealthComponent.InvokeHealthChanged();
         }
 
         void OnPlayerHealthChanged(object sender, HealthChangedEventArgs e)

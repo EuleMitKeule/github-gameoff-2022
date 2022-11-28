@@ -25,9 +25,7 @@ namespace TanksOnAPlain.Unity.Components.Spawning
         [OdinSerialize]
         int SpawnRadiusOffset { get; set; }
         
-        float LastSpawnTime { get; set; }
-        
-        float SpawnCooldown { get; set; }
+        float NextSpawnTime { get; set; }
         
         int EnemyCount { get; set; }
 
@@ -58,12 +56,13 @@ namespace TanksOnAPlain.Unity.Components.Spawning
         
         void Update()
         {
-            if (Time.time - LastSpawnTime > SpawnCooldown)
+            if (Time.time >= NextSpawnTime)
             {
                 SpawnEnemy();
 
-                SpawnCooldown = CalculateSpawnCooldown();
-                LastSpawnTime = Time.time;
+                var cooldown = DifficultyComponent.GetScaledValueExp(
+                    SpawnerAsset.Cooldown.StartValue, SpawnerAsset.Cooldown.EndValue, SpawnerAsset.Cooldown.Time);
+                NextSpawnTime = Time.time + cooldown;
             }
         }
         
@@ -170,9 +169,5 @@ namespace TanksOnAPlain.Unity.Components.Spawning
 
             return (PlayerEntityComponent.CellPosition + chosenRelativeCellPosition).ToWorld();
         }
-
-        float CalculateSpawnCooldown() => 
-            SpawnerAsset.MaxSpawnCooldown - 2 * (SpawnerAsset.MaxSpawnCooldown - SpawnerAsset.MinSpawnCooldown) / Mathf.PI *
-            Mathf.Atan(SpawnerAsset.SpawnCooldownDifficultyModifier * DifficultyComponent.Difficulty);
     }
 }

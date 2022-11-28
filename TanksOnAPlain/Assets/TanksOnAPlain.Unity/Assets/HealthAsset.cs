@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using TanksOnAPlain.Unity.Components.Difficulty;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Assets
@@ -8,9 +9,6 @@ namespace TanksOnAPlain.Unity.Assets
     public class HealthAsset : SerializedScriptableObject
     {
         [OdinSerialize]
-        public float StartHealth { get; private set; }
-        
-        [OdinSerialize]
-        public float MaxHealth { get; private set; }
+        public ScaledInt Health { get; set; }
     }
 }

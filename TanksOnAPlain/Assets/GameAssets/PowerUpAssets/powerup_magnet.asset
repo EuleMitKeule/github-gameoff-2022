@@ -27,7 +27,7 @@ MonoBehaviour:
       Data: 0
     - Name: Radius
       Entry: 4
-      Data: 1
+      Data: 3
     - Name: RadiusPercentage
       Entry: 4
       Data: 10

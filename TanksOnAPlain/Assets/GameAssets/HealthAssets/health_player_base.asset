@@ -21,9 +21,18 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: StartHealth
-      Entry: 4
+    - Name: Health
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledInt, TanksOnAPlain.Unity
+    - Name: MinValue
+      Entry: 3
       Data: 100
-    - Name: MaxHealth
-      Entry: 4
+    - Name: MaxValue
+      Entry: 3
       Data: 100
+    - Name: Time
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
