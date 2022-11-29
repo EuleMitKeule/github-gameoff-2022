@@ -7,6 +7,7 @@ using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Input;
 using TanksOnAPlain.Unity.Components.Physics;
 using TanksOnAPlain.Unity.Components.Pooling;
+using TanksOnAPlain.Unity.Components.Sound;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Components
@@ -44,6 +45,7 @@ namespace TanksOnAPlain.Unity.Components
         PoolComponent PoolComponent { get; set; }
         TankComponent TankComponent { get; set; }
         DifficultyComponent DifficultyComponent { get; set; }
+        SoundComponent SoundComponent { get; set; }
 
         void Awake()
         {
@@ -51,6 +53,7 @@ namespace TanksOnAPlain.Unity.Components
             TankComponent = GetComponent<TankComponent>();
             InputComponent = GetComponent<InputComponent>();
             HealthComponent = GetComponent<HealthComponent>();
+            SoundComponent = FindObjectOfType<SoundComponent>();
             
             PoolComponent = FindObjectOfType<PoolComponent>();
             DifficultyComponent = FindObjectOfType<DifficultyComponent>();
@@ -74,10 +77,6 @@ namespace TanksOnAPlain.Unity.Components
             Damage = AttackAsset.StartDamage;
             Ricochets = AttackAsset.StartRicochets;
             LifeSteal = AttackAsset.StartLifeSteal;
-            
-            if (TankComponent.TankAsset is not EnemyTankAsset enemyTankAsset) return;
-            
-            //TODO: Skill scaling
         }
 
         void Attack()
@@ -96,6 +95,8 @@ namespace TanksOnAPlain.Unity.Components
             ProjectileComponents.Add(projectileComponent);
             
             projectileComponent.DamageInflicted += OnDamageInflicted;
+            
+            SoundComponent.PlayClip(SoundId.ProjectileShot);
         }
 
         void OnDamageInflicted(object sender, DamageInflictedEventArgs e)

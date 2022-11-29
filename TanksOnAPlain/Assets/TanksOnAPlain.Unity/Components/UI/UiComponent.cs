@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using TanksOnAPlain.Unity.Components.Sound;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Components.UI
@@ -15,6 +17,13 @@ namespace TanksOnAPlain.Unity.Components.UI
         
         [OdinSerialize]
         CanvasGroup CanvasGroupStartScreen { get; set; }
+        
+        SoundComponent SoundComponent { get; set; }
+
+        void Awake()
+        {
+            SoundComponent = FindObjectOfType<SoundComponent>();
+        }
 
         public void ShowGameOver()
         {
@@ -33,6 +42,7 @@ namespace TanksOnAPlain.Unity.Components.UI
         {
             Time.timeScale = 1;
             DisableCanvasGroup(CanvasGroupStartScreen);
+            SoundComponent.PlayClip(SoundId.Start);
         }
         
         void EnableCanvasGroup(CanvasGroup canvasGroup)

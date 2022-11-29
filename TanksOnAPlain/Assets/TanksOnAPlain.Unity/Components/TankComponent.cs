@@ -5,6 +5,7 @@ using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TanksOnAPlain.Unity.Assets;
 using TanksOnAPlain.Unity.Components.Health;
+using TanksOnAPlain.Unity.Components.Sound;
 using TanksOnAPlain.Unity.Extensions;
 using UnityEngine;
 
@@ -33,10 +34,12 @@ namespace TanksOnAPlain.Unity.Components
         IEnumerable<GameObject> ChildObjects => gameObject.GetChildren(true);
 
         HealthComponent HealthComponent { get; set; }
+        protected SoundComponent SoundComponent { get; set; }
 
         protected virtual void Awake()
         {
             HealthComponent = GetComponent<HealthComponent>();
+            SoundComponent = FindObjectOfType<SoundComponent>();
             
             HealthComponent.Death += OnDeath;
         }

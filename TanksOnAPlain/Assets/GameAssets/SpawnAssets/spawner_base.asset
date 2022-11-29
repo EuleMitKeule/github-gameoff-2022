@@ -29,7 +29,7 @@ MonoBehaviour:
       Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
     - Name: StartValue
       Entry: 4
-      Data: 10
+      Data: 7
     - Name: EndValue
       Entry: 4
       Data: 1
