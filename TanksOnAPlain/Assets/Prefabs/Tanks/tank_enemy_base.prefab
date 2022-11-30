@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 4646192646062116849}
   - component: {fileID: 2583674907105535798}
   - component: {fileID: 8604599323072064943}
+  - component: {fileID: 6191052965639404691}
   m_Layer: 7
   m_Name: tank_enemy_base
   m_TagString: Untagged
@@ -721,6 +722,31 @@ MonoBehaviour:
     - Name: WeaponPoint
       Entry: 10
       Data: 1
+--- !u!114 &6191052965639404691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064423492359556233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591ef3be524449498243b64ee3566b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 6831792592313576337, guid: e125cbf240259ad40a90a5e27716fb95, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: ExplosionPrefab
+      Entry: 10
+      Data: 0
 --- !u!1 &6064423492455411463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,7 +1179,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1904067099
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 1
   m_Sprite: {fileID: -1837112578, guid: 493fa09564f0f994aafb3d5bf7c7e8d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
