@@ -414,7 +414,7 @@ Tilemap:
       - {fileID: 1879289358, guid: b1f2324bbcfb9c94e9a069e5ae17b372, type: 3}
       - {fileID: -1279302219, guid: b1f2324bbcfb9c94e9a069e5ae17b372, type: 3}
       - {fileID: -1220085075, guid: b1f2324bbcfb9c94e9a069e5ae17b372, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   m_TileAssetArray:

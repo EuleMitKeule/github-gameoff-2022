@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: map_base
   m_EditorClassIdentifier: 
   serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
+    SerializedFormat: 0
+    SerializedBytes: 1701090000004300680075006e006b00530069007a0065001600000017010c0000005600690065007700440069007300740061006e00630065001900000001010c0000004300680075006e006b0050007200650066006100620073002f00000000015d000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e004c00690073007400600031005b005b0055006e0069007400790045006e00670069006e0065002e00470061006d0065004f0062006a006500630074002c00200055006e0069007400790045006e00670069006e0065002e0043006f00720065004d006f00640075006c0065005d005d002c0020006d00730063006f0072006c0069006200000000000608000000000000000c000000000c010000000c020000000c030000000c040000000c050000000c060000000c070000000705010111000000540069006c0065006d006100700049007300570061006c006b00610062006c0065002f010000000193000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e00440069006300740069006f006e00610072007900600032005b005b00540061006e006b0073004f006e00410050006c00610069006e002e0055006e006900740079002e0043006f006d0070006f006e0065006e00740073002e004d00610070002e00540069006c0065006d006100700054007900700065002c002000540061006e006b0073004f006e00410050006c00610069006e002e0055006e006900740079005d002c005b00530079007300740065006d002e0042006f006f006c00650061006e002c0020006d00730063006f0072006c00690062005d005d002c0020006d00730063006f0072006c00690062000100000001010800000063006f006d00700061007200650072002f020000000182000000530079007300740065006d002e0043006f006c006c0065006300740069006f006e0073002e00470065006e0065007200690063002e0045006e0075006d0045007100750061006c0069007400790043006f006d0070006100720065007200600031005b005b00540061006e006b0073004f006e00410050006c00610069006e002e0055006e006900740079002e0043006f006d0070006f006e0065006e00740073002e004d00610070002e00540069006c0065006d006100700054007900700065002c002000540061006e006b0073004f006e00410050006c00610069006e002e0055006e006900740079005d005d002c0020006d00730063006f0072006c0069006200020000000600000000000000000705060400000000000000042e1d010200000024006b0000000000000000002b0102000000240076000105042e1d010200000024006b0001000000000000002b0102000000240076000005042e1d010200000024006b0002000000000000002b0102000000240076000105042e1d010200000024006b0004000000000000002b01020000002400760000050705
     ReferencedUnityObjects:
     - {fileID: 3531549421207840464, guid: 0951cb1850ef6fd41bdba422b71beb73, type: 3}
     - {fileID: 3531549421207840464, guid: 1c781e2b0aed8e7438fd2cdc730b452b, type: 3}
@@ -23,122 +23,9 @@ MonoBehaviour:
     - {fileID: 3531549421207840464, guid: ef2182d872ed60747bfc2f258b52f79b, type: 3}
     - {fileID: 3531549421207840464, guid: e6853561214b59842a932afae4743dcd, type: 3}
     - {fileID: 3531549421207840464, guid: 56bc9e4c1e984fc4d87e8a242def7d26, type: 3}
+    - {fileID: 3531549421207840464, guid: 88c0e5fbd358d524e84e356dd8329e0f, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: ChunkSize
-      Entry: 3
-      Data: 22
-    - Name: ViewDistance
-      Entry: 3
-      Data: 25
-    - Name: ChunkPrefabs
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 7
-    - Name: 
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 10
-      Data: 3
-    - Name: 
-      Entry: 10
-      Data: 4
-    - Name: 
-      Entry: 10
-      Data: 5
-    - Name: 
-      Entry: 10
-      Data: 6
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: TilemapIsWalkable
-      Entry: 7
-      Data: 1|System.Collections.Generic.Dictionary`2[[TanksOnAPlain.Unity.Components.Map.TilemapType,
-        TanksOnAPlain.Unity],[System.Boolean, mscorlib]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 2|System.Collections.Generic.EnumEqualityComparer`1[[TanksOnAPlain.Unity.Components.Map.TilemapType,
-        TanksOnAPlain.Unity]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 4
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 2
-    - Name: $v
-      Entry: 5
-      Data: true
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 4
-    - Name: $v
-      Entry: 5
-      Data: false
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+    SerializationNodes: []
