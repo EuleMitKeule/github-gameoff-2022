@@ -191,6 +191,9 @@ namespace TanksOnAPlain.Unity.Components.Map
                         if (!Chunks.ContainsKey(chunkIndex)) ChooseChunk(chunkIndex);
                         
                         var chunk = Chunks[chunkIndex];
+                        
+                        if (!chunk.ContainsKey(tilemapType)) continue;
+                        
                         var tileIndex = relativeChunkPosition.y * MapAsset.ChunkSize + relativeChunkPosition.x;
                         var tile = chunk[tilemapType][tileIndex];
                         

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TanksOnAPlain.Unity.Assets;
+using TanksOnAPlain.Unity.Components.Difficulty;
 using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Input;
 using TanksOnAPlain.Unity.Components.Physics;
 using TanksOnAPlain.Unity.Components.Pooling;
+using TanksOnAPlain.Unity.Components.Sound;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Components
@@ -44,6 +46,7 @@ namespace TanksOnAPlain.Unity.Components
         PoolComponent PoolComponent { get; set; }
         TankComponent TankComponent { get; set; }
         DifficultyComponent DifficultyComponent { get; set; }
+        SoundComponent SoundComponent { get; set; }
 
         void Awake()
         {
@@ -51,6 +54,7 @@ namespace TanksOnAPlain.Unity.Components
             TankComponent = GetComponent<TankComponent>();
             InputComponent = GetComponent<InputComponent>();
             HealthComponent = GetComponent<HealthComponent>();
+            SoundComponent = FindObjectOfType<SoundComponent>();
             
             PoolComponent = FindObjectOfType<PoolComponent>();
             DifficultyComponent = FindObjectOfType<DifficultyComponent>();
@@ -69,15 +73,30 @@ namespace TanksOnAPlain.Unity.Components
 
         public void Reset()
         {
-            ProjectileSpeed = AttackAsset.StartProjectileSpeed;
-            AttackCooldown = AttackAsset.StartAttackCooldown;
-            Damage = AttackAsset.StartDamage;
-            Ricochets = AttackAsset.StartRicochets;
-            LifeSteal = AttackAsset.StartLifeSteal;
+            ProjectileSpeed = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.ProjectileSpeed.StartValue,
+                AttackAsset.ProjectileSpeed.EndValue,
+                AttackAsset.ProjectileSpeed.Time);
             
-            if (TankComponent.TankAsset is not EnemyTankAsset enemyTankAsset) return;
+            AttackCooldown = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.AttackCooldown.StartValue,
+                AttackAsset.AttackCooldown.EndValue,
+                AttackAsset.AttackCooldown.Time);
             
-            //TODO: Skill scaling
+            Damage = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.Damage.StartValue,
+                AttackAsset.Damage.EndValue,
+                AttackAsset.Damage.Time);
+            
+            Ricochets = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.Ricochets.StartValue,
+                AttackAsset.Ricochets.EndValue,
+                AttackAsset.Ricochets.Time);
+            
+            LifeSteal = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.LifeSteal.StartValue,
+                AttackAsset.LifeSteal.EndValue,
+                AttackAsset.LifeSteal.Time);
         }
 
         void Attack()
@@ -96,6 +115,8 @@ namespace TanksOnAPlain.Unity.Components
             ProjectileComponents.Add(projectileComponent);
             
             projectileComponent.DamageInflicted += OnDamageInflicted;
+            
+            SoundComponent.PlayClip(SoundId.ProjectileShot);
         }
 
         void OnDamageInflicted(object sender, DamageInflictedEventArgs e)

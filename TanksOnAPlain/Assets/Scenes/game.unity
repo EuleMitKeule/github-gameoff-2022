@@ -184,6 +184,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 105230014, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 105230014, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
     - target: {fileID: 135566853, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: serializationData.Prefab
       value: 
@@ -722,14 +726,6 @@ PrefabInstance:
       propertyPath: serializationData.ReferencedUnityObjects.Array.data[7]
       value: 
       objectReference: {fileID: 1897863736}
-    - target: {fileID: 4612312275213744080, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[31].Data
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4612312275213744080, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[35].Data
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4612312275213744080, guid: 9beed9b7014701149a6ceb0d613092df, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
       value: 12

@@ -15,10 +15,13 @@ namespace TanksOnAPlain.Unity.Components
         public float Radius { get; set; }
         
         Rigidbody2D Rigidbody { get; set; }
+        
+        DifficultyComponent DifficultyComponent { get; set; }
 
         void Awake()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
+            DifficultyComponent = FindObjectOfType<DifficultyComponent>();
         }
 
         void FixedUpdate()
@@ -46,7 +49,10 @@ namespace TanksOnAPlain.Unity.Components
 
         public void Reset()
         {
-            Radius = MagnetAsset.StartRadius;
+            Radius = DifficultyComponent.GetScaledValueExp(
+                MagnetAsset.StartRadius.StartValue,
+                MagnetAsset.StartRadius.EndValue,
+                MagnetAsset.StartRadius.Time);
         }
     }
 }

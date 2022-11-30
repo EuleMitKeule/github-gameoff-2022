@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using TanksOnAPlain.Unity.Components.Difficulty;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Assets
@@ -9,7 +10,7 @@ namespace TanksOnAPlain.Unity.Assets
     {
         [OdinSerialize]
         [SuffixLabel("u")]
-        public float StartRadius { get; private set; }
+        public ScaledFloat StartRadius { get; private set; }
         
         [OdinSerialize]
         [SuffixLabel("1/s^2")]

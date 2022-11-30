@@ -23,12 +23,15 @@ namespace TanksOnAPlain.Unity.Components.Physics
         InputComponent InputComponent { get; set; }
         
         Rigidbody2D Rigidbody { get; set; }
+        
+        DifficultyComponent DifficultyComponent { get; set; }
 
         void Awake()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
             TankComponent = GetComponent<TankComponent>();
             InputComponent = GetComponent<InputComponent>();
+            DifficultyComponent = FindObjectOfType<DifficultyComponent>();
         }
 
         void FixedUpdate()
@@ -39,15 +42,21 @@ namespace TanksOnAPlain.Unity.Components.Physics
         
         public void Reset()
         {
-            MovementSpeed = TankMovementAsset.MovementSpeed;
-            RotationSpeed = TankMovementAsset.RotationSpeed;
+            MovementSpeed = DifficultyComponent.GetScaledValueExp(
+                TankMovementAsset.MovementSpeed.StartValue,
+                TankMovementAsset.MovementSpeed.EndValue,
+                TankMovementAsset.MovementSpeed.Time);
+            
+            RotationSpeed = DifficultyComponent.GetScaledValueExp(
+                TankMovementAsset.RotationSpeed.StartValue,
+                TankMovementAsset.RotationSpeed.EndValue,
+                TankMovementAsset.RotationSpeed.Time);
         }
 
         void Move()
         {
-            var speedBoostModifier = InputComponent.InputBoost ? TankMovementAsset.SpeedBoostModifier : 1;
             var direction = TankComponent.TankBody.transform.up;
-            var velocity = direction * (speedBoostModifier * MovementSpeed * InputComponent.InputMovement * Time.fixedDeltaTime);
+            var velocity = direction * (MovementSpeed * InputComponent.InputMovement * Time.fixedDeltaTime);
             
             Rigidbody.velocity = velocity;
         }

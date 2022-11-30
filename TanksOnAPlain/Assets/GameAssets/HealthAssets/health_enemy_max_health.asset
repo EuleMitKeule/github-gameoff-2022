@@ -24,10 +24,10 @@ MonoBehaviour:
     - Name: Health
       Entry: 7
       Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledInt, TanksOnAPlain.Unity
-    - Name: MinValue
+    - Name: StartValue
       Entry: 3
       Data: 200
-    - Name: MaxValue
+    - Name: EndValue
       Entry: 3
       Data: 2000
     - Name: Time

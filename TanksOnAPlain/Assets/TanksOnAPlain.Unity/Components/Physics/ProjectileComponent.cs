@@ -6,6 +6,7 @@ using TanksOnAPlain.Unity.Assets;
 using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Map;
 using TanksOnAPlain.Unity.Components.Pooling;
+using TanksOnAPlain.Unity.Components.Sound;
 using TanksOnAPlain.Unity.Extensions;
 using UnityEditor;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace TanksOnAPlain.Unity.Components.Physics
         Rigidbody2D Rigidbody { get; set; }
         Collider2D Collider { get; set; }
         MapComponent MapComponent { get; set; }
+        SoundComponent SoundComponent { get; set; }
 
         public event EventHandler<DamageInflictedEventArgs> DamageInflicted;
         public event EventHandler Destroyed;
@@ -38,6 +40,7 @@ namespace TanksOnAPlain.Unity.Components.Physics
             Rigidbody = GetComponent<Rigidbody2D>();
             Collider = GetComponent<Collider2D>();
             MapComponent = FindObjectOfType<MapComponent>();
+            SoundComponent = FindObjectOfType<SoundComponent>();
         }
 
         void FixedUpdate()
@@ -99,9 +102,13 @@ namespace TanksOnAPlain.Unity.Components.Physics
         {
             if (Ricochets <= 0)
             {
+                SoundComponent.PlayClip(SoundId.ProjectileImpact);
+                
                 Destroyed?.Invoke(this, EventArgs.Empty);
                 return;
             }
+            
+            SoundComponent.PlayClip(SoundId.ProjectileRicochet);
             
             Ricochets -= 1;
 

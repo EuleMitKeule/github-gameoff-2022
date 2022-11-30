@@ -52,7 +52,7 @@ namespace TanksOnAPlain.Unity.Components.Map.Pathfinding
 
         IEnumerator UpdateFlowField()
         {
-            while (true)
+            while (gameObject.activeSelf)
             {
                 if (HasTargetPositionChanged)
                 {

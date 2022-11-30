@@ -2,6 +2,7 @@
 using TanksOnAPlain.Unity.Assets;
 using TanksOnAPlain.Unity.Components.Pooling;
 using TanksOnAPlain.Unity.Components.PowerUps;
+using TanksOnAPlain.Unity.Components.Sound;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Components
@@ -29,6 +30,9 @@ namespace TanksOnAPlain.Unity.Components
         protected override void OnDeath(object sender, EventArgs e)
         {
             if (TankAsset is not EnemyTankAsset enemyTankAsset) return;
+            
+            SoundComponent.PlayClip(SoundId.EnemyDeathExplosion);
+            SoundComponent.PlayClip(SoundId.EnemyDeathScream);
             
             Rigidbody.simulated = false;
 

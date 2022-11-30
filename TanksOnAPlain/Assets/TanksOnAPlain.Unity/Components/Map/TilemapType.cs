@@ -5,6 +5,7 @@
         Ground,
         Wall,
         Street,
-        Decoration
+        Decoration,
+        Water
     }
 }

@@ -48,6 +48,12 @@ TagManager:
   - name: Track
     uniqueID: 1862135853
     locked: 0
+  - name: Water
+    uniqueID: 2418038065
+    locked: 0
+  - name: Decorations
+    uniqueID: 1137196695
+    locked: 0
   - name: PowerUp
     uniqueID: 163339975
     locked: 0
@@ -65,6 +71,9 @@ TagManager:
     locked: 0
   - name: PlayerCannon
     uniqueID: 1060431367
+    locked: 0
+  - name: Particles
+    uniqueID: 3475398337
     locked: 0
   - name: Wall
     uniqueID: 2014852201
