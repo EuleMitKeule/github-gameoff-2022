@@ -23,10 +23,10 @@ namespace TanksOnAPlain.Unity.Components.Graphics
             
             foreach (var particleSystem in ParticleSystems)
             {
-                var duration = particleSystem.main.duration;
+                var duration = particleSystem.main.duration + particleSystem.main.startLifetime.constantMax;
                 if (duration > LongestDuration)
                 {
-                    LongestDuration = duration * 2;
+                    LongestDuration = duration;
                 }
             }
         }
