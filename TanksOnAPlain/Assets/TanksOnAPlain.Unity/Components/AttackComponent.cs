@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TanksOnAPlain.Unity.Assets;
+using TanksOnAPlain.Unity.Components.Difficulty;
 using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Input;
 using TanksOnAPlain.Unity.Components.Physics;
@@ -72,11 +73,30 @@ namespace TanksOnAPlain.Unity.Components
 
         public void Reset()
         {
-            ProjectileSpeed = AttackAsset.StartProjectileSpeed;
-            AttackCooldown = AttackAsset.StartAttackCooldown;
-            Damage = AttackAsset.StartDamage;
-            Ricochets = AttackAsset.StartRicochets;
-            LifeSteal = AttackAsset.StartLifeSteal;
+            ProjectileSpeed = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.ProjectileSpeed.StartValue,
+                AttackAsset.ProjectileSpeed.EndValue,
+                AttackAsset.ProjectileSpeed.Time);
+            
+            AttackCooldown = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.AttackCooldown.StartValue,
+                AttackAsset.AttackCooldown.EndValue,
+                AttackAsset.AttackCooldown.Time);
+            
+            Damage = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.Damage.StartValue,
+                AttackAsset.Damage.EndValue,
+                AttackAsset.Damage.Time);
+            
+            Ricochets = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.Ricochets.StartValue,
+                AttackAsset.Ricochets.EndValue,
+                AttackAsset.Ricochets.Time);
+            
+            LifeSteal = DifficultyComponent.GetScaledValueExp(
+                AttackAsset.LifeSteal.StartValue,
+                AttackAsset.LifeSteal.EndValue,
+                AttackAsset.LifeSteal.Time);
         }
 
         void Attack()

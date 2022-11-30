@@ -22,11 +22,32 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: MovementSpeed
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
+    - Name: StartValue
       Entry: 4
       Data: 175
-    - Name: SpeedBoostModifier
+    - Name: EndValue
       Entry: 4
-      Data: 1
+      Data: 350
+    - Name: Time
+      Entry: 3
+      Data: 900
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: RotationSpeed
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
+    - Name: StartValue
       Entry: 4
-      Data: 100
+      Data: 125
+    - Name: EndValue
+      Entry: 4
+      Data: 250
+    - Name: Time
+      Entry: 3
+      Data: 900
+    - Name: 
+      Entry: 8
+      Data: 

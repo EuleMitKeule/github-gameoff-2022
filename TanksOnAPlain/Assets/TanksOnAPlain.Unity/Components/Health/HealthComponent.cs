@@ -41,7 +41,9 @@ namespace TanksOnAPlain.Unity.Components.Health
         public void Reset()
         {
             var health = DifficultyComponent.GetScaledValueExp(
-                HealthAsset.Health.MinValue, HealthAsset.Health.MaxValue, HealthAsset.Health.Time);
+                HealthAsset.Health.StartValue,
+                HealthAsset.Health.EndValue,
+                HealthAsset.Health.Time);
 
             MaxHealth = health;
             CurrentHealth = health;

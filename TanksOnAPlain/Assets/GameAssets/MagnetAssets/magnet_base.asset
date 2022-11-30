@@ -22,14 +22,26 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: StartRadius
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
+    - Name: StartValue
       Entry: 4
       Data: 0
+    - Name: EndValue
+      Entry: 4
+      Data: 0
+    - Name: Time
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: AccelerationPerDistance
       Entry: 4
-      Data: 1
+      Data: 5
     - Name: MaxAcceleration
       Entry: 4
-      Data: 1
+      Data: 5
     - Name: LayerMask
       Entry: 7
       Data: UnityEngine.LayerMask, UnityEngine.CoreModule
