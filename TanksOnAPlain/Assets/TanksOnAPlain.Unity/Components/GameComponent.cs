@@ -24,6 +24,8 @@ namespace TanksOnAPlain.Unity.Components
         
         void Awake()
         {
+            Time.timeScale = 0f;
+        
             PoolComponent = FindObjectOfType<PoolComponent>();
             UiComponent = GetComponentInChildren<UiComponent>();
             SoundComponent = GetComponentInChildren<SoundComponent>();
