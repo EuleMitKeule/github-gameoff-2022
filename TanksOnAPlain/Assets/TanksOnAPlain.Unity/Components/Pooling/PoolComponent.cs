@@ -13,28 +13,14 @@ namespace TanksOnAPlain.Unity.Components.Pooling
     public class PoolComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
-        PoolAsset PoolAsset { get; set; }
-
-        [ShowInInspector]
-        [ReadOnly]
         List<Pool> Pools { get; set; } = new();
 
         void Awake()
         {
-            foreach (var assetPool in PoolAsset.Pools)
+            foreach (var pool in Pools)
             {
-                var pool = new Pool
-                {
-                    Prefab = assetPool.Prefab,
-                    ActiveObjectLimit = assetPool.ActiveObjectLimit,
-                    HasLimit = assetPool.HasLimit,
-                    PoolObject = assetPool.PoolObject,
-                };
-                
-                Pools.Add(pool);
-                
                 if (pool.PoolObject) continue;
-
+        
                 CreatePoolObject(pool);
             }
         }
@@ -65,6 +51,7 @@ namespace TanksOnAPlain.Unity.Components.Pooling
 
         GameObject GetOrCreateObject(Pool pool, Vector3 position, Quaternion rotation)
         {
+            pool.Objects ??= new();
             var availableObjects = pool.Objects;
             
             if (availableObjects.Count > 0)

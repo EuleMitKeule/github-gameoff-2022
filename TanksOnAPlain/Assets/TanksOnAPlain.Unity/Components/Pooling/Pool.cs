@@ -29,7 +29,7 @@ namespace TanksOnAPlain.Unity.Components.Pooling
         [ShowInInspector]
         [ShowIf(nameof(IsPlaying))]
         [ReadOnly]
-        public Queue<GameObject> Objects { get; } = new();
+        public Queue<GameObject> Objects { get; set; } = new();
         
         bool IsPlaying => Application.isPlaying;
     }
