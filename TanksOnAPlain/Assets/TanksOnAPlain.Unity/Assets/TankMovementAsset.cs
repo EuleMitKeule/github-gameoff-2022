@@ -1,5 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using TanksOnAPlain.Unity.Components.Difficulty;
 using UnityEngine;
 
 namespace TanksOnAPlain.Unity.Assets
@@ -9,10 +10,9 @@ namespace TanksOnAPlain.Unity.Assets
     {
         [TitleGroup("Physics")]
         [OdinSerialize]
-        public float MovementSpeed { get; set; }
+        public ScaledFloat MovementSpeed { get; set; }
         
-        [OdinSerialize] public float SpeedBoostModifier { get; set; }
-        
-        [OdinSerialize] public float RotationSpeed { get; set; }
+        [OdinSerialize]
+        public ScaledFloat RotationSpeed { get; set; }
     }
 }

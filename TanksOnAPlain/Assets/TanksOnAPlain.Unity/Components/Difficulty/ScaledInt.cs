@@ -7,10 +7,10 @@ namespace TanksOnAPlain.Unity.Components.Difficulty
     public struct ScaledInt
     {
         [OdinSerialize]
-        public int MinValue { get; set; }
+        public int StartValue { get; set; }
         
         [OdinSerialize]
-        public int MaxValue { get; set; }
+        public int EndValue { get; set; }
         
         [OdinSerialize]
         public int Time { get; set; }

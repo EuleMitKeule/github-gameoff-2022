@@ -25,18 +25,78 @@ MonoBehaviour:
     - Name: ProjectilePrefab
       Entry: 10
       Data: 0
-    - Name: StartProjectileSpeed
+    - Name: ProjectileSpeed
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
+    - Name: StartValue
       Entry: 4
       Data: 5
-    - Name: StartAttackCooldown
+    - Name: EndValue
+      Entry: 4
+      Data: 5
+    - Name: Time
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: AttackCooldown
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
+    - Name: StartValue
       Entry: 4
       Data: 3
-    - Name: StartDamage
+    - Name: EndValue
+      Entry: 4
+      Data: 3
+    - Name: Time
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Damage
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
+    - Name: StartValue
       Entry: 4
       Data: 5
-    - Name: StartRicochets
+    - Name: EndValue
+      Entry: 4
+      Data: 5
+    - Name: Time
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Ricochets
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledInt, TanksOnAPlain.Unity
+    - Name: StartValue
       Entry: 3
       Data: 0
-    - Name: StartLifeSteal
+    - Name: EndValue
+      Entry: 3
+      Data: 0
+    - Name: Time
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: LifeSteal
+      Entry: 7
+      Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
+    - Name: StartValue
       Entry: 4
       Data: 100
+    - Name: EndValue
+      Entry: 4
+      Data: 500
+    - Name: Time
+      Entry: 3
+      Data: 900
+    - Name: 
+      Entry: 8
+      Data: 
