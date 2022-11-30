@@ -13,7 +13,7 @@ namespace TanksOnAPlain.Unity.Components.Pooling
     public class PoolComponent : SerializedMonoBehaviour
     {
         [OdinSerialize]
-        List<Pool> Pools { get; set; } = new();
+        List<Pool> Pools { get; set; }
 
         void Awake()
         {
@@ -104,6 +104,11 @@ namespace TanksOnAPlain.Unity.Components.Pooling
 
         void CreatePoolObject(Pool pool)
         {
+            if (!pool.Prefab)
+            {
+                Debug.Log("Penis");
+            }
+            
             var poolObject = new GameObject($"pool_{pool.Prefab.name}");
             poolObject.transform.SetParent(transform);
 

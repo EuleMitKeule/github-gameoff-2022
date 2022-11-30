@@ -195,6 +195,22 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 6191052965639404691, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+    - target: {fileID: 6191052965639404691, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191052965639404691, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"ExplosionPrefab","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191052965639404691, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191052965639404691, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 6831792592313576337, guid: e125cbf240259ad40a90a5e27716fb95, type: 3}
     - target: {fileID: 7126493908852175553, guid: 5d31a3a8ae7432146976ea27c1ba0b14, type: 3}
       propertyPath: serializationData.Prefab
       value: 

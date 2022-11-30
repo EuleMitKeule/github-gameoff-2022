@@ -2510,7 +2510,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6461293533356927379}
   m_Father: {fileID: 4833224386585719560}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2530,15 +2531,196 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 6fdc40c01f95d174da90c346f1638f87, type: 2}
+    - {fileID: 4472856794074153120, guid: 97753afdfd0e1954bb7a5ebf0d15c9e1, type: 3}
+    - {fileID: 4136862187117868514, guid: 186c16aee48d2934591f2da0206b70f7, type: 3}
+    - {fileID: 7005487724714998332, guid: 38825d59e19870c4d9c35b74eecdb038, type: 3}
+    - {fileID: 5135982904818416073, guid: 170963ac58467e94d869fdb6fc976169, type: 3}
+    - {fileID: 7005487724714998332, guid: 5609afde2dda8804784d3e2d9f7a9591, type: 3}
+    - {fileID: 6062020859922841093, guid: 116e5a31640d14e49b277652a1dc19b4, type: 3}
+    - {fileID: 429489426995876441, guid: 057356ae0c28aac4e8a15b8254fa0157, type: 3}
+    - {fileID: 5328066834422354929, guid: a3f1f51768881f44898dcb9c8acc9293, type: 3}
+    - {fileID: 5736488315374214953, guid: 67a0ecf837e736941ada33169a5c28f1, type: 3}
+    - {fileID: 2173118636728541576}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: PoolAsset
+    - Name: Pools
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[TanksOnAPlain.Unity.Components.Pooling.Pool,
+        TanksOnAPlain.Unity]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 9
+    - Name: 
+      Entry: 7
+      Data: 1|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
       Entry: 10
       Data: 0
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 10
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 1
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 10
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 2
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 3
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 4|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 3
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 5
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 5|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 4
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 5
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 6|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 5
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 5
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 7|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 6
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 5
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 8|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 7
+    - Name: PoolObject
+      Entry: 6
+      Data: 
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 3
+    - Name: HasLimit
+      Entry: 5
+      Data: true
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 9|TanksOnAPlain.Unity.Components.Pooling.Pool, TanksOnAPlain.Unity
+    - Name: Prefab
+      Entry: 10
+      Data: 8
+    - Name: PoolObject
+      Entry: 10
+      Data: 9
+    - Name: ActiveObjectLimit
+      Entry: 3
+      Data: 0
+    - Name: HasLimit
+      Entry: 5
+      Data: false
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
 --- !u!1 &1050167120074286016
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,6 +3473,64 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &2173118636728541576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6461293533356927379}
+  - component: {fileID: 8637475956646230716}
+  m_Layer: 0
+  m_Name: pool_floating_text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6461293533356927379
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173118636728541576}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 639860841367389525}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &8637475956646230716
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173118636728541576}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 1904067099
+  m_SortingOrder: 1
+  m_TargetDisplay: 0
 --- !u!1 &2293026434942343257
 GameObject:
   m_ObjectHideFlags: 0
@@ -4638,7 +4878,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 1904067099
+  m_SortingLayerID: -765853741
   m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &1234383458
