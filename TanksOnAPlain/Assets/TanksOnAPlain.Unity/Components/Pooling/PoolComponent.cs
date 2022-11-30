@@ -104,11 +104,6 @@ namespace TanksOnAPlain.Unity.Components.Pooling
 
         void CreatePoolObject(Pool pool)
         {
-            if (!pool.Prefab)
-            {
-                Debug.Log("Penis");
-            }
-            
             var poolObject = new GameObject($"pool_{pool.Prefab.name}");
             poolObject.transform.SetParent(transform);
 
