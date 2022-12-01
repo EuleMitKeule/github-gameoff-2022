@@ -24,7 +24,7 @@ namespace TanksOnAPlain.Unity.Assets
         public ScaledInt Ricochets { get; private set; }
         
         [OdinSerialize]
-        public ScaledFloat LifeSteal { get; private set; }
+        public ScaledInt LifeSteal { get; private set; }
 
     }
 }

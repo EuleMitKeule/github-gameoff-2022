@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 using TanksOnAPlain.Unity.Assets.PowerUps;
 using TanksOnAPlain.Unity.Components.Health;
 using TanksOnAPlain.Unity.Components.Physics;
@@ -13,7 +14,11 @@ namespace TanksOnAPlain.Unity.Components.PowerUps
 {
     public class PowerUpConsumerComponent : SerializedMonoBehaviour, IResettable
     {
-        [ShowInInspector] public Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; }
+        [OdinSerialize] 
+        Dictionary<PowerUpAsset, int> MaxPowerUps { get; set; } = new();
+        
+        [ShowInInspector] 
+        public Dictionary<PowerUpAsset, float> PowerUpsConsumed { get; set; }
         
         AttackComponent AttackComponent { get; set; }
         TankMovementComponent TankMovementComponent { get; set; }
@@ -75,48 +80,49 @@ namespace TanksOnAPlain.Unity.Components.PowerUps
         
         public void Consume(PowerUpAsset powerUpAsset)
         {
-            switch (powerUpAsset)
+            if (MaxPowerUps.ContainsKey(powerUpAsset))
             {
-                case RicochetPowerUpAsset ricochetPowerUpAsset:
-                    AttackComponent.Ricochets += ricochetPowerUpAsset.Ricochets;
-                    break;
-                case DamagePowerUpAsset damagePowerUpAsset:
-                    AttackComponent.Damage *= 1 + damagePowerUpAsset.DamagePercentageIncrease / 100;
-                    break;
-                case ProjectileSpeedPowerUpAsset projectileSpeedPowerUpAsset:
-                    AttackComponent.ProjectileSpeed *= 1 + projectileSpeedPowerUpAsset.ProjectileSpeedPercentageIncrease / 100;
-                    break;
-                case MovementSpeedPowerUpAsset movementSpeedPowerUpAsset:
-                    TankMovementComponent.MovementSpeed *= 1 + movementSpeedPowerUpAsset.MovementSpeedPercentageIncrease / 100;
-                    TankMovementComponent.RotationSpeed *= 1 + movementSpeedPowerUpAsset.RotationSpeedPercentageIncrease / 100;
-                    break;
-                case AttackCooldownPowerUpAsset attackCooldownPowerUpAsset:
-                    AttackComponent.AttackCooldown *= 1 - attackCooldownPowerUpAsset.AttackCooldownPercentageDecrease / 100;
-                    break;
-                case LifeStealPowerUpAsset lifeStealPowerUpAsset:
-                    if (AttackComponent.LifeSteal > 0)
-                    {
-                        AttackComponent.LifeSteal *= 1 + lifeStealPowerUpAsset.LifeStealPercentage / 100;
-                    }
-                    else
-                    {
+                MaxPowerUps[powerUpAsset] -= 1;
+            }
+
+            if (!MaxPowerUps.ContainsKey(powerUpAsset) || MaxPowerUps[powerUpAsset] >= 0)
+            {
+                switch (powerUpAsset)
+                {
+                    case RicochetPowerUpAsset ricochetPowerUpAsset:
+                        AttackComponent.Ricochets += ricochetPowerUpAsset.Ricochets;
+                        break;
+                    case DamagePowerUpAsset damagePowerUpAsset:
+                        AttackComponent.Damage *= 1 + damagePowerUpAsset.DamagePercentageIncrease / 100;
+                        break;
+                    case ProjectileSpeedPowerUpAsset projectileSpeedPowerUpAsset:
+                        AttackComponent.ProjectileSpeed *= 1 + projectileSpeedPowerUpAsset.ProjectileSpeedPercentageIncrease / 100;
+                        break;
+                    case MovementSpeedPowerUpAsset movementSpeedPowerUpAsset:
+                        TankMovementComponent.MovementSpeed *= 1 + movementSpeedPowerUpAsset.MovementSpeedPercentageIncrease / 100;
+                        TankMovementComponent.RotationSpeed *= 1 + movementSpeedPowerUpAsset.RotationSpeedPercentageIncrease / 100;
+                        break;
+                    case AttackCooldownPowerUpAsset attackCooldownPowerUpAsset:
+                        AttackComponent.AttackCooldown *= 1 - attackCooldownPowerUpAsset.AttackCooldownPercentageDecrease / 100;
+                        break;
+                    case LifeStealPowerUpAsset lifeStealPowerUpAsset:
                         AttackComponent.LifeSteal += lifeStealPowerUpAsset.LifeSteal;
-                    }
-                    break;
-                case MagnetPowerUpAsset magnetPowerUpAsset:
-                    if (MagnetComponent.Radius > 0)
-                    {
-                        MagnetComponent.Radius *= 1 + magnetPowerUpAsset.RadiusPercentage / 100;
-                    }
-                    else
-                    {
-                        MagnetComponent.Radius += magnetPowerUpAsset.Radius;
-                    }
-                    break;
-                case MaxHealthPowerUpAsset maxHealthPowerUpAsset:
-                    HealthComponent.MaxHealth += maxHealthPowerUpAsset.MaxHealthIncrease;
-                    HealthComponent.InvokeHealthChanged();
-                    break;
+                        break;
+                    case MagnetPowerUpAsset magnetPowerUpAsset:
+                        if (MagnetComponent.Radius > 0)
+                        {
+                            MagnetComponent.Radius *= 1 + magnetPowerUpAsset.RadiusPercentage / 100;
+                        }
+                        else
+                        {
+                            MagnetComponent.Radius += magnetPowerUpAsset.Radius;
+                        }
+                        break;
+                    case MaxHealthPowerUpAsset maxHealthPowerUpAsset:
+                        HealthComponent.MaxHealth += maxHealthPowerUpAsset.MaxHealthIncrease;
+                        HealthComponent.InvokeHealthChanged();
+                        break;
+                }
             }
 
             SoundComponent.PlayClip(SoundId.PowerUpPickup);

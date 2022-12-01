@@ -34,7 +34,7 @@ namespace TanksOnAPlain.Unity.Components
         public int Ricochets { get; set; }
         
         [ShowInInspector]
-        public float LifeSteal { get; set; }
+        public int LifeSteal { get; set; }
         
         [ShowInInspector]
         [ReadOnly]
@@ -114,6 +114,7 @@ namespace TanksOnAPlain.Unity.Components
             
             ProjectileComponents.Add(projectileComponent);
             
+            projectileComponent.DamageInflicted -= OnDamageInflicted;
             projectileComponent.DamageInflicted += OnDamageInflicted;
             
             SoundComponent.PlayClip(SoundId.ProjectileShot);
@@ -121,7 +122,7 @@ namespace TanksOnAPlain.Unity.Components
 
         void OnDamageInflicted(object sender, DamageInflictedEventArgs e)
         {
-            var healAmount = e.Damage * LifeSteal / 100f;
+            var healAmount = LifeSteal;
             if (healAmount <= 0) return;
             
             HealthComponent.ChangeHealth(healAmount);
