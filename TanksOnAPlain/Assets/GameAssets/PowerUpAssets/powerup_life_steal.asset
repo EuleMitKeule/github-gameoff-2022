@@ -25,9 +25,6 @@ MonoBehaviour:
     - Name: Prefab
       Entry: 10
       Data: 0
-    - Name: LifeStealPercentage
-      Entry: 4
-      Data: 10
     - Name: LifeSteal
-      Entry: 4
-      Data: 10
+      Entry: 3
+      Data: 1

@@ -26,10 +26,10 @@ MonoBehaviour:
       Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
     - Name: StartValue
       Entry: 4
-      Data: 175
+      Data: 200
     - Name: EndValue
       Entry: 4
-      Data: 350
+      Data: 400
     - Name: Time
       Entry: 3
       Data: 900
@@ -41,10 +41,10 @@ MonoBehaviour:
       Data: TanksOnAPlain.Unity.Components.Difficulty.ScaledFloat, TanksOnAPlain.Unity
     - Name: StartValue
       Entry: 4
-      Data: 125
+      Data: 150
     - Name: EndValue
       Entry: 4
-      Data: 250
+      Data: 275
     - Name: Time
       Entry: 3
       Data: 900
